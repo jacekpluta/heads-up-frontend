@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import GameModule from "./GameModule";
-
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 function eventDivOnClick(e) {
   e.preventDefault();
   console.log("Clicked");
@@ -25,11 +25,19 @@ class Box extends Component {
 
   render() {
     return (
-      <div className="Box" onClick={eventDivOnClick}>
-        {this.state.showComponent ? <GameModule /> : null}
-      </div>
+      <Router>
+        <div className="Box" onClick={eventDivOnClick}>
+          <Link to="/GameModule">Start</Link>
+
+          <Switch>
+            <Route path="/GameModule">
+              <GameModule />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }
-
+//{this.state.showComponent ? <GameModule /> : null}
 export default Box;
