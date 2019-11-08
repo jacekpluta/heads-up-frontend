@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import Box from "./Box";
 
 class Main extends Component {
-  state = {};
   render() {
+    const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
     return (
       <div className="Main">
-        <Box></Box>
+        {numbers.map(key => {
+          return <Box key={key}></Box>;
+        })}
       </div>
     );
   }
