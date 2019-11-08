@@ -1,0 +1,63 @@
+/* Large */
+.MainLayout {
+  display: flex;
+  flex-flow: row wrap;
+  /* This aligns items to the end line on main-axis */
+  justify-content: flex-end;
+}
+
+/* Medium screens */
+@media all and (max-width: 800px) {
+  .MainLayout {
+    /* When on medium sized screens, we center it by evenly distributing empty space around items */
+    justify-content: space-around;
+  }
+}
+
+/* Small screens */
+@media all and (max-width: 500px) {
+  .MainLayout {
+    /* On small screens, we are no longer using row direction but column */
+    flex-direction: column;
+  }
+}
+
+.Header {
+  width: 100%;
+  text-align: center;
+  background-color: blue;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  padding: 20px;
+}
+
+.Main {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
+
+.Box {
+  width: 5%;
+  height: 5%;
+  background-color: red;
+  border-style: solid;
+  border-width: 4px 4px 4px 4px;
+  border-radius: 5px;
+  border-color: green;
+  text-align: center;
+  background-color: red;
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+  padding: 12%;
+  margin-top: 2%;
+}
+
+.Button {
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border-radius: 3px;
+}
