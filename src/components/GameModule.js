@@ -1,26 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Counter from "./Counter";
 
 function GameModule() {
-  let [count, setCount] = React.useState(5);
-  let i_id;
-
-  React.useEffect(() => {
-    i_id = setInterval(() => {
-      setCount(currCount => currCount - 1);
-    }, 1000);
-
-    return () => {
-      clearInterval(i_id);
-    };
-  }, []);
-
   return (
     <div className="GameModule">
+      <Counter></Counter>
       <h1>Game</h1>
-      {count}
+
       <Link to="/">
-        Back Count:
+        Back:
         <div id="countdown-number"></div>
         <svg>
           <circle r="18" cx="20" cy="20"></circle>
