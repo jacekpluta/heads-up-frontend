@@ -10,7 +10,8 @@ class Box extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showComponent: false
+      showComponent: false,
+      startSecondCounter: false
     };
     this.eventDivOnClick = this.eventDivOnClick.bind(this);
   }
