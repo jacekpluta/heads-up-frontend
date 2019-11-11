@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import useInterval from "./UseInterval";
+import "../counter.scss";
 
 function CounterStart() {
   const [countStart, setCount] = useState(5);
@@ -7,7 +8,7 @@ function CounterStart() {
   const [isRunning, setIsRunning] = useState(true);
 
   useInterval(
-    () => {
+    props => {
       // Your custom logic here
       setCount(countStart - 1);
     },
@@ -18,6 +19,7 @@ function CounterStart() {
   useEffect(() => {
     if (countStart === 0) {
       setIsRunning(false);
+      setCount("Start");
     }
   }, [countStart]);
 

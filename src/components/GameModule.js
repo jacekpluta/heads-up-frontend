@@ -3,9 +3,11 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import CounterStart from "./CounterStart";
 import CounterTimer from "./CounterTimer";
 function GameModule() {
+  if (countStart === true) {
+  }
   return (
     <div className="GameModule">
-      <CounterStart></CounterStart>
+      <CounterStart>{props.countStart}</CounterStart>
       <CounterTimer></CounterTimer>
       <h1>Game</h1>
 
