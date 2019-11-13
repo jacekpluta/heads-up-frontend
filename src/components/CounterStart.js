@@ -1,42 +1,14 @@
-import React, { useState, useEffect } from "react";
-import useInterval from "./UseInterval";
+import React from "react";
+
 import "../counter.scss";
-import $ from "jquery";
 
-function stop() {
-  $(".demo").addClass("stop");
-}
-
-const CounterStart = ({ startSecondCounterValue }) => {
-  const [countStart, setCount] = useState(5);
-  const [delay] = useState(750);
-  const [isRunning, setIsRunning] = useState(true);
-  const [showDiv, setShowDiv] = useState(true);
-
-  useInterval(
-    () => {
-      // Your custom logic here
-      setCount(countStart - 1);
-    },
-
-    isRunning ? delay : null
-  );
-
-  useEffect(() => {
-    if (countStart < 0) {
-      setIsRunning(false);
-      stop();
-      setCount("Start");
-      setShowDiv(false);
-      startSecondCounterValue = true; //pass this value to BOX
-    }
-  }, [countStart]);
-
+const CounterStart = props => {
   return (
     <>
-      <h1>{countStart}</h1>
-
-      <div className="demo" style={{ display: showDiv ? "block" : "none" }}>
+      <div
+        className="demo"
+        style={{ display: props.showDivCounterStart ? "block" : "none" }}
+      >
         <div className="demo__colored-blocks">
           <div className="demo__colored-blocks-rotater">
             <div className="demo__colored-block"></div>

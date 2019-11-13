@@ -1,30 +1,19 @@
-import React, { useState, useEffect } from "react";
-import useInterval from "./UseInterval";
+import React from "react";
 
-function CounterTimer() {
-  const [countTimer, setCount] = useState(30);
-  const [delay] = useState(1000);
-  const [isRunning, setIsRunning] = useState(true);
+import "../counterTimer.css";
 
-  useInterval(
-    () => {
-      // Your custom logic here
-      setCount(countTimer - 1);
-    },
-
-    isRunning ? delay : null
-  );
-
-  useEffect(() => {
-    if (countTimer === 0) {
-      setIsRunning(false);
-      setCount("");
-    }
-  }, [countTimer]);
-
+function CounterTimer(props) {
   return (
     <>
-      <h1>{countTimer}</h1>
+      <div
+        id="countdown"
+        style={{ display: props.showDivCounterTimer ? "block" : "none" }}
+      >
+        <div id="countdown-number">{props.countTimer}</div>
+        <svg>
+          <circle r="18" cx="20" cy="20"></circle>
+        </svg>
+      </div>
     </>
   );
 }
