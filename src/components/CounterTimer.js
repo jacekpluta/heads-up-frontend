@@ -1,13 +1,11 @@
 import React from "react";
-
 import "../counterTimer.css";
-
 function CounterTimer(props) {
   return (
     <>
       <div
         id="countdown"
-        style={{ display: props.showDivCounterTimer ? "block" : "none" }}
+        style={{ display: props.showDivCounterTimer ? "none" : "block" }}
       >
         <div id="countdown-number">{props.countTimer}</div>
         <svg>

@@ -5,13 +5,13 @@ import CounterTimer from "./CounterTimer";
 import useInterval from "./UseInterval";
 
 function GameModule(props) {
-  const [counterBool, SetCounterBool] = useState(false);
+  const highNumber = 99999999999999999999;
 
   const [countStart, setCountStart] = useState(5);
   const [countTimer, setCountTimer] = useState(30);
 
   const [delayStart] = useState(750);
-  const [delayTimer] = useState(1000);
+  const [delayTimer, setDelayTimer] = useState(highNumber);
 
   const [isRunningStart, setIsRunningStart] = useState(true);
   const [isRunningTimer, setIsRunningTimer] = useState(true);
@@ -37,18 +37,20 @@ function GameModule(props) {
     if (countStart < 0) {
       setIsRunningStart(false);
       setShowDivCounterStart(false);
+      setShowDivCounterTimer(false);
+      setDelayTimer(1000);
+      props.onChange(true);
     }
     if (countTimer === 0) {
       setIsRunningTimer(false);
-      setCountTimer("");
-      setShowDivCounterTimer(false);
+      setCountTimer("0");
+      props.onChange2(true);
     }
   }, [countStart, countTimer]);
 
   return (
     <div className="GameModule">
       <CounterStart
-        counterBool={counterBool}
         countStart={countStart}
         showDivCounterStart={showDivCounterStart}
       ></CounterStart>
