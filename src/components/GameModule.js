@@ -8,7 +8,7 @@ function GameModule(props) {
   const highNumber = 99999999999999999999;
 
   const [countStart, setCountStart] = useState(5);
-  const [countTimer, setCountTimer] = useState(30);
+  const [countTimer, setCountTimer] = useState(7);
 
   const [delayStart] = useState(750);
   const [delayTimer, setDelayTimer] = useState(highNumber);
@@ -18,6 +18,8 @@ function GameModule(props) {
 
   const [showDivCounterStart, setShowDivCounterStart] = useState(true);
   const [showDivCounterTimer, setShowDivCounterTimer] = useState(true);
+
+  const [nextGame, setNextGame] = useState(false);
 
   useInterval(
     () => {
@@ -33,23 +35,31 @@ function GameModule(props) {
     isRunningTimer ? delayTimer : null
   );
 
+  function ClickOnSkipFunc() {
+    setNextGame(true);
+    console.log(nextGame);
+  }
+
   useEffect(() => {
-    if (countStart < 0) {
-      setIsRunningStart(false);
+    if (countStart === 1) {
       setShowDivCounterStart(false);
       setShowDivCounterTimer(false);
       setDelayTimer(1000);
-      props.onChange(true);
+      console.log("1 game");
     }
-    if (countTimer === 0) {
-      setIsRunningTimer(false);
-      setCountTimer("0");
-      props.onChange2(true);
-    }
-  }, [countStart, countTimer]);
+  }, [countStart]);
 
+  if (countTimer === 0) {
+    setCountTimer("0");
+    setCountTimer(7);
+    console.log("2 game");
+  }
+
+  if (nextGame === true) {
+    console.log("3 game");
+  }
   return (
-    <div className="GameModule">
+    <div className="GameModule" onClick={ClickOnSkipFunc}>
       <CounterStart
         countStart={countStart}
         showDivCounterStart={showDivCounterStart}
