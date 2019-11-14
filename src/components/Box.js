@@ -1,44 +1,48 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import GameModule from "./GameModule";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
 function eventDivOnClick(e) {
-  e.preventDefault();
   console.log("Clicked");
 }
 
-class Box extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showComponent: false,
-      startSecondCounter: false
-    };
-    this.eventDivOnClick = this.eventDivOnClick.bind(this);
+function Box(props) {
+  const [startGame, setStartGame] = useState(false);
+  const [startNextGame, setStartNextGame] = useState(false);
+  function handleChange(newValue) {
+    setStartGame(newValue);
+    if (newValue === true) {
+      console.log("Gra 1");
+    }
   }
 
-  eventDivOnClick(e) {
-    e.preventDefault();
-    this.setState({
-      showComponent: true
-    });
-    console.log("Clicked");
+  function handleChange2(newValue2) {
+    setStartNextGame(newValue2);
+
+    if (newValue2 === true) {
+      console.log("Gra 2");
+    }
   }
 
-  render() {
-    return (
-      <Router>
-        <div className="Box" onClick={eventDivOnClick}>
-          <Link to="/GameModule">Start</Link>
+  return (
+    <Router>
+      <div className="Box" onClick={eventDivOnClick}>
+        <Link to="/GameModule">Start</Link>
 
-          <Switch>
-            <Route path="/GameModule">
-              <GameModule />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
-    );
-  }
+        <Switch>
+          <Route exact path="/GameModule">
+            <GameModule
+              startNextGame={startNextGame}
+              startGame={startGame}
+              onChange={handleChange}
+              onChange2={handleChange2}
+            />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+  );
 }
+
 //{this.state.showComponent ? <GameModule /> : null}
 export default Box;
