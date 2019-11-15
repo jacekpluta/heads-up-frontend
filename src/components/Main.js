@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Box from "./Box";
+import gamePicTwo from "../pic/gamePicTwo.jpg";
 
 class Main extends Component {
   render() {
@@ -8,7 +9,12 @@ class Main extends Component {
     return (
       <div className="Main">
         {numbers.map(key => {
-          return <Box key={key}></Box>;
+          return (
+            <Box
+              key={key}
+              style={{ backgroundImage: `url(${gamePicTwo})` }}
+            ></Box>
+          );
         })}
       </div>
     );
