@@ -17,11 +17,7 @@ function Box(props) {
   Box.handleClickOutside = () => setIsOpen(false);
 
   console.log(isOpen);
-  let history = useHistory();
 
-  function back() {
-    history.push("/");
-  }
   return (
     <div className="Box" onClick={toggle}>
       <Router>
