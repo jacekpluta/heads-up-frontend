@@ -1,33 +1,44 @@
 import React, { useState } from "react";
 import GameModule from "./GameModule";
+import onClickOutside from "react-onclickoutside";
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
+  useHistory
 } from "react-router-dom";
 
 function Box(props) {
-  const [clickedTrue, setClickedTrue] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
 
-  const handleClickBox = () => {
-    setClickedTrue(true);
-  };
+  Box.handleClickOutside = () => setIsOpen(false);
 
+  console.log(isOpen);
+  let history = useHistory();
+
+  function back() {
+    history.push("/");
+  }
   return (
-    <div className="Box" onClick={handleClickBox}>
+    <div className="Box" onClick={toggle}>
       <Router>
         <Switch>
           <Route exact path="/GameModule">
-            <GameModule></GameModule>
+            <GameModule clickedTrue={toggle}></GameModule>
           </Route>
-          {clickedTrue ? <Redirect to="/GameModule" /> : <Redirect to="/" />}
+          {isOpen ? <Redirect to="/GameModule" /> : <Redirect to="/" />}
         </Switch>
       </Router>
     </div>
   );
 }
 
+const clickOutsideConfig = {
+  handleClickOutside: () => Box.handleClickOutside
+};
+
 //{this.state.showComponent ? <GameModule /> : null}
-export default Box;
+export default onClickOutside(Box, clickOutsideConfig);

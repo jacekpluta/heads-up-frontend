@@ -8,9 +8,11 @@
     "react": "^16.11.0",
     "react-auto-scale": "^1.0.4",
     "react-dom": "^16.11.0",
+    "react-onclickoutside": "^6.9.0",
     "react-resize-image": "^1.0.4",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "semantic-ui-react": "^0.88.1",
     "styled-components": "^4.4.1"
   },
   "scripts": {

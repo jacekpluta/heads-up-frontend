@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory
+} from "react-router-dom";
 import CounterStart from "./CounterStart";
 import CounterTimer from "./CounterTimer";
 import useInterval from "./UseInterval";
@@ -77,26 +82,35 @@ function GameModule(props) {
     }
   }, [numberOfGamesCompleted, numberOfGames]);
 
+  let history = useHistory();
+
+  function back() {
+    history.push("/");
+  }
+
   return (
-    <div className="GameModule" onClick={ClickOnSkipFunc}>
-      <CounterStart
-        countStart={countStart}
-        showDivCounterStart={showDivCounterStart}
-      ></CounterStart>
-      <CounterTimer
-        countTimer={countTimer}
-        showDivCounterTimer={showDivCounterTimer}
-        stopDivCounterTimer={stopDivCounterTimer}
-      ></CounterTimer>
-      <h1>Game</h1>
-      <h1>{currentQuestion}</h1>
-      <Router>
-        <Link to="/">Home</Link>
+    <Router>
+      <div className="GameModule" onClick={ClickOnSkipFunc}>
+        <CounterStart
+          countStart={countStart}
+          showDivCounterStart={showDivCounterStart}
+        ></CounterStart>
+        <CounterTimer
+          countTimer={countTimer}
+          showDivCounterTimer={showDivCounterTimer}
+          stopDivCounterTimer={stopDivCounterTimer}
+        ></CounterTimer>
+        <h1>Game</h1>
+        <h1>{currentQuestion}</h1>
+        <button type="button" onClick={back}>
+          Back
+        </button>
+
         <Switch>
-          <Route path="/"></Route>
+          <Route exact path="/"></Route>
         </Switch>
-      </Router>
-    </div>
+      </div>
+    </Router>
   );
 }
 
