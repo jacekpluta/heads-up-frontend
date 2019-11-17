@@ -1,24 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import GameModule from "./GameModule";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
 
 function Box(props) {
-  return (
-    <Router>
-      <div className="Box">
-        <Link to="/GameModule">
-          {" "}
-          <span>dsaas</span>
-        </Link>
+  const [clickedTrue, setClickedTrue] = useState(false);
 
+  const handleClickBox = () => {
+    setClickedTrue(true);
+  };
+
+  return (
+    <div className="Box" onClick={handleClickBox}>
+      <Router>
         <Switch>
           <Route exact path="/GameModule">
             <GameModule></GameModule>
           </Route>
+          {clickedTrue ? <Redirect to="/GameModule" /> : <Redirect to="/" />}
         </Switch>
-      </div>
-    </Router>
+      </Router>
+    </div>
   );
 }
 

@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 .App {
   width: 100%;
 }
@@ -25,15 +28,19 @@
   margin-right: auto;
   padding: 10%;
   margin-top: 2%;
+  max-width: 500px;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-
   background-repeat: no-repeat;
   background-size: contain, cover;
   background-size: 100% 100%;
   background-image: url("./pic/gamePicOne.jpg");
+  cursor: pointer;
+}
+
+.overlay {
 }
 
 .GameModule {

@@ -90,8 +90,12 @@ function GameModule(props) {
       ></CounterTimer>
       <h1>Game</h1>
       <h1>{currentQuestion}</h1>
-
-      <Link to="/">Back:</Link>
+      <Router>
+        <Link to="/">Home</Link>
+        <Switch>
+          <Route path="/"></Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
