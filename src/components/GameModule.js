@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useHistory
-} from "react-router-dom";
+import { BrowserRouter as Router, useHistory } from "react-router-dom";
 import CounterStart from "./CounterStart";
 import CounterTimer from "./CounterTimer";
 import useInterval from "./UseInterval";
+import { motion, AnimatePresence } from "framer-motion";
+import BackButton from "./BackButton";
 
 function GameModule(props) {
   const highNumber = 99999999999999999999;
@@ -47,7 +44,6 @@ function GameModule(props) {
 
   function ClickOnSkipFunc() {
     setCountTimer(1);
-
     setStopDivCounterTimer(false);
   }
 
@@ -78,19 +74,65 @@ function GameModule(props) {
     if (numberOfGamesCompleted > numberOfGames) {
       setIsRunningTimer(false);
       setCountTimer("");
+      setCurrentQuestion("");
       setShowDivCounterTimer(true);
     }
   }, [numberOfGamesCompleted, numberOfGames]);
 
+  const [sleep, setSleep] = useState(false);
   let history = useHistory();
 
+  useEffect(() => {
+    if (sleep) {
+      const timer = setTimeout(() => {
+        history.push("/");
+      }, 200);
+      return () => clearTimeout(timer);
+    }
+  }, [history, sleep]);
+
   function back() {
-    history.push("/");
+    setActive(false);
+    setSleep(true);
+    someFn();
   }
 
+  function someFn() {
+    props.myCallback(false);
+  }
+
+  //console.log(history.location);
+
+  const pageTransition = {
+    inBox: {
+      opacity: 1
+    },
+    outBox: {
+      opacity: 0
+    },
+    inBackBtn: {
+      opacity: 0,
+      x: "-100vh"
+    },
+    animBackBtn: {
+      opacity: 1,
+      x: 0
+    }
+  };
+
+  const [active, setActive] = useState(true);
+
+  //console.log(active);
   return (
     <Router>
-      <div className="GameModule" onClick={ClickOnSkipFunc}>
+      <motion.div
+        variants={pageTransition}
+        initial={active ? "outBox" : "inBox"}
+        animate={active ? "inBox" : "outBox"}
+        exit={active ? "outBox" : "inBox"}
+        className="GameModule"
+        onClick={ClickOnSkipFunc}
+      >
         <CounterStart
           countStart={countStart}
           showDivCounterStart={showDivCounterStart}
@@ -100,16 +142,12 @@ function GameModule(props) {
           showDivCounterTimer={showDivCounterTimer}
           stopDivCounterTimer={stopDivCounterTimer}
         ></CounterTimer>
-        <h1>Game</h1>
-        <h1>{currentQuestion}</h1>
-        <button type="button" onClick={back}>
-          Back
-        </button>
 
-        <Switch>
-          <Route exact path="/"></Route>
-        </Switch>
-      </div>
+        <h1>{currentQuestion}</h1>
+        <div onClick={back}>
+          <BackButton back={back}></BackButton>
+        </div>
+      </motion.div>
     </Router>
   );
 }

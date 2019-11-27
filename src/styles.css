@@ -1,6 +1,28 @@
 * {
   box-sizing: border-box;
 }
+
+.BackButtonContainer {
+  padding: 2%;
+  width: 5%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: relative;
+}
+
+.BackButton {
+  width: 10%;
+  overflow: visible;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  margin-right: 50%;
+  position: absolute;
+}
+
 .App {
   width: 100%;
 }
@@ -9,8 +31,9 @@
   text-align: center;
   font-size: 24px;
   font-weight: bold;
+  height: 100%;
   color: white;
-  background-color: green;
+  background: linear-gradient(180deg, #05f, #09f);
   display: flex;
   justify-content: space-between;
   flex-flow: row wrap;
@@ -18,7 +41,6 @@
 }
 
 .Box {
-  background-color: red;
   border-style: solid;
   border-color: white;
   border-radius: 10px;
@@ -37,17 +59,33 @@
   background-size: contain, cover;
   background-size: 100% 100%;
   background-image: url("./pic/gamePicOne.jpg");
-  cursor: pointer;
+  position: relative;
 }
 
-.overlay {
+a.divLink {
+  cursor: pointer;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  text-decoration: none;
+  /* Makes sure the link doesn't get underlined */
+  z-index: 1;
+  /* raises anchor tag above everything else in div */
+  background-color: white;
+  /*workaround to make clickable in IE */
+  opacity: 0;
+  /*workaround to make clickable in IE */
+  filter: alpha(opacity=0);
+  /*workaround to make clickable in IE */
 }
 
 .GameModule {
   position: fixed;
-  width: 80vh;
-  height: 80vh;
-  background-color: red;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(180deg, #05f, #09f);
   border-style: solid;
   text-align: center;
   font-size: 10px;
@@ -55,10 +93,11 @@
   color: white;
   display: block;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   flex-flow: wrap;
-  left: 29.2%;
-  top: 10%;
+  left: 0%;
+  top: 0%;
+  z-index: 2;
 }
 
 /* Large */

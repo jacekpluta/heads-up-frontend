@@ -1,40 +1,57 @@
 import React, { useState } from "react";
 import GameModule from "./GameModule";
-import onClickOutside from "react-onclickoutside";
+import { motion } from "framer-motion";
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect,
-  useHistory
+  Redirect
 } from "react-router-dom";
 
 function Box(props) {
   const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen(!isOpen);
 
-  Box.handleClickOutside = () => setIsOpen(false);
+  function back() {
+    setIsOpen(true);
+  }
 
-  console.log(isOpen);
+  function myCallback() {
+    setIsOpen(false);
+  }
 
+  const pageTransition = {
+    inModule: {
+      opacity: 0,
+      x: "-100vh"
+    },
+    animModule: {
+      opacity: 1,
+      x: 0
+    }
+  };
   return (
-    <div className="Box" onClick={toggle}>
-      <Router>
+    <Router>
+      <motion.div
+        variants={pageTransition}
+        className="Box"
+        initial={"inModule"}
+        animate={"animModule"}
+      >
+        <a className="divLink" onClick={back}></a>
+
         <Switch>
-          <Route exact path="/GameModule">
-            <GameModule clickedTrue={toggle}></GameModule>
-          </Route>
-          {isOpen ? <Redirect to="/GameModule" /> : <Redirect to="/" />}
+          <Route
+            exact
+            path="/GameModule"
+            render={props => <GameModule {...props} myCallback={myCallback} />}
+          />
+          {isOpen ? <Redirect to="/GameModule" /> : <Redirect to="/" />}{" "}
         </Switch>
-      </Router>
-    </div>
+      </motion.div>
+    </Router>
   );
 }
 
-const clickOutsideConfig = {
-  handleClickOutside: () => Box.handleClickOutside
-};
-
 //{this.state.showComponent ? <GameModule /> : null}
-export default onClickOutside(Box, clickOutsideConfig);
+export default Box;
