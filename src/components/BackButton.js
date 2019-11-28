@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 const icon = {
@@ -18,12 +18,9 @@ function BackButton(props) {
   return (
     <motion.div
       className="BackButtonContainer"
-      whileHover={{ rotate: 180 }}
-      whileTap={{
-        scale: 0.8,
-        rotate: -90,
-        borderRadius: "100%"
-      }}
+      onHoverStart={() => console.log("Hover starts")}
+      whileHover={{ scale: 1.2, transition: { duration: 1 } }}
+      whileTap={{ scale: 0.8, transition: { duration: 1 } }}
     >
       <motion.svg
         xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +32,6 @@ function BackButton(props) {
           variants={icon}
           initial="hidden"
           animate="visible"
-          whileHover={{ scale: -90 }}
           transition={{
             default: { duration: 2, ease: "easeInOut" },
             fill: { duration: 2, ease: [1, 0, 0.8, 1] }
