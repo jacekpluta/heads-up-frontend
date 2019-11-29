@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
+import "../BackButton.css";
 
 const icon = {
   hidden: {
@@ -21,6 +22,7 @@ function BackButton(props) {
       onHoverStart={() => console.log("Hover starts")}
       whileHover={{ scale: 1.2, transition: { duration: 1 } }}
       whileTap={{ scale: 0.8, transition: { duration: 1 } }}
+      onClick={() => props.back()}
     >
       <motion.svg
         xmlns="http://www.w3.org/2000/svg"

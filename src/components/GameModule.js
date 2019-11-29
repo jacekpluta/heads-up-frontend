@@ -3,8 +3,9 @@ import { BrowserRouter as Router, useHistory } from "react-router-dom";
 import CounterStart from "./CounterStart";
 import CounterTimer from "./CounterTimer";
 import useInterval from "./UseInterval";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import BackButton from "./BackButton";
+import ParticlesCanvas from "./ParticlesCanvas";
 
 function GameModule(props) {
   const highNumber = 99999999999999999999;
@@ -91,11 +92,11 @@ function GameModule(props) {
     }
   }, [history, sleep]);
 
-  function back() {
+  const back = value => {
     setActive(false);
     setSleep(true);
     someFn();
-  }
+  };
 
   function someFn() {
     props.myCallback(false);
@@ -121,7 +122,7 @@ function GameModule(props) {
   };
 
   const [active, setActive] = useState(true);
-
+  const [onTapScale, setOnTapScale] = useState(true);
   //console.log(active);
   return (
     <Router>
@@ -144,9 +145,10 @@ function GameModule(props) {
         ></CounterTimer>
 
         <h1>{currentQuestion}</h1>
-        <div onClick={back}>
-          <BackButton back={back}></BackButton>
-        </div>
+
+        <BackButton back={back}></BackButton>
+
+        <ParticlesCanvas></ParticlesCanvas>
       </motion.div>
     </Router>
   );
