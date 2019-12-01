@@ -15,10 +15,10 @@ function ParticlesCanvas(params) {
       params={{
         particles: {
           number: {
-            value: 100,
+            value: 70,
             density: {
               enable: true,
-              value_area: 1200
+              value_area: 1000
             }
           },
           line_linked: {
@@ -27,17 +27,17 @@ function ParticlesCanvas(params) {
           },
           move: {
             direction: "top",
-            speed: 0.1,
+            speed: 0.5,
             random: false
           },
           size: {
-            value: 3
+            value: 5
           },
           opacity: {
             anim: {
               enable: true,
-              speed: 0.2,
-              opacity_min: 0.05
+              speed: 0.3,
+              opacity_min: 0
             }
           }
         },

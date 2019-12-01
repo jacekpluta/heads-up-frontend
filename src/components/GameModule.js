@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, useHistory } from "react-router-dom";
+import { motion } from "framer-motion";
 import CounterStart from "./CounterStart";
 import CounterTimer from "./CounterTimer";
 import useInterval from "./UseInterval";
-import { motion } from "framer-motion";
 import BackButton from "./BackButton";
+import Questions from "./Questions";
 import ParticlesCanvas from "./ParticlesCanvas";
-
+import SkipOrCorrect from "./SkipOrCorrect";
+import Result from "./Result";
 function GameModule(props) {
   const highNumber = 99999999999999999999;
 
-  const [numberOfGames] = useState(4);
+  const [numberOfGames] = useState(2);
   const [numberOfGamesCompleted, setNumberOfGamesCompleted] = useState(0);
 
   const [countStart, setCountStart] = useState(5);
@@ -29,6 +31,16 @@ function GameModule(props) {
 
   const [currentQuestion, setCurrentQuestion] = useState("");
 
+  const [active, setActive] = useState(true);
+
+  const [showResult, setShowResult] = useState(false);
+
+  const [sleep, setSleep] = useState(false);
+
+  const [points, setPoints] = useState(0);
+  const [questionsResult, setQuestionsResult] = useState([]);
+  let history = useHistory();
+
   useInterval(
     () => {
       setCountStart(countStart - 1);
@@ -43,46 +55,6 @@ function GameModule(props) {
     isRunningTimer ? delayTimer : null
   );
 
-  function ClickOnSkipFunc() {
-    setCountTimer(1);
-    setStopDivCounterTimer(false);
-  }
-
-  function GetRandomQuestion(rand) {
-    const Questions = ["kot", "pies", "mysz", "kon", "buldog"];
-    return (rand = Questions[Math.floor(Math.random() * Questions.length)]);
-  }
-
-  useEffect(() => {
-    if (countStart === -1) {
-      setShowDivCounterStart(false);
-      setShowDivCounterTimer(false);
-      setDelayTimer(1000);
-      setCurrentQuestion(GetRandomQuestion([numberOfGamesCompleted]));
-    }
-  }, [countStart, numberOfGamesCompleted]);
-
-  useEffect(() => {
-    if (countTimer === 0 && numberOfGamesCompleted <= numberOfGames) {
-      setStopDivCounterTimer(true);
-      setCountTimer(7);
-      setNumberOfGamesCompleted(numberOfGamesCompleted + 1);
-      setCurrentQuestion(GetRandomQuestion([numberOfGamesCompleted]));
-    }
-  }, [countTimer, numberOfGamesCompleted, numberOfGames]);
-
-  useEffect(() => {
-    if (numberOfGamesCompleted > numberOfGames) {
-      setIsRunningTimer(false);
-      setCountTimer("");
-      setCurrentQuestion("");
-      setShowDivCounterTimer(true);
-    }
-  }, [numberOfGamesCompleted, numberOfGames]);
-
-  const [sleep, setSleep] = useState(false);
-  let history = useHistory();
-
   useEffect(() => {
     if (sleep) {
       const timer = setTimeout(() => {
@@ -92,7 +64,7 @@ function GameModule(props) {
     }
   }, [history, sleep]);
 
-  const back = value => {
+  const back = () => {
     setActive(false);
     setSleep(true);
     someFn();
@@ -103,6 +75,58 @@ function GameModule(props) {
   }
 
   //console.log(history.location);
+
+  //Skip questin and reset timer on div click
+  function ClickOnSkip() {
+    setCountTimer(1);
+    setStopDivCounterTimer(false);
+  }
+
+  //Returns random question
+  function GetRandomQuestion(rand) {
+    const Questions = ["kot", "pies", "mysz", "kon", "buldog"];
+    return (rand = Questions[Math.floor(Math.random() * Questions.length)]);
+  }
+
+  //Beginning, setting all counters and question
+  useEffect(() => {
+    if (countStart === -1) {
+      setShowDivCounterStart(false);
+      setShowDivCounterTimer(false);
+      setDelayTimer(1000);
+      setCurrentQuestion(GetRandomQuestion([numberOfGamesCompleted]));
+    }
+  }, [countStart, numberOfGamesCompleted]);
+
+  //End of each round
+  useEffect(() => {
+    if (countTimer === 0) {
+      setStopDivCounterTimer(false);
+    }
+    if (countTimer === -1 && numberOfGamesCompleted <= numberOfGames) {
+      setStopDivCounterTimer(true);
+      setCountTimer(7);
+      setNumberOfGamesCompleted(numberOfGamesCompleted + 1);
+      setCurrentQuestion(GetRandomQuestion([numberOfGamesCompleted]));
+      setPoints(points - 1);
+
+      setQuestionsResult(questionsResult => [
+        ...questionsResult,
+        currentQuestion + " -1"
+      ]);
+    }
+  }, [countTimer, numberOfGamesCompleted, numberOfGames, points]);
+
+  //End of the game
+  useEffect(() => {
+    if (numberOfGamesCompleted > numberOfGames) {
+      setIsRunningTimer(false);
+      setCountTimer("");
+      setCurrentQuestion("");
+      setShowDivCounterTimer(true);
+      setShowResult(true);
+    }
+  }, [numberOfGamesCompleted, numberOfGames]);
 
   const pageTransition = {
     inBox: {
@@ -121,8 +145,6 @@ function GameModule(props) {
     }
   };
 
-  const [active, setActive] = useState(true);
-  const [onTapScale, setOnTapScale] = useState(true);
   //console.log(active);
   return (
     <Router>
@@ -132,23 +154,34 @@ function GameModule(props) {
         animate={active ? "inBox" : "outBox"}
         exit={active ? "outBox" : "inBox"}
         className="GameModule"
-        onClick={ClickOnSkipFunc}
+        onClick={ClickOnSkip}
       >
         <CounterStart
           countStart={countStart}
           showDivCounterStart={showDivCounterStart}
-        ></CounterStart>
+        />
         <CounterTimer
           countTimer={countTimer}
           showDivCounterTimer={showDivCounterTimer}
           stopDivCounterTimer={stopDivCounterTimer}
-        ></CounterTimer>
+        />
 
-        <h1>{currentQuestion}</h1>
-
-        <BackButton back={back}></BackButton>
-
-        <ParticlesCanvas></ParticlesCanvas>
+        <BackButton back={back} />
+        <Questions
+          currentQuestion={currentQuestion}
+          showDivCounterTimer={showDivCounterTimer}
+          stopDivCounterTimer={stopDivCounterTimer}
+        />
+        <SkipOrCorrect
+          showDivCounterTimer={showDivCounterTimer}
+          stopDivCounterTimer={stopDivCounterTimer}
+        />
+        <Result
+          showResult={showResult}
+          points={points}
+          questionsResult={questionsResult}
+        />
+        <ParticlesCanvas />
       </motion.div>
     </Router>
   );

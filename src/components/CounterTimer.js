@@ -1,16 +1,17 @@
 import React from "react";
 import "../counterTimer.css";
 import { motion } from "framer-motion";
+
 const pageTransition = {
-  in: {
+  inBox: {
     opacity: 1
   },
-  out: {
+  outBox: {
     opacity: 0
   }
 };
 
-function CounterTimer(props) {
+const CounterTimer = props => {
   if (props.stopDivCounterTimer === false) {
     return <div></div>;
   }
@@ -20,22 +21,18 @@ function CounterTimer(props) {
         id="countdown"
         style={{ display: props.showDivCounterTimer ? "none" : "block" }}
         variants={pageTransition}
-        initial={"inBackBtn"}
-        animate={"animBackBtn"}
+        initial={props.showDivCounterTimer ? "inBox" : "outBox"}
+        animate={props.showDivCounterTimer ? "outBox" : "inBox"}
+        exit={props.showDivCounterTimer ? "inBox" : "outBox"}
       >
-        <div
-          id="countdown"
-          style={{ display: props.showDivCounterTimer ? "none" : "block" }}
-        >
-          <div id="countdown-number">{props.countTimer}</div>
-          <svg>
-            <circle r="18" cx="20" cy="20"></circle>
-          </svg>
-        </div>
+        <div id="countdown-number">{props.countTimer}</div>
+        <svg>
+          <circle r="18" cx="20" cy="20"></circle>
+        </svg>
       </motion.div>
     );
   }
-}
+};
 
 export default CounterTimer;
 

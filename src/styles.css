@@ -17,18 +17,17 @@
   font-size: 24px;
   font-weight: bold;
   height: 100%;
-  color: white;
-  background: linear-gradient(180deg, #05f, #09f);
-  display: flex;
-  justify-content: space-between;
-  flex-flow: row wrap;
-  padding: 0 5% 3% 5%;
   width: 100%;
   font-family: "Exo", sans-serif;
   color: #fff;
   background: linear-gradient(-45deg, #0077ff, #05f368, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
+
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
+  padding: 0 5% 3% 5%;
 }
 
 @keyframes gradientBG {
@@ -70,10 +69,10 @@
   background-size: 100% 100%;
   background-image: url("./pic/gamePicOne.jpg");
   position: relative;
+  opacity: 0.6;
+  transition: 0.3s;
 }
 
-.Box:hover {
-}
 a.divLink {
   cursor: pointer;
   position: absolute;
@@ -111,7 +110,42 @@ a.divLink {
   top: 0%;
   z-index: 2;
 }
-
+.Skip {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(180deg, rgb(255, 0, 0), rgb(255, 139, 6));
+  border-style: solid;
+  text-align: center;
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+  display: block;
+  align-items: center;
+  justify-content: space-around;
+  flex-flow: wrap;
+  left: 0%;
+  top: 0%;
+  z-index: 3;
+}
+.Result {
+  position: fixed;
+  width: 20%;
+  height: 20vh;
+  background: linear-gradient(180deg, rgb(14, 197, 44), rgb(243, 239, 13));
+  border-style: solid;
+  text-align: center;
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+  display: block;
+  align-items: center;
+  justify-content: space-around;
+  flex-flow: wrap;
+  left: 0%;
+  top: 0%;
+  z-index: 5;
+}
 /* Large */
 .Main {
 }

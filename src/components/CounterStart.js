@@ -1,13 +1,15 @@
 import React from "react";
-
+import { motion } from "framer-motion";
 import "../counter.scss";
 
 const CounterStart = props => {
   return (
     <>
-      <div
+      <motion.div
         className="demo"
-        style={{ display: props.showDivCounterStart ? "block" : "none" }}
+        style={{
+          display: props.showDivCounterStart ? "block" : "none"
+        }}
       >
         <div className="demo__colored-blocks">
           <div className="demo__colored-blocks-rotater">
@@ -49,7 +51,7 @@ const CounterStart = props => {
             />
           </svg>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };
