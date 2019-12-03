@@ -9,7 +9,7 @@ import Questions from "./Questions";
 import ParticlesCanvas from "./ParticlesCanvas";
 import SkipOrCorrect from "./SkipOrCorrect";
 import Result from "./Result";
-import GameMenu from "./GameMenu";
+import GameMenu from "./menu/GameMenu";
 function GameModule(props) {
   const highNumber = 99999999999999999999;
 

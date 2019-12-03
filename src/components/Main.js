@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Box from "./Box";
-import gamePicTwo from "../pic/gamePicTwo.jpg";
+import gamePicTwo from "../components/pic/gamePicTwo.jpg";
 
 class Main extends Component {
   render() {

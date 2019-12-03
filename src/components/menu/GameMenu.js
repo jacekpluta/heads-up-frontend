@@ -2,7 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import GameTitle from "./GameTitle";
-import Variants from "./Variants";
+import Variants from "../Variants";
 
 const pStyle = {
   fontSize: "36px",

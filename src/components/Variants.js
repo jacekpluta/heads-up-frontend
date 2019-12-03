@@ -1,9 +1,9 @@
 import React from "react";
 
-import DescribeTile from "./DescribeTile";
-import ShowTile from "./ShowTile";
-import ChallangeTile from "./ChallangeTile";
-import DrawTile from "./DrawTile";
+import DescribeTile from "./menu/DescribeTile";
+import ShowTile from "./menu/ShowTile";
+import ChallangeTile from "./menu/ChallangeTile";
+import DrawTile from "./menu/DrawTile";
 
 const variantsStyle = {
   display: "flex",
