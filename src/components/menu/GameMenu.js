@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import GameTitle from "./GameTitle";
-import Variants from "../Variants";
+import Variants from "./Variants";
 
 const pStyle = {
   fontSize: "36px",
@@ -26,7 +26,10 @@ export default function GameMenu(props) {
           <GameTitle />
 
           <p style={pStyle}>Zgaduj zwierze</p>
-          <Variants />
+          <Variants
+            onClick={props.onClick}
+            gameVariantChosen={props.gameVariantChosen}
+          />
         </motion.div>
       )}
     </AnimatePresence>

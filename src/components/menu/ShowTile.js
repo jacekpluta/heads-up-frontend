@@ -4,6 +4,12 @@ import ShowPic from "../pic/showPic.jpg";
 
 const showTileStyle = { backgroundImage: `url(${ShowPic})` };
 
-export default function ShowTile() {
-  return <motion.div className="TileStyle" style={showTileStyle}></motion.div>;
+export default function ShowTile(props) {
+  return (
+    <motion.div
+      className="TileStyle"
+      style={showTileStyle}
+      onClick={props.onClick}
+    ></motion.div>
+  );
 }

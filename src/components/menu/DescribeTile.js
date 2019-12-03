@@ -8,18 +8,11 @@ const describleTileStyle = {
 };
 
 function DescribeTile(props) {
-  const [gameVariantChosen, setGameVariantChosen] = useState(false);
-
-  const handleGameVariantChosen = setGameVariantChosen => {
-    setGameVariantChosen(true);
-  };
-
   return (
     <motion.div
       className="TileStyle"
       style={describleTileStyle}
-      onClick={handleGameVariantChosen}
-      gameVariantChosen={gameVariantChosen}
+      onClick={props.onClick}
     ></motion.div>
   );
 }

@@ -27,7 +27,7 @@ const showTileStyle = {
 };
 
 function GameTitle(props) {
-  return <div style={showTileStyle}></div>;
+  return <div style={showTileStyle} onClick={props.onClick}></div>;
 }
 
 export default GameTitle;

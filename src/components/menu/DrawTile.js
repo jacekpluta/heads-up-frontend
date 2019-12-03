@@ -4,6 +4,12 @@ import DrawPic from "../pic/drawPic.jpg";
 
 const drawTileStyle = { backgroundImage: `url(${DrawPic})` };
 
-export default function DrawTile() {
-  return <motion.div className="TileStyle" style={drawTileStyle}></motion.div>;
+export default function DrawTile(props) {
+  return (
+    <motion.div
+      className="TileStyle"
+      style={drawTileStyle}
+      onClick={props.onClick}
+    ></motion.div>
+  );
 }

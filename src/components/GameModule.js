@@ -43,8 +43,13 @@ function GameModule(props) {
 
   const [showgameMenu, setShowgameMenu] = useState(true);
 
-  const [gameVariantChosen, setGameVariantChosen] = useState(false);
   let history = useHistory();
+
+  const [gameVariantChosen, setGameVariantChosen] = useState(false);
+
+  const handleVariantChosen = () => {
+    setGameVariantChosen(true);
+  };
 
   useInterval(
     () => {
@@ -204,13 +209,18 @@ function GameModule(props) {
           showDivCounterTimer={showDivCounterTimer}
           stopDivCounterTimer={stopDivCounterTimer}
         />
-        <GameMenu showgameMenu={showgameMenu} />
+        <GameMenu
+          showgameMenu={showgameMenu}
+          onClick={handleVariantChosen}
+          gameVariantChosen={gameVariantChosen}
+        />
         <Result
           showResult={showResult}
           points={points}
           questionsResult={questionsResult}
           refresh={refresh}
         />
+
         <ParticlesCanvas />
       </motion.div>
     </Router>
