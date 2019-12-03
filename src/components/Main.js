@@ -4,7 +4,7 @@ import gamePicTwo from "../pic/gamePicTwo.jpg";
 
 class Main extends Component {
   render() {
-    const numbers = [1, 2, 3, 4];
+    const numbers = [1];
 
     return (
       <div className="Main">

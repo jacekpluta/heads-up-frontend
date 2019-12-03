@@ -23,7 +23,6 @@
   background: linear-gradient(-45deg, #0077ff, #05f368, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
-
   display: flex;
   justify-content: space-between;
   flex-flow: row wrap;
@@ -103,13 +102,33 @@ a.divLink {
   font-weight: bold;
   color: white;
   display: block;
-  align-items: center;
-  justify-content: space-around;
-  flex-flow: wrap;
   left: 0%;
   top: 0%;
   z-index: 2;
 }
+
+.GameMenu {
+  width: 108%;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  margin-left: -15em;
+  position: fixed;
+
+  background: linear-gradient(180deg, rgb(211, 211, 211), rgb(255, 251, 12));
+}
+
+.TileStyle {
+  border-style: solid;
+  border-color: white;
+  border-radius: 10px;
+  border-width: 10px;
+  padding: 160px;
+
+  background-size: contain, cover;
+  background-size: 100% 100%;
+}
+
 .Skip {
   position: fixed;
   width: 100%;
@@ -122,29 +141,32 @@ a.divLink {
   color: white;
   display: block;
   align-items: center;
-  justify-content: space-around;
-  flex-flow: wrap;
   left: 0%;
   top: 0%;
   z-index: 3;
 }
 .Result {
-  position: fixed;
-  width: 20%;
-  height: 20vh;
+  display: block;
+  position: absolute;
+  width: 30em;
+  height: 30em;
+  margin-top: -9em; /*set to a negative number 1/2 of your height*/
+  margin-left: -15em; /*set to a negative number 1/2 of your width*/
   background: linear-gradient(180deg, rgb(14, 197, 44), rgb(243, 239, 13));
-  border-style: solid;
   text-align: center;
   font-size: 10px;
   font-weight: bold;
-  color: white;
-  display: block;
-  align-items: center;
-  justify-content: space-around;
-  flex-flow: wrap;
-  left: 0%;
-  top: 0%;
-  z-index: 5;
+  border-style: solid;
+  border-color: white;
+  border-radius: 10px;
+  border-width: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 /* Large */
 .Main {

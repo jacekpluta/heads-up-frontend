@@ -9,6 +9,7 @@ import Questions from "./Questions";
 import ParticlesCanvas from "./ParticlesCanvas";
 import SkipOrCorrect from "./SkipOrCorrect";
 import Result from "./Result";
+import GameMenu from "./GameMenu";
 function GameModule(props) {
   const highNumber = 99999999999999999999;
 
@@ -21,8 +22,8 @@ function GameModule(props) {
   const [delayStart] = useState(750);
   const [delayTimer, setDelayTimer] = useState(highNumber);
 
-  const [isRunningStart] = useState(true);
-  const [isRunningTimer, setIsRunningTimer] = useState(true);
+  const [isRunningStart, setIsRunningStart] = useState(false);
+  const [isRunningTimer, setIsRunningTimer] = useState(false);
 
   const [showDivCounterStart, setShowDivCounterStart] = useState(true);
   const [showDivCounterTimer, setShowDivCounterTimer] = useState(true);
@@ -32,13 +33,17 @@ function GameModule(props) {
   const [currentQuestion, setCurrentQuestion] = useState("");
 
   const [active, setActive] = useState(true);
-
+  const [clickOnSkip, setClickOnSkip] = useState(false);
   const [showResult, setShowResult] = useState(false);
 
   const [sleep, setSleep] = useState(false);
 
   const [points, setPoints] = useState(0);
   const [questionsResult, setQuestionsResult] = useState([]);
+
+  const [showgameMenu, setShowgameMenu] = useState(true);
+
+  const [gameVariantChosen, setGameVariantChosen] = useState(false);
   let history = useHistory();
 
   useInterval(
@@ -65,9 +70,13 @@ function GameModule(props) {
   }, [history, sleep]);
 
   const back = () => {
-    setActive(false);
     setSleep(true);
     someFn();
+    setActive(false);
+  };
+
+  const refresh = () => {
+    history.push("/");
   };
 
   function someFn() {
@@ -78,8 +87,10 @@ function GameModule(props) {
 
   //Skip questin and reset timer on div click
   function ClickOnSkip() {
-    setCountTimer(1);
-    setStopDivCounterTimer(false);
+    if (clickOnSkip) {
+      setCountTimer(1);
+      setStopDivCounterTimer(false);
+    }
   }
 
   //Returns random question
@@ -88,9 +99,19 @@ function GameModule(props) {
     return (rand = Questions[Math.floor(Math.random() * Questions.length)]);
   }
 
+  //Game menu
+  useEffect(() => {
+    if (gameVariantChosen) {
+      setShowgameMenu(false);
+      setIsRunningStart(true);
+      setIsRunningTimer(true);
+    }
+  }, [gameVariantChosen]);
+
   //Beginning, setting all counters and question
   useEffect(() => {
     if (countStart === -1) {
+      setClickOnSkip(true);
       setShowDivCounterStart(false);
       setShowDivCounterTimer(false);
       setDelayTimer(1000);
@@ -115,7 +136,13 @@ function GameModule(props) {
         currentQuestion + " -1"
       ]);
     }
-  }, [countTimer, numberOfGamesCompleted, numberOfGames, points]);
+  }, [
+    countTimer,
+    numberOfGamesCompleted,
+    numberOfGames,
+    points,
+    currentQuestion
+  ]);
 
   //End of the game
   useEffect(() => {
@@ -125,6 +152,7 @@ function GameModule(props) {
       setCurrentQuestion("");
       setShowDivCounterTimer(true);
       setShowResult(true);
+      setClickOnSkip(false);
     }
   }, [numberOfGamesCompleted, numberOfGames]);
 
@@ -176,10 +204,12 @@ function GameModule(props) {
           showDivCounterTimer={showDivCounterTimer}
           stopDivCounterTimer={stopDivCounterTimer}
         />
+        <GameMenu showgameMenu={showgameMenu} />
         <Result
           showResult={showResult}
           points={points}
           questionsResult={questionsResult}
+          refresh={refresh}
         />
         <ParticlesCanvas />
       </motion.div>

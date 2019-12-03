@@ -8,7 +8,7 @@ const CounterStart = props => {
       <motion.div
         className="demo"
         style={{
-          display: props.showDivCounterStart ? "block" : "none"
+          display: props.isRunningStart ? "block" : "none"
         }}
       >
         <div className="demo__colored-blocks">

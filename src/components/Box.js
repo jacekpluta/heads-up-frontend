@@ -10,14 +10,14 @@ import {
 } from "react-router-dom";
 
 function Box(props) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [openGameModule, setOpenGameModule] = useState(false);
 
   function back() {
-    setIsOpen(true);
+    setOpenGameModule(true);
   }
 
   function myCallback() {
-    setIsOpen(false);
+    setOpenGameModule(false);
   }
 
   const pageTransition = {
@@ -48,7 +48,12 @@ function Box(props) {
           path="/GameModule"
           render={props => <GameModule {...props} myCallback={myCallback} />}
         />
-        {isOpen ? <Redirect to="/GameModule" /> : <Redirect to="/" />}{" "}
+        <Route
+          exact
+          path="/GameMenu"
+          render={props => <GameModule {...props} myCallback={myCallback} />}
+        />
+        {openGameModule ? <Redirect to="/GameModule" /> : <Redirect to="/" />}{" "}
       </Switch>
     </Router>
   );

@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import PropTypes from "prop-types";
+
 import { motion, useMotionValue, useTransform } from "framer-motion";
 function Questions(props) {
   const pageTransition = {

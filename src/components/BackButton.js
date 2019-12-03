@@ -19,7 +19,6 @@ function BackButton(props) {
   return (
     <motion.div
       className="BackButtonContainer"
-      onHoverStart={() => console.log("Hover starts")}
       whileHover={{ scale: 1.2, transition: { duration: 1 } }}
       whileTap={{ scale: 0.8, transition: { duration: 1 } }}
       onClick={() => props.back()}
