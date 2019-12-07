@@ -10,6 +10,7 @@ import ParticlesCanvas from "./ParticlesCanvas";
 import SkipOrCorrect from "./SkipOrCorrect";
 import Result from "./Result";
 import GameMenu from "./menu/GameMenu";
+
 function GameModule(props) {
   const highNumber = 99999999999999999999;
 
@@ -25,7 +26,7 @@ function GameModule(props) {
   const [isRunningStart, setIsRunningStart] = useState(false);
   const [isRunningTimer, setIsRunningTimer] = useState(false);
 
-  const [showDivCounterStart, setShowDivCounterStart] = useState(true);
+  const [showDivCounterStart, setShowDivCounterStart] = useState(false);
   const [showDivCounterTimer, setShowDivCounterTimer] = useState(true);
 
   const [stopDivCounterTimer, setStopDivCounterTimer] = useState(true);
@@ -47,9 +48,58 @@ function GameModule(props) {
 
   const [gameVariantChosen, setGameVariantChosen] = useState(false);
 
-  const handleVariantChosen = () => {
-    setGameVariantChosen(true);
-  };
+  const [describeTileClicked, setDescribeTileClicked] = useState(false);
+  const [showTileClicked, setShowTileClicked] = useState(false);
+  const [challangeTileClicked, setChallangeTileClicked] = useState(false);
+  const [drawTileClicked, setDrawTileClicked] = useState(false);
+
+  const [backgroundColor, setBackgroundColor] = useState("");
+
+  const [skipTimer, setSkipTimer] = useState(0);
+
+  function handleGameVariantDescribe() {
+    setDescribeTileClicked(true);
+
+    const backgroundColorDescribe = {
+      background: "linear-gradient((180deg, #05f, #09f))"
+    };
+
+    setBackgroundColor(backgroundColorDescribe);
+
+    setSkipTimer(30);
+  }
+
+  function handleGameVariantShow() {
+    setShowTileClicked(true);
+
+    const backgroundColorShow = {
+      background: "linear-gradient(180deg, rgb(0, 255, 34), rgb(40, 236, 220))"
+    };
+    setBackgroundColor(backgroundColorShow);
+    setCountTimer(90);
+    setSkipTimer(90);
+  }
+  function handleGameChallange() {
+    setChallangeTileClicked(true);
+
+    const backgroundColorChallange = {
+      background:
+        "linear-gradient(180deg, rgb(216, 15, 243), rgb(205, 241, 74))"
+    };
+    setBackgroundColor(backgroundColorChallange);
+    setCountTimer(80);
+    setSkipTimer(80);
+  }
+  function handleGameDraw() {
+    setDrawTileClicked(true);
+
+    const backgroundColorDraw = {
+      background: "linear-gradient(180deg, rgb(81, 255, 0), rgb(255, 0, 234))"
+    };
+    setBackgroundColor(backgroundColorDraw);
+    setCountTimer(120);
+    setSkipTimer(120);
+  }
 
   useInterval(
     () => {
@@ -100,18 +150,36 @@ function GameModule(props) {
 
   //Returns random question
   function GetRandomQuestion(rand) {
-    const Questions = ["kot", "pies", "mysz", "kon", "buldog"];
-    return (rand = Questions[Math.floor(Math.random() * Questions.length)]);
+    return (rand =
+      props.gameVariant.questions[
+        Math.floor(Math.random() * props.gameVariant.questions.length)
+      ]);
   }
 
   //Game menu
   useEffect(() => {
+    if (
+      describeTileClicked ||
+      showTileClicked ||
+      challangeTileClicked ||
+      drawTileClicked
+    ) {
+      setGameVariantChosen(true);
+    }
+
     if (gameVariantChosen) {
       setShowgameMenu(false);
       setIsRunningStart(true);
       setIsRunningTimer(true);
+      setShowDivCounterStart(true);
     }
-  }, [gameVariantChosen]);
+  }, [
+    gameVariantChosen,
+    describeTileClicked,
+    showTileClicked,
+    challangeTileClicked,
+    drawTileClicked
+  ]);
 
   //Beginning, setting all counters and question
   useEffect(() => {
@@ -131,7 +199,7 @@ function GameModule(props) {
     }
     if (countTimer === -1 && numberOfGamesCompleted <= numberOfGames) {
       setStopDivCounterTimer(true);
-      setCountTimer(7);
+      setCountTimer(skipTimer);
       setNumberOfGamesCompleted(numberOfGamesCompleted + 1);
       setCurrentQuestion(GetRandomQuestion([numberOfGamesCompleted]));
       setPoints(points - 1);
@@ -179,6 +247,7 @@ function GameModule(props) {
   };
 
   //console.log(active);
+
   return (
     <Router>
       <motion.div
@@ -186,8 +255,10 @@ function GameModule(props) {
         initial={active ? "outBox" : "inBox"}
         animate={active ? "inBox" : "outBox"}
         exit={active ? "outBox" : "inBox"}
+        style={backgroundColor}
         className="GameModule"
         onClick={ClickOnSkip}
+        onClick={props.handleBoxId(props.id)}
       >
         <CounterStart
           countStart={countStart}
@@ -211,8 +282,11 @@ function GameModule(props) {
         />
         <GameMenu
           showgameMenu={showgameMenu}
-          onClick={handleVariantChosen}
-          gameVariantChosen={gameVariantChosen}
+          handleGameVariantDescribe={handleGameVariantDescribe}
+          handleGameVariantShow={handleGameVariantShow}
+          handleGameChallange={handleGameChallange}
+          handleGameDraw={handleGameDraw}
+          gameVariant={props.gameVariant}
         />
         <Result
           showResult={showResult}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import GameTitle from "./GameTitle";
@@ -20,15 +20,17 @@ export default function GameMenu(props) {
           className="GameMenu"
           initial={{ opacity: 0, x: 0 }}
           animate={{ opacity: 1, x: 100 }}
-          transition={{ delay: 0.4 }}
+          transition={{ delay: 0.05 }}
           exit={{ opacity: 0 }}
         >
-          <GameTitle />
+          <GameTitle gameVariant={props.gameVariant} />
 
           <p style={pStyle}>Zgaduj zwierze</p>
           <Variants
-            onClick={props.onClick}
-            gameVariantChosen={props.gameVariantChosen}
+            handleGameVariantDescribe={props.handleGameVariantDescribe}
+            handleGameVariantShow={props.handleGameVariantShow}
+            handleGameChallange={props.handleGameChallange}
+            handleGameDraw={props.handleGameDraw}
           />
         </motion.div>
       )}

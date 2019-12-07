@@ -9,7 +9,7 @@ export default function ShowTile(props) {
     <motion.div
       className="TileStyle"
       style={showTileStyle}
-      onClick={props.onClick}
+      onClick={props.handleGameVariantShow}
     ></motion.div>
   );
 }

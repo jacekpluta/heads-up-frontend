@@ -14,13 +14,14 @@ function Box(props) {
 
   function back() {
     setOpenGameModule(true);
+    props.handleCurrentGameVariant();
   }
 
   function myCallback() {
     setOpenGameModule(false);
   }
 
-  const pageTransition = {
+  const boxTransition = {
     inModule: {
       opacity: 0,
       x: "-100vh"
@@ -34,7 +35,8 @@ function Box(props) {
   return (
     <Router>
       <motion.div
-        variants={pageTransition}
+        style={props.backgroundBox}
+        variants={boxTransition}
         className="Box"
         initial={"inModule"}
         animate={"animModule"}
@@ -42,16 +44,19 @@ function Box(props) {
       >
         <a className="divLink" onClick={back} />
       </motion.div>
+
       <Switch>
         <Route
           exact
           path="/GameModule"
-          render={props => <GameModule {...props} myCallback={myCallback} />}
-        />
-        <Route
-          exact
-          path="/GameMenu"
-          render={props => <GameModule {...props} myCallback={myCallback} />}
+          render={() => (
+            <GameModule
+              myCallback={myCallback}
+              gameVariant={props.gameVariant}
+              id={props.id + 1}
+              handleBoxId={props.handleBoxId}
+            />
+          )}
         />
         {openGameModule ? <Redirect to="/GameModule" /> : <Redirect to="/" />}{" "}
       </Switch>

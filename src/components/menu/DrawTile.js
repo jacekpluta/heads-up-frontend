@@ -9,7 +9,7 @@ export default function DrawTile(props) {
     <motion.div
       className="TileStyle"
       style={drawTileStyle}
-      onClick={props.onClick}
+      onClick={props.handleGameDraw}
     ></motion.div>
   );
 }

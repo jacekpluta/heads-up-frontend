@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import DescribePic from "../pic/describePic.jpg";
 
@@ -12,7 +12,7 @@ function DescribeTile(props) {
     <motion.div
       className="TileStyle"
       style={describleTileStyle}
-      onClick={props.onClick}
+      onClick={props.handleGameVariantDescribe}
     ></motion.div>
   );
 }

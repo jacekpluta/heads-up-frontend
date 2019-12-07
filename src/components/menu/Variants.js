@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import DescribeTile from "./DescribeTile";
 import ShowTile from "./ShowTile";
@@ -14,21 +14,11 @@ export default function GameMenu(props) {
   return (
     <div style={variantsStyle}>
       <DescribeTile
-        onClick={props.onClick}
-        gameVariantChosen={props.gameVariantChosen}
+        handleGameVariantDescribe={props.handleGameVariantDescribe}
       />
-      <ShowTile
-        onClick={props.onClick}
-        gameVariantChosen={props.gameVariantChosen}
-      />
-      <ChallangeTile
-        onClick={props.onClick}
-        gameVariantChosen={props.gameVariantChosen}
-      />
-      <DrawTile
-        onClick={props.onClick}
-        gameVariantChosen={props.gameVariantChosen}
-      />
+      <ShowTile handleGameVariantShow={props.handleGameVariantShow} />
+      <ChallangeTile handleGameChallange={props.handleGameChallange} />
+      <DrawTile handleGameDraw={props.handleGameDraw} />
     </div>
   );
 }
