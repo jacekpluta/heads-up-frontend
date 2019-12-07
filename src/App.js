@@ -9,6 +9,9 @@ import MoviesTile from "./components/pic/moviesTile.jpg";
 import GamesTile from "./components/pic/gamesTile.jpg";
 import CarsTile from "./components/pic/carsTile.jpg";
 
+//styled components (styles.css)
+// fix refresh button
+//zmiana kolerow przy wyborze, ladne przejscie
 const gameVariantsList = {
   0: {
     id: 1,

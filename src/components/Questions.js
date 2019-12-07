@@ -17,10 +17,16 @@ function Questions(props) {
     clamp: false
   });
 
-  const Paragraph = styled.p`
-    font-size: 15px;
-    text-align: center;
-  `;
+  const pStyle = {
+    textAlign: "center",
+    color: "black",
+    width: "100%",
+    marginTop: "25%",
+    fontSize: "120px",
+    color: "#f8f8ff",
+    textShadow:
+      "0 3px 0 #b2a98f,0 14px 10px rgba(0,0,0,0.15), 0 24px 2px rgba(0,0,0,0.1), 0 34px 30px rgba(0,0,0,0.1)"
+  };
 
   return (
     <motion.div
@@ -34,7 +40,7 @@ function Questions(props) {
       style={rotateY}
     >
       <motion.div drag="x" dragConstraints={constraintsRef} style={{ x }}>
-        <Paragraph>{props.currentQuestion}</Paragraph>
+        <p style={pStyle}>{props.currentQuestion}</p>
       </motion.div>
     </motion.div>
   );
