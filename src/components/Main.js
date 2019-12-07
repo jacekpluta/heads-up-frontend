@@ -1,63 +1,34 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState } from "react";
 import Box from "./Box";
-import AnimalsTile from "../components/pic/animalsTile.jpg";
-import MoviesTile from "../components/pic/moviesTile.jpg";
-import GamesTile from "../components/pic/gamesTile.jpg";
 
-const Main = () => {
+const Main = props => {
   const numbers = [1, 2, 3];
+  const [handleBoxIdCompleted, setHandleBoxIdCompleted] = useState(false);
+  const [gameVariant, setCurrentGameVariant] = useState({});
+
   const [boxId, setboxId] = useState(0);
 
   const handleBoxId = boxIdProps => {
     setboxId(boxIdProps);
+    setHandleBoxIdCompleted(true);
   };
 
-  const addGameVariant = variant => {
-    setGameVariantsList([...gameVariant, variant]);
-  };
-
-  const [gameVariantsList, setGameVariantsList] = useState({
-    1: {
-      id: 1,
-      name: "animals",
-      questions: ["Kot", "Pies", "Mysz", "Kon", "Buldog"],
-      background: { backgroundImage: `url(${AnimalsTile})` },
-      gameTile: AnimalsTile
-    },
-    2: {
-      id: 2,
-      name: "films",
-      questions: ["Marvel", "Joker", "Netflix", "Star Wars", "Romantic"],
-      background: { backgroundImage: `url(${MoviesTile})` },
-      gameTile: MoviesTile
-    },
-    3: {
-      id: 2,
-      name: "games",
-      questions: ["CS", "FPS", "RPG", "Tibia", "Dark Souls"],
-      background: { backgroundImage: `url(${GamesTile})` },
-      gameTile: GamesTile
-    }
-  });
-
-  const [gameVariant, setCurrentGameVariant] = useState({
-    id: 1,
-    name: "animals",
-    questions: ["Kot", "Pies", "Mysz", "Kon", "Buldog"],
-    background: { backgroundImage: `url(${AnimalsTile})` },
-    gameTile: AnimalsTile
-  });
-
-  const handleCurrentGameVariant = key => {
-    if (gameVariant.id === boxId) {
+  const handleCurrentGameVariant = () => {
+    if (handleBoxIdCompleted)
       setCurrentGameVariant({
-        name: gameVariantsList[2].name,
-        questions: gameVariantsList[2].questions,
-        background: gameVariantsList[2].background,
-        gameTile: gameVariantsList[2].gameTile
+        name: props.gameVariantsList[boxId].name,
+        questions: props.gameVariantsList[boxId].questions,
+        background: props.gameVariantsList[boxId].background,
+        gameTile: props.gameVariantsList[boxId].gameTile,
+        title: props.gameVariantsList[[boxId].title]
       });
-    }
   };
+
+  //console.log(boxId);
+
+  // const addGameVariant = variant => {
+  //   setGameVariantsList([...gameVariant, variant]);
+  // };
 
   return (
     <div className="Main">
@@ -93,8 +64,9 @@ const Main = () => {
             handleCurrentGameVariant={handleCurrentGameVariant}
             key={key}
             id={id}
-            backgroundBox={gameVariantsList[key].background}
+            backgroundBox={props.gameVariantsList[key].background}
             handleBoxId={handleBoxId}
+            handleBoxIdCompleted={handleBoxIdCompleted}
           ></Box>
         );
       })}

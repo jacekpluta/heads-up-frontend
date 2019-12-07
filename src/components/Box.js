@@ -14,7 +14,6 @@ function Box(props) {
 
   function back() {
     setOpenGameModule(true);
-    props.handleCurrentGameVariant();
   }
 
   function myCallback() {
@@ -55,6 +54,7 @@ function Box(props) {
               gameVariant={props.gameVariant}
               id={props.id + 1}
               handleBoxId={props.handleBoxId}
+              handleCurrentGameVariant={props.handleCurrentGameVariant}
             />
           )}
         />

@@ -9,7 +9,7 @@ const pStyle = {
   textAlign: "center",
   color: "black",
   width: "100%",
-  height: "5vh"
+  height: "10vh"
 };
 
 export default function GameMenu(props) {
@@ -25,7 +25,7 @@ export default function GameMenu(props) {
         >
           <GameTitle gameVariant={props.gameVariant} />
 
-          <p style={pStyle}>Zgaduj zwierze</p>
+          <p style={pStyle}>{props.gameVariant.title}</p>
           <Variants
             handleGameVariantDescribe={props.handleGameVariantDescribe}
             handleGameVariantShow={props.handleGameVariantShow}

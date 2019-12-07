@@ -18,7 +18,7 @@ function GameModule(props) {
   const [numberOfGamesCompleted, setNumberOfGamesCompleted] = useState(0);
 
   const [countStart, setCountStart] = useState(5);
-  const [countTimer, setCountTimer] = useState(7);
+  const [countTimer, setCountTimer] = useState(30);
 
   const [delayStart] = useState(750);
   const [delayTimer, setDelayTimer] = useState(highNumber);
@@ -44,8 +44,6 @@ function GameModule(props) {
 
   const [showgameMenu, setShowgameMenu] = useState(true);
 
-  let history = useHistory();
-
   const [gameVariantChosen, setGameVariantChosen] = useState(false);
 
   const [describeTileClicked, setDescribeTileClicked] = useState(false);
@@ -57,6 +55,8 @@ function GameModule(props) {
 
   const [skipTimer, setSkipTimer] = useState(0);
 
+  let history = useHistory();
+
   function handleGameVariantDescribe() {
     setDescribeTileClicked(true);
 
@@ -66,6 +66,7 @@ function GameModule(props) {
 
     setBackgroundColor(backgroundColorDescribe);
 
+    setCountTimer(30);
     setSkipTimer(30);
   }
 
@@ -128,6 +129,7 @@ function GameModule(props) {
     setSleep(true);
     someFn();
     setActive(false);
+    props.handleCurrentGameVariant();
   };
 
   const refresh = () => {
@@ -258,7 +260,7 @@ function GameModule(props) {
         style={backgroundColor}
         className="GameModule"
         onClick={ClickOnSkip}
-        onClick={props.handleBoxId(props.id)}
+        whileTap={props.handleBoxId(props.id)}
       >
         <CounterStart
           countStart={countStart}
@@ -266,6 +268,7 @@ function GameModule(props) {
         />
         <CounterTimer
           countTimer={countTimer}
+          skipTimer={skipTimer}
           showDivCounterTimer={showDivCounterTimer}
           stopDivCounterTimer={stopDivCounterTimer}
         />

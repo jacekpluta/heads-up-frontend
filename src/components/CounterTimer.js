@@ -34,7 +34,7 @@ const CounterTimer = props => {
       strokeWidth: "2px",
       stroke: "white",
       fill: "none",
-      animation: "countdown " + props.countTimer + "s linear forwards infinite"
+      animation: "countdown " + props.skipTimer + "s linear forwards infinite"
     };
 
     return (
