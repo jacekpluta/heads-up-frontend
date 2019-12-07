@@ -11,7 +11,21 @@ import SkipOrCorrect from "./SkipOrCorrect";
 import Result from "./Result";
 import GameMenu from "./menu/GameMenu";
 
+import UIfx from "uifx";
+import FailureRing from "./sounds/failure.mp3";
+import SuccessRing from "./sounds/success.mp3";
+
 function GameModule(props) {
+  const failureSound = new UIfx(FailureRing, {
+    volume: 0.8,
+    throttleMs: 100
+  });
+
+  const successSound = new UIfx(SuccessRing, {
+    volume: 0.8,
+    throttleMs: 100
+  });
+
   const highNumber = 99999999999999999999;
 
   const [numberOfGames] = useState(2);
@@ -129,7 +143,6 @@ function GameModule(props) {
     setSleep(true);
     someFn();
     setActive(false);
-    props.handleCurrentGameVariant();
   };
 
   const refresh = () => {
@@ -147,6 +160,8 @@ function GameModule(props) {
     if (clickOnSkip) {
       setCountTimer(1);
       setStopDivCounterTimer(false);
+    } else {
+      props.clickSound.play();
     }
   }
 
@@ -197,6 +212,7 @@ function GameModule(props) {
   //End of each round
   useEffect(() => {
     if (countTimer === 0) {
+      failureSound.play();
       setStopDivCounterTimer(false);
     }
     if (countTimer === -1 && numberOfGamesCompleted <= numberOfGames) {

@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Box from "./Box";
 
 const Main = props => {
   const numbers = [1, 2, 3];
   const [handleBoxIdCompleted, setHandleBoxIdCompleted] = useState(false);
-  const [gameVariant, setCurrentGameVariant] = useState({});
+
+  const [gameVariant, setCurrentGameVariant] = useState({
+    name: props.gameVariantsList[0].name,
+    questions: props.gameVariantsList[0].questions,
+    background: props.gameVariantsList[0].background,
+    gameTile: props.gameVariantsList[0].gameTile,
+    gameMenuTitle: props.gameVariantsList[0].gameMenuTitle
+  });
 
   const [boxId, setboxId] = useState(0);
 
@@ -13,18 +20,15 @@ const Main = props => {
     setHandleBoxIdCompleted(true);
   };
 
-  const handleCurrentGameVariant = () => {
-    if (handleBoxIdCompleted)
-      setCurrentGameVariant({
-        name: props.gameVariantsList[boxId].name,
-        questions: props.gameVariantsList[boxId].questions,
-        background: props.gameVariantsList[boxId].background,
-        gameTile: props.gameVariantsList[boxId].gameTile,
-        title: props.gameVariantsList[[boxId].title]
-      });
-  };
-
-  //console.log(boxId);
+  useEffect(() => {
+    setCurrentGameVariant({
+      name: props.gameVariantsList[boxId].name,
+      questions: props.gameVariantsList[boxId].questions,
+      background: props.gameVariantsList[boxId].background,
+      gameTile: props.gameVariantsList[boxId].gameTile,
+      gameMenuTitle: props.gameVariantsList[boxId].gameMenuTitle
+    });
+  }, [boxId]);
 
   // const addGameVariant = variant => {
   //   setGameVariantsList([...gameVariant, variant]);
@@ -61,7 +65,6 @@ const Main = props => {
         return (
           <Box
             gameVariant={gameVariant}
-            handleCurrentGameVariant={handleCurrentGameVariant}
             key={key}
             id={id}
             backgroundBox={props.gameVariantsList[key].background}

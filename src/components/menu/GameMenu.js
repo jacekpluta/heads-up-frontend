@@ -24,8 +24,8 @@ export default function GameMenu(props) {
           exit={{ opacity: 0 }}
         >
           <GameTitle gameVariant={props.gameVariant} />
-
-          <p style={pStyle}>{props.gameVariant.title}</p>
+          {console.log(props.gameVariant)}
+          <p style={pStyle}>{props.gameVariant.gameMenuTitle}</p>
           <Variants
             handleGameVariantDescribe={props.handleGameVariantDescribe}
             handleGameVariantShow={props.handleGameVariantShow}

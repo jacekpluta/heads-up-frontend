@@ -1,0 +1,78 @@
+/* Fancy CSS3 Text Shadows */
+/* by Ernie Simpson, aka The Big Erns */
+
+.BLOCKtxt {
+	color:#f8f8ff;
+	text-shadow:0 1px 1px #ddd,0 2px 1px #d6d6d6,0 3px 1px #ccc,0 4px 1px #c5c5c5,0 5px 1px #c1c1c1,0 6px 1px #bbb,0 7px 1px #777,0 8px 3px rgba(91,106,106,0.9),0 9px 5px rgba(91,106,106,0.8),0 10px 7px rgba(91,106,106,0.7),0 11px 9px rgba(91,106,106,0.6),0 12px 11px rgba(91,106,106,0.5),0 13px 15px rgba(91,106,106,0.4);
+}
+
+.RETROtxt {
+	color:#707070;
+	font-size:150px;
+	text-shadow:5px 4px 0 #eee,7px 6px 0 #707070;
+}
+
+.NEONpinktxt {
+	color:#fff;
+	font-size:125px;
+	text-shadow:0 0 10px #fff,0 0 20px #fff,0 0 30px #fff,0 0 40px #ff00de,0 0 70px #ff00de,0 0 80px #ff00de,0 0 100px #ff00de,0 0 150px #ff00de;
+}
+
+.NEONbluetxt {
+	color:#fff;
+	font-size:125px;
+	text-shadow:0 0 10px #fff,0 0 20px #fff,0 0 30px #fff,0 0 40px #00DEFF,0 0 70px #00DEFF,0 0 80px #00DEFF,0 0 100px #00DEFF,0 0 150px #00DEFF;
+}
+
+.THREEDtxt {
+	color:rgba(0,168,255,0.5);
+	font-size:150px;
+	text-shadow:8px 8px 0 rgba(255,0,180,0.5);
+}
+
+.BURNtxt {
+	color:#fff;
+	font-size:150px;
+	margin:30px!important;
+	text-shadow:0 0 20px #fefcc9,10px -10px 30px #feec85,-20px -20px 40px #ffae34,20px -40px 50px #ec760c,-20px -60px 60px #cd4606,0 -80px 70px #973716,10px -90px 80px #451b0e;
+}
+
+.INSETtxt {
+	color:#3c3c3c;
+	font-size:150px;
+	text-shadow:0 -2px 3px #111,0 3px 4px #666;
+}
+
+.FLOATtxt {
+	color:#f8f8ff;
+	font-size:150px;
+	text-shadow:0 3px 0 #b2a98f,0 14px 10px rgba(0,0,0,0.15),0 24px 2px rgba(0,0,0,0.1),0 34px 30px rgba(0,0,0,0.1);
+}
+
+.DIFFUSEtxt {
+	color:#d2b48c;
+	font-size:150px;
+	text-shadow:0 3px 0 #999999,0 15px 5px rgba(0,0,0,0.1),10px 20px 5px rgba(0,0,0,0.05),-10px 20px 5px rgba(0,0,0,0.05);
+}
+
+.FOCUStxt {
+	color:transparent;
+	text-shadow:-9px 0 5px rgba(255,255,255,0.3),9px 0 5px rgba(255,255,255,0.3),21px 0 5px rgba(255,255,255,0.1),-21px 0 5px rgba(255,255,255,0.1),0 0 0 rgba(0,0,0,0.0);
+	font-size:150px;
+	-webkit-transition:all .5s;
+}
+.FOCUStxt:hover {
+	color:#fff;
+	text-shadow:0 0 0 rgba(255,255,255,0.3),0 0 0 rgba(255,255,255,0.3),0 0 0 rgba(255,255,255,0.1),0 0 0 rgba(255,255,255,0.1),0 0 5px rgba(0,0,0,0.5);
+}
+
+.BLURtxt {
+	color:#3c3c3c;
+	text-shadow:0 0 0 rgba(0,0,0,0.3),0 0 0 rgba(0,0,0,0.3),0 0 0 rgba(0,0,0,0.1),0 0 0 rgba(0,0,0,0.1),0 -1px 5px rgba(255,255,255,0.5);
+	-webkit-transition:all .5s;
+}
+.BLURtxt:hover {
+	color:transparent;
+	text-shadow:-9px 0 5px rgba(0,0,0,0.3),9px 0 5px rgba(0,0,0,0.3),-21px 0 5px rgba(0,0,0,0.1),21px 0 5px rgba(0,0,0,0.1),0 0 0 rgba(0,0,0,0.1);
+}
+
