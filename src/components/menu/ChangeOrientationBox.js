@@ -1,7 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { ParStyle } from "../Layout";
+import { ParStyle } from "../../Layout";
 
 export default function ChangeOrientationBox(props) {
   return (

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import GameTitle from "./GameTitle";
 import Variants from "./Variants";
-import { ParStyle } from "../Layout";
+import { ParStyle } from "../../Layout";
 
 export default function GameMenu(props) {
   return (

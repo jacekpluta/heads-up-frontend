@@ -3,7 +3,7 @@ import GameModule from "./GameModule";
 import { motion } from "framer-motion";
 import UIfx from "uifx";
 import buttonClick from "./sounds/buttonClick.mp3";
-import { DivLink } from "./Layout";
+import { DivLink } from "../Layout";
 
 import {
   BrowserRouter as Router,
