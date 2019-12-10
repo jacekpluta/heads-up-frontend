@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "./Box";
 
 const Main = props => {
@@ -28,7 +28,7 @@ const Main = props => {
       gameTile: props.gameVariantsList[boxId].gameTile,
       gameMenuTitle: props.gameVariantsList[boxId].gameMenuTitle
     });
-  }, [boxId]);
+  }, [boxId, props.gameVariantsList]);
 
   // const addGameVariant = variant => {
   //   setGameVariantsList([...gameVariant, variant]);

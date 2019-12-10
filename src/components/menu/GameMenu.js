@@ -6,7 +6,6 @@ import Variants from "./Variants";
 
 const pStyle = {
   textAlign: "center",
-  color: "black",
   width: "100%",
   marginTop: "0%",
   marginBottom: "3%",
@@ -28,7 +27,7 @@ export default function GameMenu(props) {
           exit={{ opacity: 0 }}
         >
           <GameTitle gameVariant={props.gameVariant} />
-          {console.log(props.gameVariant)}
+
           <p style={pStyle}>{props.gameVariant.gameMenuTitle}</p>
           <Variants
             handleGameVariantDescribe={props.handleGameVariantDescribe}

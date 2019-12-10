@@ -21,7 +21,6 @@ function GameTitle(props) {
     backgroundRepeat: "no - repeat",
     backgroundSize: "100% 100%",
     backgroundImage: `url(${props.gameVariant.gameTile})`,
-    backgroundColor: "red",
     position: "relative",
     opacity: 1,
     transition: 0.3

@@ -10,13 +10,11 @@ import ParticlesCanvas from "./ParticlesCanvas";
 import SkipOrCorrect from "./SkipOrCorrect";
 import Result from "./Result";
 import GameMenu from "./menu/GameMenu";
-
-import DeviceOrientation, { Orientation } from "react-screen-orientation";
-
 import UIfx from "uifx";
 import FailureRing from "./sounds/failure.mp3";
 import SuccessRing from "./sounds/success.mp3";
-
+import DeviceOrientation, { Orientation } from "react-screen-orientation";
+import ChangeOrientationBox from "./menu/ChangeOrientationBox";
 function GameModule(props) {
   const failureSound = new UIfx(FailureRing, {
     volume: 0.8,
@@ -79,9 +77,7 @@ function GameModule(props) {
     const backgroundColorDescribe = {
       background: "linear-gradient((180deg, #05f, #09f))"
     };
-
     setBackgroundColor(backgroundColorDescribe);
-
     setCountTimer(30);
     setSkipTimer(30);
   }
@@ -96,6 +92,7 @@ function GameModule(props) {
     setCountTimer(90);
     setSkipTimer(90);
   }
+
   function handleGameChallange() {
     setChallangeTileClicked(true);
     props.clickSound.play();
@@ -107,6 +104,7 @@ function GameModule(props) {
     setCountTimer(80);
     setSkipTimer(80);
   }
+
   function handleGameDraw() {
     setDrawTileClicked(true);
     props.clickSound.play();
@@ -141,24 +139,24 @@ function GameModule(props) {
     }
   }, [history, sleep]);
 
-  const back = () => {
+  const handleGoBack = () => {
     setSleep(true);
-    someFn();
+    handleCloseGameModule();
     setActive(false);
   };
 
-  const refresh = () => {
+  const handleGameRefresh = () => {
     history.push("/");
   };
 
-  function someFn() {
-    props.myCallback(false);
+  function handleCloseGameModule() {
+    props.handleCloseGameModule(false);
   }
 
   //console.log(history.location);
 
   //Skip questin and reset timer on div click
-  function ClickOnSkip() {
+  function handleClickOnSkip() {
     if (clickOnSkip) {
       setCountTimer(1);
       setStopDivCounterTimer(false);
@@ -212,8 +210,8 @@ function GameModule(props) {
   //End of each round
   useEffect(() => {
     if (countTimer === 0) {
-      failureSound.play();
       setStopDivCounterTimer(false);
+      failureSound.play();
     }
     if (countTimer === -1 && numberOfGamesCompleted <= numberOfGames) {
       setStopDivCounterTimer(true);
@@ -228,6 +226,7 @@ function GameModule(props) {
       ]);
     }
   }, [
+    skipTimer,
     countTimer,
     numberOfGamesCompleted,
     numberOfGames,
@@ -277,7 +276,7 @@ function GameModule(props) {
             exit={active ? "outBox" : "inBox"}
             style={backgroundColor}
             className="GameModule"
-            onClick={ClickOnSkip}
+            onClick={handleClickOnSkip}
             whileTap={props.handleBoxId(props.id)}
           >
             <CounterStart
@@ -291,7 +290,7 @@ function GameModule(props) {
               stopDivCounterTimer={stopDivCounterTimer}
             />
 
-            <BackButton back={back} />
+            <BackButton handleGoBack={handleGoBack} />
             <Questions
               currentQuestion={currentQuestion}
               showDivCounterTimer={showDivCounterTimer}
@@ -313,16 +312,15 @@ function GameModule(props) {
               showResult={showResult}
               points={points}
               questionsResult={questionsResult}
-              refresh={refresh}
+              handleGameRefresh={handleGameRefresh}
             />
 
             <ParticlesCanvas />
           </motion.div>
         </Orientation>
+
         <Orientation orientation="portrait">
-          <div>
-            <p>Please rotate your device</p>
-          </div>
+          <ChangeOrientationBox showgameMenu={showgameMenu} />
         </Orientation>
       </DeviceOrientation>
     </Router>

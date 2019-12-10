@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const pStyle = {
   textAlign: "center",
-  color: "black",
+
   width: "100%",
   marginTop: "25%",
   fontSize: "120px",

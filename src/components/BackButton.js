@@ -41,7 +41,7 @@ function BackButton(props) {
       style={backButtonContainerStyle}
       whileHover={{ scale: 1.2, transition: { duration: 1 } }}
       whileTap={{ scale: 0.8, transition: { duration: 1 } }}
-      onClick={() => props.back()}
+      onClick={() => props.handleGoBack()}
     >
       <motion.svg
         xmlns="http://www.w3.org/2000/svg"

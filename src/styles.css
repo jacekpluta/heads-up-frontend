@@ -88,7 +88,7 @@ svg {
   transition: 0.3s;
 }
 
-a.divLink {
+.divLink {
   cursor: pointer;
   position: absolute;
   width: 100%;
@@ -96,15 +96,10 @@ a.divLink {
   top: 0;
   left: 0;
   text-decoration: none;
-  /* Makes sure the link doesn't get underlined */
   z-index: 1;
-  /* raises anchor tag above everything else in div */
   background-color: white;
-  /*workaround to make clickable in IE */
   opacity: 0;
-  /*workaround to make clickable in IE */
   filter: alpha(opacity=0);
-  /*workaround to make clickable in IE */
 }
 
 .GameModule {

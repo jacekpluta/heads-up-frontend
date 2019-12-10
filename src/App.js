@@ -16,38 +16,34 @@ const gameVariantsList = {
   0: {
     id: 1,
     name: "cars",
-    gameMenuTitle: "aaaaaaaa",
+    gameMenuTitle: "Auta",
     questions: ["Mercedes", "BMW", "Ford", "Fiat", "Audi"],
     background: { backgroundImage: `url(${CarsTile})` },
-    gameTile: CarsTile,
-    gameMenuTitle: "Kategoria SAMOCHODY"
+    gameTile: CarsTile
   },
   1: {
     id: 1,
     name: "animals",
-    gameMenuTitle: "bbbbbbb",
+    gameMenuTitle: "Zwierzeta",
     questions: ["Kot", "Pies", "Mysz", "Kon", "Buldog"],
     background: { backgroundImage: `url(${AnimalsTile})` },
-    gameTile: AnimalsTile,
-    gameMenuTitle: "Kategoria ZWIERZETA"
+    gameTile: AnimalsTile
   },
   2: {
     id: 2,
     name: "films",
-    gameMenuTitle: "cccccccc",
+    gameMenuTitle: "Filmy",
     questions: ["Marvel", "Joker", "Netflix", "Star Wars", "Romantic"],
     background: { backgroundImage: `url(${MoviesTile})` },
-    gameTile: MoviesTile,
-    gameMenuTitle: "Kategoria FILMY"
+    gameTile: MoviesTile
   },
   3: {
     id: 3,
     name: "games",
-    gameMenuTitle: "dddddddd",
+    gameMenuTitle: "Gry",
     questions: ["CS", "FPS", "RPG", "Tibia", "Dark Souls"],
     background: { backgroundImage: `url(${GamesTile})` },
-    gameTile: GamesTile,
-    gameMenuTitle: "Kategoria GRY"
+    gameTile: GamesTile
   }
 };
 

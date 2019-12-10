@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import styled from "styled-components";
 
 import { motion, useMotionValue, useTransform } from "framer-motion";
 function Questions(props) {
@@ -19,7 +18,6 @@ function Questions(props) {
 
   const pStyle = {
     textAlign: "center",
-    color: "black",
     width: "100%",
     marginTop: "25%",
     fontSize: "120px",
@@ -31,13 +29,14 @@ function Questions(props) {
   return (
     <motion.div
       id="countdown"
-      style={{ display: props.showDivCounterTimer ? "none" : "block" }}
+      style={
+        ({ display: props.showDivCounterTimer ? "none" : "block" }, rotateY)
+      }
       variants={pageTransition}
       initial={props.showDivCounterTimer ? "inBox" : "outBox"}
       animate={props.showDivCounterTimer ? "outBox" : "inBox"}
       exit={props.showDivCounterTimer ? "inBox" : "outBox"}
       ref={constraintsRef}
-      style={rotateY}
     >
       <motion.div drag="x" dragConstraints={constraintsRef} style={{ x }}>
         <p style={pStyle}>{props.currentQuestion}</p>

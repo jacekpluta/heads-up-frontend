@@ -3,6 +3,7 @@ import GameModule from "./GameModule";
 import { motion } from "framer-motion";
 import UIfx from "uifx";
 import buttonClick from "./sounds/buttonClick.mp3";
+import { DivLink } from "./Layout";
 
 import {
   BrowserRouter as Router,
@@ -19,14 +20,14 @@ function Box(props) {
     throttleMs: 100
   });
 
-  function back() {
+  const handleBack = () => {
     setOpenGameModule(true);
-  }
+  };
 
-  function myCallback() {
+  const handleCloseGameModule = () => {
     setOpenGameModule(false);
     clickSound.play();
-  }
+  };
 
   const boxTransition = {
     inModule: {
@@ -50,7 +51,7 @@ function Box(props) {
         whileHover={{ scale: 1.1 }}
         onClick={() => clickSound.play()}
       >
-        <a className="divLink" onClick={back} />
+        <DivLink onClick={handleBack}></DivLink>
       </motion.div>
 
       <Switch>
@@ -59,7 +60,7 @@ function Box(props) {
           path="/GameModule"
           render={() => (
             <GameModule
-              myCallback={myCallback}
+              handleCloseGameModule={handleCloseGameModule}
               gameVariant={props.gameVariant}
               id={props.id + 1}
               handleBoxId={props.handleBoxId}
