@@ -28,9 +28,11 @@ function Result(props) {
           <p style={pStyle}>Points: {props.points}</p>
           <p style={pStyle}>Questions: </p>
           <p style={pStyle}>
-            {props.questionsResult.map(reptile => (
-              <li>{reptile}</li>
-            ))}
+            <ol>
+              {props.questionsResult.map(question => (
+                <li>{question}</li>
+              ))}
+            </ol>
           </p>
           <h1>
             <div className="reloadSingle"></div>

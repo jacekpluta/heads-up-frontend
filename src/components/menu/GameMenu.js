@@ -3,17 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import GameTitle from "./GameTitle";
 import Variants from "./Variants";
-
-const pStyle = {
-  textAlign: "center",
-  width: "100%",
-  marginTop: "0%",
-  marginBottom: "3%",
-  fontSize: "120px",
-  color: "#fff",
-  textShadow:
-    "0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #00DEFF, 0 0 70px #00DEFF, 0 0 80px #00DEFF, 0 0 100px #00DEFF, 0 0 150px #00DEFF"
-};
+import { ParStyle } from "../Layout";
 
 export default function GameMenu(props) {
   return (
@@ -28,7 +18,7 @@ export default function GameMenu(props) {
         >
           <GameTitle gameVariant={props.gameVariant} />
 
-          <p style={pStyle}>{props.gameVariant.gameMenuTitle}</p>
+          <ParStyle>{props.gameVariant.gameMenuTitle}</ParStyle>
           <Variants
             handleGameVariantDescribe={props.handleGameVariantDescribe}
             handleGameVariantShow={props.handleGameVariantShow}
