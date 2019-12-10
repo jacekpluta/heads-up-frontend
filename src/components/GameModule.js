@@ -12,20 +12,17 @@ import Result from "./Result";
 import GameMenu from "./menu/GameMenu";
 import UIfx from "uifx";
 import FailureRing from "./sounds/failure.mp3";
+
 import SuccessRing from "./sounds/success.mp3";
 import DeviceOrientation, { Orientation } from "react-screen-orientation";
 import ChangeOrientationBox from "./menu/ChangeOrientationBox";
+
+const failureSound = new UIfx(FailureRing, {
+  volume: 0.8,
+  throttleMs: 100
+});
+
 function GameModule(props) {
-  const failureSound = new UIfx(FailureRing, {
-    volume: 0.8,
-    throttleMs: 100
-  });
-
-  const successSound = new UIfx(SuccessRing, {
-    volume: 0.8,
-    throttleMs: 100
-  });
-
   const highNumber = 99999999999999999999;
 
   const [numberOfGames] = useState(2);
@@ -213,7 +210,9 @@ function GameModule(props) {
       setStopDivCounterTimer(false);
       failureSound.play();
     }
+  }, [countTimer]);
 
+  useEffect(() => {
     if (countTimer === -1 && numberOfGamesCompleted <= numberOfGames) {
       setStopDivCounterTimer(true);
       setCountTimer(skipTimer);

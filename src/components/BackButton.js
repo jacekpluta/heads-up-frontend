@@ -15,7 +15,7 @@ const icon = {
 };
 const backButtonContainerStyle = {
   padding: "2%",
-  width: "5%",
+  width: "1vh",
   top: "0",
   left: "0",
   right: "0",
