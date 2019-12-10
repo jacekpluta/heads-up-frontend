@@ -106,7 +106,18 @@
   right: 0;
   bottom: 0;
 }
-
+.ChangeOrientationBox {
+  position: absolute;
+  width: 100%;
+  margin-left: -12vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgb(14, 197, 44), rgb(243, 239, 13));
+  text-align: center;
+  z-index: 10;
+}
 /* MEDIA QUERIES */
 
 /* Small screens */
