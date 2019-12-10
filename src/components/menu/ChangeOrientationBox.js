@@ -14,7 +14,7 @@ export default function ChangeOrientationBox(props) {
           transition={{ delay: 0.05 }}
           exit={{ opacity: 0 }}
         >
-          <ParStyle>{props.gameVariant.gameMenuTitle}</ParStyle>
+          <ParStyle>change screen rorattion</ParStyle>
         </motion.div>
       )}
     </AnimatePresence>
