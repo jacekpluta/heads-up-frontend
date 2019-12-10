@@ -268,62 +268,54 @@ function GameModule(props) {
 
   return (
     <Router>
-      <DeviceOrientation lockOrientation={"landscape"}>
-        <Orientation orientation="landscape" alwaysRender={false}>
-          <motion.div
-            variants={pageTransition}
-            initial={active ? "outBox" : "inBox"}
-            animate={active ? "inBox" : "outBox"}
-            exit={active ? "outBox" : "inBox"}
-            style={backgroundColor}
-            className="GameModule"
-            onClick={handleClickOnSkip}
-            whileTap={props.handleBoxId(props.id)}
-          >
-            <CounterStart
-              countStart={countStart}
-              showDivCounterStart={showDivCounterStart}
-            />
-            <CounterTimer
-              countTimer={countTimer}
-              skipTimer={skipTimer}
-              showDivCounterTimer={showDivCounterTimer}
-              stopDivCounterTimer={stopDivCounterTimer}
-            />
+      <motion.div
+        variants={pageTransition}
+        initial={active ? "outBox" : "inBox"}
+        animate={active ? "inBox" : "outBox"}
+        exit={active ? "outBox" : "inBox"}
+        style={backgroundColor}
+        className="GameModule"
+        onClick={handleClickOnSkip}
+        whileTap={props.handleBoxId(props.id)}
+      >
+        <CounterStart
+          countStart={countStart}
+          showDivCounterStart={showDivCounterStart}
+        />
+        <CounterTimer
+          countTimer={countTimer}
+          skipTimer={skipTimer}
+          showDivCounterTimer={showDivCounterTimer}
+          stopDivCounterTimer={stopDivCounterTimer}
+        />
 
-            <BackButton handleGoBack={handleGoBack} />
-            <Questions
-              currentQuestion={currentQuestion}
-              showDivCounterTimer={showDivCounterTimer}
-              stopDivCounterTimer={stopDivCounterTimer}
-            />
-            <SkipOrCorrect
-              showDivCounterTimer={showDivCounterTimer}
-              stopDivCounterTimer={stopDivCounterTimer}
-            />
-            <GameMenu
-              showgameMenu={showgameMenu}
-              handleGameVariantDescribe={handleGameVariantDescribe}
-              handleGameVariantShow={handleGameVariantShow}
-              handleGameChallange={handleGameChallange}
-              handleGameDraw={handleGameDraw}
-              gameVariant={props.gameVariant}
-            />
-            <Result
-              showResult={showResult}
-              points={points}
-              questionsResult={questionsResult}
-              handleGameRefresh={handleGameRefresh}
-            />
+        <BackButton handleGoBack={handleGoBack} />
+        <Questions
+          currentQuestion={currentQuestion}
+          showDivCounterTimer={showDivCounterTimer}
+          stopDivCounterTimer={stopDivCounterTimer}
+        />
+        <SkipOrCorrect
+          showDivCounterTimer={showDivCounterTimer}
+          stopDivCounterTimer={stopDivCounterTimer}
+        />
+        <GameMenu
+          showgameMenu={showgameMenu}
+          handleGameVariantDescribe={handleGameVariantDescribe}
+          handleGameVariantShow={handleGameVariantShow}
+          handleGameChallange={handleGameChallange}
+          handleGameDraw={handleGameDraw}
+          gameVariant={props.gameVariant}
+        />
+        <Result
+          showResult={showResult}
+          points={points}
+          questionsResult={questionsResult}
+          handleGameRefresh={handleGameRefresh}
+        />
 
-            <ParticlesCanvas />
-          </motion.div>
-        </Orientation>
-
-        <Orientation orientation="portrait">
-          <ChangeOrientationBox showgameMenu={showgameMenu} />
-        </Orientation>
-      </DeviceOrientation>
+        <ParticlesCanvas />
+      </motion.div>
     </Router>
   );
 }
