@@ -14,13 +14,13 @@ export const DivLink = styled.div`
   filter: alpha(opacity=0);
 `;
 
-export const ParStyle = styled.div` 
-  text-align: center,
-  width: 100%,
-  margin-top: 0%,
-  margin-bottom: 3%,
-  font-size: 120px,
-  color: #fff,
-  text-shadow:
-    0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #00DEFF, 0 0 70px #00DEFF, 0 0 80px #00DEFF, 0 0 100px #00DEFF, 0 0 150px #00DEFF
+export const ParStyle = styled.p`
+  text-align: center;
+  width: 100%;
+  margin-top: 0%;
+  margin-bottom: 3%;
+  font-size: 8em;
+  color: #fff;
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #00deff,
+    0 0 70px #00deff, 0 0 80px #00deff, 0 0 100px #00deff, 0 0 150px #00deff;
 `;

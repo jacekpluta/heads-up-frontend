@@ -105,7 +105,7 @@ svg {
 .GameModule {
   position: fixed;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background: linear-gradient(180deg, #05f, #09f);
   border-style: solid;
   text-align: center;

@@ -1,7 +1,7 @@
 import React from "react";
 
 function GameTitle(props) {
-  const gameTileStyle = {
+  const tileStyle = {
     margin: "40px",
     border: "5px solid pink",
     borderStyle: "solid",
@@ -26,7 +26,7 @@ function GameTitle(props) {
     transition: 0.3
   };
 
-  return <div style={gameTileStyle}></div>;
+  return <div style={tileStyle}></div>;
 }
 
 export default GameTitle;

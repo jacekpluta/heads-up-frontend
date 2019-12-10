@@ -213,6 +213,7 @@ function GameModule(props) {
       setStopDivCounterTimer(false);
       failureSound.play();
     }
+
     if (countTimer === -1 && numberOfGamesCompleted <= numberOfGames) {
       setStopDivCounterTimer(true);
       setCountTimer(skipTimer);

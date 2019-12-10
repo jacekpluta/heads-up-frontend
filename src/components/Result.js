@@ -1,6 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "../Refresh.scss";
+
 function Result(props) {
   const pStyle = {
     textAlign: "center",
@@ -10,6 +11,13 @@ function Result(props) {
     textShadow: "0 3px 0 #b2a98f,0 14px 10px rgba(0,0,0,0.15)"
   };
 
+  const olStyle = {
+    textAlign: "center",
+    width: "100%",
+    fontSize: "20px",
+    color: "#f8f8ff",
+    textShadow: "0 3px 0 #b2a98f,0 14px 10px rgba(0,0,0,0.15)"
+  };
   return (
     <AnimatePresence>
       {props.showResult === true && (
@@ -27,13 +35,16 @@ function Result(props) {
         >
           <p style={pStyle}>Points: {props.points}</p>
           <p style={pStyle}>Questions: </p>
-          <p style={pStyle}>
-            <ol>
-              {props.questionsResult.map(question => (
-                <li>{question}</li>
-              ))}
-            </ol>
-          </p>
+
+          <ol style={olStyle}>
+            {props.questionsResult.map((question, key) => (
+              <li key={key}>
+                {console.log(question)}
+                {question}
+              </li>
+            ))}
+          </ol>
+
           <h1>
             <div className="reloadSingle"></div>
           </h1>
