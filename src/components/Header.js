@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { HeaderStyle } from "../Layout";
+import { HeaderStyle } from "../styles/Layout";
 
 function Header(props) {
   return (

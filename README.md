@@ -1,68 +1,37 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Heads-Up Clone
 
-## Available Scripts
+A mobile device with motion sensors (accelerometer and gyroscope ) is recommended.
 
-In the project directory, you can run:
+## How to play
 
-### `npm start`
+The game is to be played in a group > 2.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. You choose a category/tag and one person holds the phone/tablet in front of his/her head.
+2. On the screen a text will appear. The other players have to describe the entry to the active player, without mentioning any word from the actual entry. 
+3. Once the entry is guessed the active player tilts phone forward and a new entry will be shown. 
+4. When the active player clicks on the screen, the current entry will be skipped and a new entry will be shown.
+5. For every round there is a time limit and the goal is to guess as many Entry as possible.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+This web app take the concept of mobile app
+[Heads Up!](https://play.google.com/store/apps/details?id=com.wb.headsup&hl=en)
 
-### `npm test`
+### Development
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Installation
 
-### `npm run build`
+install `nodejs`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+clone the repository
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+run `npm install`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Build
 
-### `npm run eject`
+build development versions with `npm run build`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Credit
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+[success.mp3](http://www.freesound.org/people/rhodesmas/sounds/320655/)
+and [failure.mp3](http://www.freesound.org/people/rhodesmas/sounds/342756/)
+from [rhodesmas](http://www.freesound.org/people/rhodesmas)

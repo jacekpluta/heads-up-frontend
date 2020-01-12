@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import "../counter.scss";
+import "../styles/counter.scss";
 
 const CounterStart = props => {
+  useEffect(() => {
+    if (props.countStart === 4) {
+      props.countdownSound.play();
+    }
+  }, [props.countStart, props.countdownSound]);
+
   return (
     <motion.div
       className="demo"

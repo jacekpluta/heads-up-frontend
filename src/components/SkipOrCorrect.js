@@ -2,19 +2,24 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const pStyle = {
-  textAlign: "center",
-  width: "100%",
-  marginTop: "25%",
-  fontSize: "120px",
+  position: "absolute",
+  top: " 35%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
   color: "#f8f8ff",
+  fontSize: "15vh",
   textShadow:
-    "0 3px 0 #b2a98f,0 14px 10px rgba(0,0,0,0.15), 0 24px 2px rgba(0,0,0,0.1), 0 34px 30px rgba(0,0,0,0.1)"
+    "0 3px 0 #b2a98f,0 14px 10px rgba(0,0,0,0.15), 0 24px 2px rgba(0,0,0,0.1), 0 34px 30px rgba(0,0,0,0.1)",
+  fontWeight: 700
 };
 
 const SkipOrCorrect = props => {
   return (
     <AnimatePresence>
-      {props.stopDivCounterTimer === false && (
+      {props.skippedAnswer && (
         <motion.div
           style={{
             opacity: 0,
@@ -26,6 +31,21 @@ const SkipOrCorrect = props => {
           exit={{ opacity: 0 }}
         >
           <p style={pStyle}>SKIPPED</p>
+        </motion.div>
+      )}
+
+      {props.correctAnswer && (
+        <motion.div
+          style={{
+            opacity: 0,
+            display: "block"
+          }}
+          className="Correct"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <p style={pStyle}>CORRECT</p>
         </motion.div>
       )}
     </AnimatePresence>

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import HeaderPic from "./components/pic/headerPic.jpg";
+import HeaderPic from "../pic//headerPic.jpg";
 
 export const DivLink = styled.div`
   cursor: pointer;
@@ -18,25 +18,33 @@ export const DivLink = styled.div`
 export const ParStyle = styled.p`
   text-align: center;
   width: 100%;
-  margin-top: 0%;
-  margin-bottom: 3%;
-  font-size: 10vw;
+  margin-top: -2%;
+  font-size: 3vw;
   color: #fff;
   text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #00deff,
     0 0 70px #00deff, 0 0 80px #00deff, 0 0 100px #00deff, 0 0 150px #00deff;
 `;
 
+export const BlueBackgroundStyle = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: linear-gradient(180deg, #05f, #09f);
+`;
+
 export const HeaderStyle = styled.div`
-  height: 20vh;
-  margin-top: -1%;
-  padding: 5%;
+  height: 160px;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  border-bottom-style: solid;
+  border-bottom-width: 5px;
+  border-bottom-color: white;
   object-fit: cover;
-  border-bottom: solid;
-  border-width: 2vh;
-  border-color: white;
   background-size: 100% 100%;
   background-image: url(${HeaderPic});
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 `;

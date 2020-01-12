@@ -1,0 +1,230 @@
+.App {
+  width: 100%;
+}
+
+.Main {
+  width: 100%;
+  background: linear-gradient(180deg, #05f, #09f);
+  background-image: url("../pic/background.jpg");
+  display: grid;
+  grid-column-gap: 10vh;
+  grid-row-gap: 5vh;
+  grid-template-columns: auto auto;
+  padding: 15px;
+  z-index: 0;
+}
+
+.Box {
+  position: relative;
+  border-style: solid;
+  border-color: white;
+  border-radius: 10px;
+  border-width: 10px;
+  background-repeat: no-repeat;
+  background-size: contain, cover;
+  background-size: 100% 100%;
+  padding: 40%;
+}
+
+.GameModule {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: linear-gradient(180deg, #05f, #09f);
+  border-style: solid;
+  z-index: 1;
+}
+
+.GameMenu {
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+
+.VariantsStyle {
+  display: grid;
+  padding: 0% 0% 0% 0%;
+  grid-column-gap: 40px;
+  grid-row-gap: 40px;
+  width: 150vh;
+  height: 30vh;
+  margin: 0 auto;
+  grid-template-columns: auto auto auto auto;
+}
+
+.TileStyle {
+  border-style: ridge;
+
+  border-width: 14px;
+  border-radius: 30%;
+
+  background-image: var(--img-url), linear-gradient(#f9f047, #0fd850);
+  padding: 15%;
+  background-size: contain, cover;
+  background-size: 100% 100%;
+}
+
+.Skip {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(180deg, rgb(255, 0, 0), rgb(255, 139, 6));
+  background-image: url("../pic/failPic.jpg");
+  align-items: center;
+  left: 0%;
+  top: 0%;
+  z-index: 3;
+}
+
+.Correct {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(180deg, rgb(7, 255, 48), rgb(2, 255, 171));
+  background-image: url("../pic/correctPic.jpg");
+  align-items: center;
+  left: 0%;
+  top: 0%;
+  z-index: 3;
+}
+
+.Result {
+  background: linear-gradient(180deg, rgb(14, 197, 44), rgb(243, 239, 13));
+  text-align: center;
+  font-weight: bold;
+  border-style: solid;
+  border-color: white;
+  border-radius: 10px;
+  border-width: 10px;
+  width: 80vh;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.BackButtonContainer {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  place-content: center;
+  overflow: hidden;
+  border-radius: 30px;
+  position: absolute;
+  z-index: 55;
+}
+
+.BackButton {
+  width: 100%;
+  overflow: visible;
+  stroke: #fff;
+  stroke-width: 3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  transform: translate(-35%, 0%);
+}
+
+.timer {
+  font-family: "Montserrat";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.value {
+  font-size: 25px;
+}
+
+.counterStyle {
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: white;
+  font-weight: 700;
+}
+.ChangeOrientationBox {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(180deg, #05f, #09f);
+  left: 0%;
+  top: 0%;
+  z-index: 11;
+}
+
+/* MEDIA QUERIES */
+@media screen and (min-height: 450px) {
+  .Result {
+    height: 70vh;
+  }
+
+  .VariantsStyle {
+    width: 120vh;
+    height: 25vh;
+  }
+}
+
+@media screen and (min-height: 550px) {
+  .VariantsStyle {
+    width: 100vh;
+    height: 20vh;
+  }
+}
+
+@media screen and (min-height: 550px) {
+  .VariantsStyle {
+    width: 90vh;
+    height: 20vh;
+  }
+}
+
+/* ANIMATIONS */
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes countdown {
+  from {
+    stroke-dashoffset: 0px;
+  }
+
+  to {
+    stroke-dashoffset: 113px;
+  }
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+svg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+}

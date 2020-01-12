@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Box from "./Box";
 
 const Main = props => {
-  const numbers = [1, 2, 3];
+  const numbers = [1, 2, 3, 4];
   const [handleBoxIdCompleted, setHandleBoxIdCompleted] = useState(false);
 
   const [gameVariant, setCurrentGameVariant] = useState({

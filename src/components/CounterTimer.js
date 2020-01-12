@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 const pageTransition = {
   inBox: {
@@ -11,48 +12,34 @@ const pageTransition = {
 };
 
 const CounterTimer = props => {
-  if (props.stopDivCounterTimer === false) {
-    return <div></div>;
-  }
+  const renderTime = value => {
+    return (
+      <div className="timer">
+        <div className="value">{value}</div>
+      </div>
+    );
+  };
 
-  if (props.stopDivCounterTimer) {
-    const countdownNumberStyle = {
-      position: "absolute",
-      top: 0,
-      right: 0,
-      width: "40px",
-      height: "40px",
-      color: "white",
-      lineHeight: "40px",
-      display: props.showDivCounterTimer ? "none" : "inline-block"
-    };
-
-    const counterStyle = {
-      strokeDasharray: "113px",
-      strokeDashoffset: "0px",
-      strokeLinecap: "round",
-      strokeWidth: "2px",
-      stroke: "white",
-      fill: "none",
-      animation: "countdown " + props.skipTimer + "s linear forwards infinite"
-    };
-
+  if (props.stopDivCounterTimer && props.skipTimer !== 0) {
     return (
       <motion.div
-        id="countdown"
-        style={countdownNumberStyle}
         variants={pageTransition}
         initial={props.showDivCounterTimer ? "inBox" : "outBox"}
         animate={props.showDivCounterTimer ? "outBox" : "inBox"}
         exit={props.showDivCounterTimer ? "inBox" : "outBox"}
+        className="counterStyle"
       >
-        <div id="countdown-number">{props.countTimer}</div>
-        <svg>
-          <circle r="18" cx="20" cy="20" style={counterStyle}></circle>
-        </svg>
+        <CountdownCircleTimer
+          isPlaying={!props.showDivCounterTimer}
+          durationSeconds={props.skipTimer}
+          colors={[["#ffffff", 0.33], ["#ff8585", 0.33], ["#ff3636"]]}
+          renderTime={renderTime}
+          onComplete={() => [false, 1000]}
+          size={60}
+        />
       </motion.div>
     );
-  }
+  } else return null;
 };
 
 export default CounterTimer;

@@ -1,7 +1,7 @@
 import React from "react";
 
 function GameTitle(props) {
-  const tileStyle = {
+  const gameTitle = {
     marginBottom: "40px",
     borderStyle: "solid",
     borderColor: "white",
@@ -9,15 +9,15 @@ function GameTitle(props) {
     borderWidth: "10px",
     marginLeft: "auto",
     marginRight: "auto",
-    padding: "10%",
+    padding: "7%",
     marginTop: "2%",
-    width: "65%",
+    width: "17%",
+    hegiht: "50vh",
     backgroundSize: "100% 100%",
-    backgroundImage: `url(${props.gameVariant.gameTile})`,
-    position: "relative"
+    backgroundImage: `url(${props.gameVariant.gameTile})`
   };
 
-  return <div style={tileStyle}></div>;
+  return <div style={gameTitle}></div>;
 }
 
 export default GameTitle;

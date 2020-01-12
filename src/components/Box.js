@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import GameModule from "./GameModule";
 import { motion } from "framer-motion";
 import UIfx from "uifx";
-import buttonClick from "./sounds/buttonClick.mp3";
-import { DivLink } from "../Layout";
+import buttonClick from "../sounds/buttonClick.mp3";
+import { DivLink } from "../styles/Layout";
 
 import {
   BrowserRouter as Router,
@@ -48,16 +48,16 @@ function Box(props) {
         className="Box"
         initial={"inModule"}
         animate={"animModule"}
-        whileHover={{ scale: 1.1 }}
+        whileHover={{ scale: 1.05 }}
         onClick={() => clickSound.play()}
       >
-        <DivLink onClick={handleBack}></DivLink>
+        <DivLink onClick={handleBack}> </DivLink>
       </motion.div>
 
       <Switch>
         <Route
           exact
-          path="/GameModule"
+          path="/gamemodule"
           render={() => (
             <GameModule
               handleCloseGameModule={handleCloseGameModule}
@@ -68,7 +68,7 @@ function Box(props) {
             />
           )}
         />
-        {openGameModule ? <Redirect to="/GameModule" /> : <Redirect to="/" />}{" "}
+        {openGameModule ? <Redirect to="/gamemodule" /> : <Redirect to="/" />}{" "}
       </Switch>
     </Router>
   );
