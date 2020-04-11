@@ -3,27 +3,27 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const pStyle = {
   position: "absolute",
-  top: " 35%",
+  top: "42%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   color: "#f8f8ff",
-  fontSize: "15vh",
+  fontSize: "10vh",
   textShadow:
     "0 3px 0 #b2a98f,0 14px 10px rgba(0,0,0,0.15), 0 24px 2px rgba(0,0,0,0.1), 0 34px 30px rgba(0,0,0,0.1)",
-  fontWeight: 700
+  fontWeight: 700,
 };
 
-const SkipOrCorrect = props => {
+const SkipOrCorrect = (props) => {
   return (
     <AnimatePresence>
       {props.skippedAnswer && (
         <motion.div
           style={{
             opacity: 0,
-            display: "block"
+            display: "block",
           }}
           className="Skip"
           initial={{ opacity: 0 }}
@@ -38,7 +38,7 @@ const SkipOrCorrect = props => {
         <motion.div
           style={{
             opacity: 0,
-            display: "block"
+            display: "block",
           }}
           className="Correct"
           initial={{ opacity: 0 }}

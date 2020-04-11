@@ -1,7 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "../styles/Refresh.scss";
-import { List, Table } from "semantic-ui-react";
+import { Table } from "semantic-ui-react";
 
 function Result(props) {
   const pStyle = {

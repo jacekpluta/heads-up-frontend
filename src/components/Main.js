@@ -1,54 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Box from "./Box";
+import { Grid } from "@material-ui/core/";
+import { motion } from "framer-motion";
 
-const Main = props => {
-  const numbers = [1, 2, 3, 4];
-  const [handleBoxIdCompleted, setHandleBoxIdCompleted] = useState(false);
-
-  const [gameVariant, setCurrentGameVariant] = useState({
-    name: props.gameVariantsList[0].name,
-    questions: props.gameVariantsList[0].questions,
-    background: props.gameVariantsList[0].background,
-    gameTile: props.gameVariantsList[0].gameTile,
-    gameMenuTitle: props.gameVariantsList[0].gameMenuTitle
-  });
-
-  const [boxId, setboxId] = useState(0);
-
-  const handleBoxId = boxIdProps => {
-    setboxId(boxIdProps);
-    setHandleBoxIdCompleted(true);
-  };
-
-  useEffect(() => {
-    setCurrentGameVariant({
-      name: props.gameVariantsList[boxId].name,
-      questions: props.gameVariantsList[boxId].questions,
-      background: props.gameVariantsList[boxId].background,
-      gameTile: props.gameVariantsList[boxId].gameTile,
-      gameMenuTitle: props.gameVariantsList[boxId].gameMenuTitle
-    });
-  }, [boxId, props.gameVariantsList]);
-
-  // const addGameVariant = variant => {
-  //   setGameVariantsList([...gameVariant, variant]);
-  // };
+const Main = (props) => {
+  const { gameVariantsList, muteSounds } = props;
 
   return (
-    <div className="Main">
-      {numbers.map((key, id) => {
-        return (
-          <Box
-            gameVariant={gameVariant}
-            key={key}
-            id={id}
-            backgroundBox={props.gameVariantsList[key].background}
-            handleBoxId={handleBoxId}
-            handleBoxIdCompleted={handleBoxIdCompleted}
-          ></Box>
-        );
-      })}
-    </div>
+    <motion.div className="Main">
+      <Grid container spacing={0}>
+        {gameVariantsList.map((gameVariant) => (
+          <Grid
+            item
+            xs={6}
+            style={{ paddingBottom: "5%" }}
+            key={gameVariant.name}
+          >
+            <Box
+              backgroundImage={gameVariant.background}
+              muteSounds={muteSounds}
+              gameVariant={gameVariant}
+            ></Box>
+          </Grid>
+        ))}
+      </Grid>
+    </motion.div>
   );
 };
 

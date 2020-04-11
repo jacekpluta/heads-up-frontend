@@ -1,50 +1,87 @@
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useContext, useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { GameCategoryContext } from "../contex/GameCategoryContext";
+import BackButton from "../BackButton";
+import buttonClick from "../../sounds/buttonClick.mp3";
+import UIfx from "uifx";
+
+import { useHistory } from "react-router-dom";
 
 import GameTitle from "./GameTitle";
-import Variants from "./Variants";
+import Variants from "./tiles/Variants";
 import { ParStyle } from "../../styles/Layout";
 
-export default function GameMenu(props) {
-  const pageTransition = {
-    inBox: {
-      opacity: 1,
-      transition: {
-        ease: "easeOut",
-        duration: 1
-      },
-      x: 0
+const pageTransition = {
+  inBox: {
+    opacity: 1,
+    transition: {
+      duration: 1,
     },
-    outBox: {
-      opacity: 0,
-      transition: {
-        ease: "easeOut",
-        duration: 1
-      },
-      x: 300
-    }
-  };
-  return (
-    <AnimatePresence>
-      {props.showgameMenu && (
-        <motion.div
-          className="GameMenu"
-          variants={pageTransition}
-          initial={props.activeGameMenu ? "outBox" : "inBox"}
-          animate={props.activeGameMenu ? "inBox" : "outBox"}
-          exit={props.activeGameMenu ? "outBox" : "inBox"}
-        >
-          <GameTitle gameVariant={props.gameVariant} />
+  },
+  outBox: {
+    opacity: 0,
+    transition: {
+      duration: 1,
+    },
+  },
+};
 
-          <ParStyle>{props.gameVariant.gameMenuTitle}</ParStyle>
-          <Variants
-            handleGameVariantDescribe={props.handleGameVariantDescribe}
-            handleGameVariantShow={props.handleGameVariantShow}
-            handleGameChallange={props.handleGameChallange}
-            handleGameDraw={props.handleGameDraw}
-          />
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
+const clickSound = new UIfx(buttonClick, {
+  volume: 1,
+  throttleMs: 100,
+});
+
+export default function GameMenu(props) {
+  let history = useHistory();
+
+  const { gameCategory } = useContext(GameCategoryContext);
+  const [transitionOff, setTransitionOff] = useState(false);
+
+  useEffect(() => {
+    if (!gameCategory) {
+      history.push("/");
+    }
+  }, [gameCategory]);
+
+  const handleGoBack = () => {
+    clickSound.play();
+    setTimeout(() => {
+      history.push("/");
+    }, 700);
+    setTransitionOff(true);
+  };
+
+  const gameTitleStyle = {
+    zIndex: "-1",
+    borderBottomStyle: "solid",
+    background: "#023c7e",
+
+    borderWidth: "0px",
+    borderBottomLeftRadius: "30px",
+    borderBottomRightRadius: "30px",
+
+    paddingBottom: "20px",
+  };
+
+  if (gameCategory) {
+    return (
+      <motion.div
+        variants={pageTransition}
+        initial={transitionOff ? "inBox" : "outBox"}
+        animate={transitionOff ? "outBox" : "inBox"}
+        exit={transitionOff ? "inBox" : "outBox"}
+        className="gameMenu"
+      >
+        <div style={gameTitleStyle}>
+          <BackButton handleGoBack={handleGoBack} />
+
+          <GameTitle gameCategoryImage={gameCategory.background} />
+          <ParStyle>{gameCategory.description}</ParStyle>
+        </div>
+        <Variants />
+      </motion.div>
+    );
+  } else {
+    return <React.Fragment></React.Fragment>;
+  }
 }

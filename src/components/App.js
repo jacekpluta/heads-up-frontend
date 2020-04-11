@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../styles/styles.css";
+import { CircularProgress, Grid } from "@material-ui/core/";
 
 import Header from "./Header";
 import Main from "./Main";
@@ -7,7 +8,6 @@ import Main from "./Main";
 import AnimalsTile from "../pic/animalsTile.jpg";
 import MoviesTile from "../pic/moviesTile.jpg";
 import GamesTile from "../pic/gamesTile.jpg";
-import CarsTile from "../pic/carsTile.jpg";
 import AnimeTile from "../pic/animeTile.jpg";
 
 import { ParStyle, BlueBackgroundStyle } from "../styles/Layout";
@@ -15,35 +15,79 @@ import { isBrowser } from "react-device-detect";
 import animalList from "./lists/AnimalsList";
 import axios from "axios";
 
-// fix refresh button
-//zmiana kolerow przy wyborze, ladne przejscie
-
 function App() {
-  const [filmList, setFilmList] = useState("");
-  const [gameList, setGameList] = useState("");
-  const [animeList, setAnimeList] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [filmList, setFilmList] = useState([]);
+  const [gameList, setGameList] = useState([]);
+  const [animeList, setAnimeList] = useState([]);
 
-  useEffect(() => {
-    setIsLoading(true);
+  const [animeFetched, setAnimeFetched] = useState(false);
+  const [filmsFetched, setFilmsFetched] = useState(false);
+  const [gamesFetched, setGamesFetched] = useState(false);
+  const [allFechted, setAllFechted] = useState(false);
+  const [muteSounds, setMuteSounds] = useState(false);
 
-    fetch(
-      "https://api.themoviedb.org/3/movie/popular?api_key=01e57b363d38e654e9afbd273dce30c3&language=en-US&page=1"
-    )
+  const gameVariantsList = [
+    {
+      id: 0,
+      name: "animals",
+      gameMenuTitle: "Zwierzeta",
+      questions: animalList,
+      background: { backgroundImage: `url(${AnimalsTile})` },
+      gameTile: { AnimalsTile },
+      description: "Can you pretend to be an elephant? "
+    },
+    {
+      id: 1,
+      name: "films",
+      gameMenuTitle: "Filmy",
+      questions: filmList,
+      background: { backgroundImage: `url(${MoviesTile})` },
+      gameTile: { MoviesTile },
+      description: "aaa"
+    },
+    {
+      id: 2,
+      name: "games",
+      gameMenuTitle: "Gry",
+      questions: gameList,
+      background: { backgroundImage: `url(${GamesTile})` },
+      gameTile: { GamesTile },
+      description: "aaa"
+    },
+    {
+      id: 3,
+      name: "anime",
+      gameMenuTitle: "Anime",
+      questions: animeList,
+      background: { backgroundImage: `url(${AnimeTile})` },
+      gameTile: { AnimeTile },
+      description: "aaa"
+    }
+  ];
+
+  async function fetchMyAPIFilms() {
+    axios({
+      method: "GET",
+      url:
+        "https://api.themoviedb.org/3/movie/popular?api_key=01e57b363d38e654e9afbd273dce30c3&language=en-US&page=1"
+    })
       .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        Object.entries(data.results).map(([key, value]) =>
-          setFilmList(filmList => [...filmList, data.results[key].title])
+        Object.entries(response.data.results).map(([key, value]) =>
+          setFilmList(filmList => [
+            ...filmList,
+            response.data.results[key].name
+          ])
         );
       })
-      .then(setIsLoading(false))
+      .then(() => {
+        setFilmsFetched(true);
+      })
       .catch(error => {
-        setIsLoading(false);
         console.log(error);
       });
+  }
 
+  async function fetchMyAPIGames() {
     axios({
       method: "GET",
       url: "https://rawg-video-games-database.p.rapidapi.com/games",
@@ -61,118 +105,96 @@ function App() {
           ])
         );
       })
-      .then(setIsLoading(false))
+      .then(() => {
+        setGamesFetched(true);
+      })
       .catch(error => {
-        setIsLoading(false);
         console.log(error);
       });
+  }
 
-    async function fetchMyAPIAnime() {
-      axios({
-        method: "GET",
-        url: "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=0",
-        headers: {
-          Accept: "application/vnd.api+json",
-          "Content-type": "application/vnd.api+json",
-          links: {
-            first:
-              "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=1",
-            next:
-              "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=2",
-            last:
-              "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=3"
-          }
+  async function fetchMyAPIAnime() {
+    axios({
+      method: "GET",
+      url: "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=0",
+      headers: {
+        Accept: "application/vnd.api+json",
+        "Content-type": "application/vnd.api+json",
+        links: {
+          first:
+            "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=1",
+          next: "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=2",
+          last: "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=3"
         }
+      }
+    })
+      .then(response => {
+        Object.entries(response.data.data).map(([key, value]) =>
+          setAnimeList(animeList => [
+            ...animeList,
+            response.data.data[key].attributes.titles.en_jp
+          ])
+        );
       })
-        .then(response => {
-          Object.entries(response.data.data).map(([key, value]) =>
-            setAnimeList(animeList => [
-              ...animeList,
-              response.data.data[key].attributes.titles.en_jp
-            ])
-          );
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
-    fetchMyAPIAnime();
-  }, []);
-
-  const gameVariantsList = {
-    0: {
-      id: 1,
-      name: "cars",
-      gameMenuTitle: "Auta",
-      questions: ["Mercedes", "BMW", "Ford", "Fiat", "Audi"],
-      background: { backgroundImage: `url(${CarsTile})` },
-      gameTile: CarsTile
-    },
-    1: {
-      id: 1,
-      name: "animals",
-      gameMenuTitle: "Zwierzeta",
-      questions: animalList,
-      background: { backgroundImage: `url(${AnimalsTile})` },
-      gameTile: AnimalsTile
-    },
-    2: {
-      id: 2,
-      name: "films",
-      gameMenuTitle: "Filmy",
-      questions: filmList,
-      background: { backgroundImage: `url(${MoviesTile})` },
-      gameTile: MoviesTile
-    },
-    3: {
-      id: 3,
-      name: "games",
-      gameMenuTitle: "Gry",
-      questions: gameList,
-      background: { backgroundImage: `url(${GamesTile})` },
-      gameTile: GamesTile
-    },
-    4: {
-      id: 4,
-      name: "anime",
-      gameMenuTitle: "Anime",
-      questions: animeList,
-      background: { backgroundImage: `url(${AnimeTile})` },
-      gameTile: AnimeTile
-    }
+      .then(() => {
+        setAnimeFetched(true);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+  const handleMuteSounds = () => {
+    setMuteSounds(!muteSounds);
   };
 
   useEffect(() => {
-    window.onscroll = function() {
-      if (window.pageYOffset === 0) {
-        console.log("I AM AT THE TOP");
-      } else {
-      }
-    };
+    if (!isBrowser) {
+      // fetchMyAPIFilms();
+      // fetchMyAPIAnime();
+      // fetchMyAPIGames();
+    }
   }, []);
 
-  if (isLoading || isLoading) {
-    return <p>Loading ...</p>;
-  }
+  useEffect(() => {
+    if (animeFetched && gamesFetched && filmsFetched) {
+      setAllFechted(true);
+    }
+  }, [animeFetched, gamesFetched, filmsFetched]);
 
   if (isBrowser) {
     return (
-      <div>
-        {" "}
-        <BlueBackgroundStyle>
-          <ParStyle style={{ marginTop: "25%", fontSize: "5vw" }}>
-            This content is only aviable on phone or tablet devices
-          </ParStyle>
-        </BlueBackgroundStyle>
+      <BlueBackgroundStyle>
+        <ParStyle style={{ marginTop: "25%", fontSize: "5vw" }}>
+          This content is only aviable on phone or tablet devices
+        </ParStyle>
+      </BlueBackgroundStyle>
+    );
+  } else if (!allFechted) {
+    return (
+      <div className="App">
+        <Header handleMuteSounds={handleMuteSounds} />
+        <Main
+          allFechted={allFechted}
+          gameVariantsList={gameVariantsList}
+          muteSounds={muteSounds}
+        ></Main>
       </div>
     );
-  }
-  return (
-    <div className="App">
-      <Header></Header>
-      <Main gameVariantsList={gameVariantsList}></Main>
-    </div>
-  );
+  } else
+    return (
+      <Grid
+        container
+        spacing={0}
+        alignItems="center"
+        justify="center"
+        style={{
+          background: "linearGradient(180deg, #013064, #1255a0)",
+          minHeight: "100vh"
+        }}
+      >
+        <CircularProgress thickness={5} color="secondary" />
+      </Grid>
+    );
 }
 
 export default App;

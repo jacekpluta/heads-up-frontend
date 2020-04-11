@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { motion } from "framer-motion";
-import ShowPic from "../../pic/showPic.jpg";
+import ShowPic from "../../../pic/showPic.jpg";
+import { GameVariantContext } from "../../contex/GameVariantContext";
 
 const showTileStyle = {
   backgroundImage: `url(${ShowPic})`,
@@ -9,13 +10,18 @@ const showTileStyle = {
 };
 
 export default function ShowTile(props) {
+  const { setGameVariant } = useContext(GameVariantContext);
+  const { handleStartGame } = props;
   return (
     <motion.div
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.8, transition: { duration: 1 } }}
       className="TileStyle"
       style={showTileStyle}
-      onClick={props.handleGameVariantShow}
+      onClick={() => {
+        handleStartGame();
+        setGameVariant("show");
+      }}
     ></motion.div>
   );
 }

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { motion } from "framer-motion";
-import ChallangePic from "../../pic/challangePic.jpg";
+import ChallangePic from "../../../pic/challangePic.jpg";
+import { GameVariantContext } from "../../contex/GameVariantContext";
 
 const challangeTileStyle = {
   backgroundImage: `url(${ChallangePic})`,
@@ -9,13 +10,20 @@ const challangeTileStyle = {
 };
 
 export default function ChallangeTile(props) {
+  const { setGameVariant } = useContext(GameVariantContext);
+
+  const { handleStartGame } = props;
+
   return (
     <motion.div
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.8, transition: { duration: 1 } }}
       className="TileStyle"
       style={challangeTileStyle}
-      onClick={props.handleGameChallange}
+      onClick={() => {
+        handleStartGame();
+        setGameVariant("challange");
+      }}
     ></motion.div>
   );
 }

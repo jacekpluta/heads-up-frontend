@@ -1,23 +1,27 @@
 import React from "react";
-
+import { Grid } from "@material-ui/core/";
 function GameTitle(props) {
-  const gameTitle = {
-    marginBottom: "40px",
+  const gameTitleStyle = {
     borderStyle: "solid",
     borderColor: "white",
     borderRadius: "10px",
-    borderWidth: "10px",
-    marginLeft: "auto",
-    marginRight: "auto",
-    padding: "7%",
-    marginTop: "2%",
-    width: "17%",
-    hegiht: "50vh",
+    borderWidth: "5px",
+    minWidth: "60%",
     backgroundSize: "100% 100%",
-    backgroundImage: `url(${props.gameVariant.gameTile})`
+    backgroundImage: `${props.gameCategoryImage.backgroundImage}`,
+    marginTop: "15%",
   };
 
-  return <div style={gameTitle}></div>;
+  return (
+    <Grid container justify="center">
+      <Grid item xs={4} style={gameTitleStyle}>
+        <div className="loader">
+          <span></span>
+          <span></span>
+        </div>
+      </Grid>
+    </Grid>
+  );
 }
 
 export default GameTitle;

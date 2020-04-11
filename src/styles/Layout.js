@@ -3,7 +3,6 @@ import HeaderPic from "../pic//headerPic.jpg";
 
 export const DivLink = styled.div`
   cursor: pointer;
-  position: absolute;
   width: 100%;
   height: 100%;
   top: 0;
@@ -18,11 +17,8 @@ export const DivLink = styled.div`
 export const ParStyle = styled.p`
   text-align: center;
   width: 100%;
-  margin-top: -2%;
-  font-size: 3vw;
+  font-size: 5vw;
   color: #fff;
-  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #00deff,
-    0 0 70px #00deff, 0 0 80px #00deff, 0 0 100px #00deff, 0 0 150px #00deff;
 `;
 
 export const BlueBackgroundStyle = styled.div`
@@ -35,8 +31,8 @@ export const BlueBackgroundStyle = styled.div`
 `;
 
 export const HeaderStyle = styled.div`
-  height: 160px;
-  display: block;
+  box-sizing: border-box;
+  height: 100px;
   border-bottom-style: solid;
   border-bottom-width: 5px;
   border-bottom-color: white;

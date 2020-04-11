@@ -1,29 +1,72 @@
+html,
+body,
 .App {
+  margin: 0;
+  background: linear-gradient(180deg, #013064, #1255a0);
+  min-height: 100%;
+  height: 100%;
   width: 100%;
+  position: fixed;
+  overflow: scroll;
 }
 
 .Main {
-  width: 100%;
-  background: linear-gradient(180deg, #05f, #09f);
-  background-image: url("../pic/background.jpg");
-  display: grid;
-  grid-column-gap: 10vh;
-  grid-row-gap: 5vh;
-  grid-template-columns: auto auto;
-  padding: 15px;
-  z-index: 0;
+  padding-left: 5%;
+  padding-top: 5%;
 }
 
 .Box {
-  position: relative;
+  box-sizing: border-box;
+
   border-style: solid;
   border-color: white;
-  border-radius: 10px;
-  border-width: 10px;
+  border-radius: 7px;
+  border-width: 7px;
+
+  width: 120px;
+  height: 220px;
+  min-width: 90%;
+
   background-repeat: no-repeat;
   background-size: contain, cover;
   background-size: 100% 100%;
-  padding: 40%;
+}
+
+.gameVariantBox {
+  box-sizing: border-box;
+
+  border-style: solid;
+  border-color: white;
+  border-radius: 7px;
+  border-width: 7px;
+}
+
+.BackButtonContainer {
+  width: 40px;
+  height: 40px;
+  left: 4%;
+  top: 4%;
+  position: absolute;
+}
+
+.gameMenu {
+  height: 100vh;
+  border-style: solid;
+  border-color: white;
+  border-width: 10px;
+}
+
+.TileStyle {
+  position: relative;
+  border-style: ridge;
+  border-width: 10px;
+  border-radius: 30%;
+
+  min-height: inherit;
+  min-width: 80%;
+
+  height: 20vh;
+  background-size: 100% 100%;
 }
 
 .GameModule {
@@ -32,38 +75,12 @@
   height: 100%;
   left: 0;
   top: 0;
-  background: linear-gradient(180deg, #05f, #09f);
-  border-style: solid;
+  background: linear-gradient(180deg, #013064, #1255a0);
   z-index: 1;
 }
 
-.GameMenu {
-  position: fixed;
-  width: 100%;
-  top: 0;
-}
-
-.VariantsStyle {
-  display: grid;
-  padding: 0% 0% 0% 0%;
-  grid-column-gap: 40px;
-  grid-row-gap: 40px;
-  width: 150vh;
-  height: 30vh;
-  margin: 0 auto;
-  grid-template-columns: auto auto auto auto;
-}
-
-.TileStyle {
-  border-style: ridge;
-
-  border-width: 14px;
-  border-radius: 30%;
-
-  background-image: var(--img-url), linear-gradient(#f9f047, #0fd850);
-  padding: 15%;
-  background-size: contain, cover;
-  background-size: 100% 100%;
+.counterStyle {
+  margin-top: 110%;
 }
 
 .Skip {
@@ -91,43 +108,6 @@
 }
 
 .Result {
-  background: linear-gradient(180deg, rgb(14, 197, 44), rgb(243, 239, 13));
-  text-align: center;
-  font-weight: bold;
-  border-style: solid;
-  border-color: white;
-  border-radius: 10px;
-  border-width: 10px;
-  width: 80vh;
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.BackButtonContainer {
-  width: 80px;
-  height: 80px;
-  display: flex;
-  place-content: center;
-  overflow: hidden;
-  border-radius: 30px;
-  position: absolute;
-  z-index: 55;
-}
-
-.BackButton {
-  width: 100%;
-  overflow: visible;
-  stroke: #fff;
-  stroke-width: 3;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  transform: translate(-35%, 0%);
 }
 
 .timer {
@@ -142,18 +122,6 @@
   font-size: 25px;
 }
 
-.counterStyle {
-  position: absolute;
-  top: 75%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  color: white;
-  font-weight: 700;
-}
 .ChangeOrientationBox {
   position: fixed;
   width: 100%;
@@ -163,39 +131,13 @@
   top: 0%;
   z-index: 11;
 }
+*/
 
 /* MEDIA QUERIES */
-@media screen and (min-height: 450px) {
-  .Result {
-    height: 70vh;
-  }
-
-  .VariantsStyle {
-    width: 120vh;
-    height: 25vh;
-  }
-}
-
-@media screen and (min-height: 550px) {
-  .VariantsStyle {
-    width: 100vh;
-    height: 20vh;
-  }
-}
-
-@media screen and (min-height: 550px) {
-  .VariantsStyle {
-    width: 90vh;
-    height: 20vh;
-  }
+@media screen and (min-width: 500px) {
 }
 
 /* ANIMATIONS */
-#particles-js {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
 
 @keyframes countdown {
   from {
@@ -207,24 +149,45 @@
   }
 }
 
-@keyframes gradientBG {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
 svg {
   position: absolute;
   top: 0;
   right: 0;
   width: 40px;
   height: 40px;
+}
+
+.loader {
+  z-index: -2;
+  width: 180px;
+  height: 180px;
+  position: relative;
+
+  margin-top: -5px;
+
+  background-size: 100% 100%;
+}
+
+.loader span {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 80%;
+  background: linear-gradient(#09daff, #26ff09);
+  animation: animate 1s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loader span:nth-child(1) {
+  filter: blur(50px);
+}
+.loader span:nth-child(2) {
+  filter: blur(100px);
 }

@@ -3,17 +3,19 @@ import { motion } from "framer-motion";
 import "../styles/counter.scss";
 
 const CounterStart = props => {
+  const { countStart, countdownSound, showDivCounterStart } = props;
+
   useEffect(() => {
-    if (props.countStart === 4) {
-      props.countdownSound.play();
+    if (countStart === 4) {
+      countdownSound.play();
     }
-  }, [props.countStart, props.countdownSound]);
+  }, [countStart, countdownSound]);
 
   return (
     <motion.div
       className="demo"
       style={{
-        display: props.showDivCounterStart ? "block" : "none"
+        display: showDivCounterStart ? "block" : "none"
       }}
     >
       <div className="demo__colored-blocks">

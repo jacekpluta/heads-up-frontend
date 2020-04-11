@@ -12,6 +12,8 @@ const pageTransition = {
 };
 
 const CounterTimer = props => {
+  const { stopDivCounterTimer, skipTimer, showDivCounterTimer } = props;
+
   const renderTime = value => {
     return (
       <div className="timer">
@@ -20,18 +22,18 @@ const CounterTimer = props => {
     );
   };
 
-  if (props.stopDivCounterTimer && props.skipTimer !== 0) {
+  if (stopDivCounterTimer && skipTimer !== 0) {
     return (
       <motion.div
         variants={pageTransition}
-        initial={props.showDivCounterTimer ? "inBox" : "outBox"}
-        animate={props.showDivCounterTimer ? "outBox" : "inBox"}
-        exit={props.showDivCounterTimer ? "inBox" : "outBox"}
+        initial={showDivCounterTimer ? "inBox" : "outBox"}
+        animate={showDivCounterTimer ? "outBox" : "inBox"}
+        exit={showDivCounterTimer ? "inBox" : "outBox"}
         className="counterStyle"
       >
         <CountdownCircleTimer
-          isPlaying={!props.showDivCounterTimer}
-          durationSeconds={props.skipTimer}
+          isPlaying={!showDivCounterTimer}
+          durationSeconds={skipTimer}
           colors={[["#ffffff", 0.33], ["#ff8585", 0.33], ["#ff3636"]]}
           renderTime={renderTime}
           onComplete={() => [false, 1000]}
