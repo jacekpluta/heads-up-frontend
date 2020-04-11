@@ -2,22 +2,18 @@ import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import "../styles/counter.scss";
 
-const CounterStart = props => {
-  const { countStart, countdownSound, showDivCounterStart } = props;
+const CountDown = (props) => {
+  const { countdownSound } = props;
 
   useEffect(() => {
-    if (countStart === 4) {
+    const timer = setTimeout(() => {
       countdownSound.play();
-    }
-  }, [countStart, countdownSound]);
+    }, 900);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <motion.div
-      className="demo"
-      style={{
-        display: showDivCounterStart ? "block" : "none"
-      }}
-    >
+    <motion.div className="demo">
       <div className="demo__colored-blocks">
         <div className="demo__colored-blocks-rotater">
           <div className="demo__colored-block"></div>
@@ -59,21 +55,4 @@ const CounterStart = props => {
   );
 };
 
-export default CounterStart;
-
-/*
-
-  function handleDelayChange(e) {
-    setDelay(Number(e.target.value));
-  }
-
-  function handleIsRunningChange(e) {
-    setIsRunning(false);
-  }
-      <input
-        type="checkbox"
-        checked={isRunning}
-        onChange={handleIsRunningChange}
-      />
-      <input value={delay} onChange={handleDelayChange} />
-      */
+export default CountDown;

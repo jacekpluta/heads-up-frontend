@@ -2,6 +2,7 @@ import React from "react";
 import { Grid } from "@material-ui/core/";
 function GameTitle(props) {
   const gameTitleStyle = {
+    height: "200px",
     borderStyle: "solid",
     borderColor: "white",
     borderRadius: "10px",
@@ -10,16 +11,12 @@ function GameTitle(props) {
     backgroundSize: "100% 100%",
     backgroundImage: `${props.gameCategoryImage.backgroundImage}`,
     marginTop: "15%",
+    zIndex: 5,
   };
 
   return (
     <Grid container justify="center">
-      <Grid item xs={4} style={gameTitleStyle}>
-        <div className="loader">
-          <span></span>
-          <span></span>
-        </div>
-      </Grid>
+      <Grid item xs={4} style={gameTitleStyle}></Grid>
     </Grid>
   );
 }

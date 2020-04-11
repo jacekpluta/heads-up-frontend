@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import { BrowserRouter as Router, useHistory } from "react-router-dom";
 import { motion } from "framer-motion";
-import CounterStart from "./CounterStart";
-import CounterTimer from "./CounterTimer";
+import CountDown from "./CountDown";
+
 import useInterval from "./UseInterval";
 import BackButton from "./BackButton";
 import Questions from "./Questions";
 import SkipOrCorrect from "./SkipOrCorrect";
 import Result from "./Result";
+import CounterTimer from "./CounterTimer";
 
 import { GameCategoryContext } from "./contex/GameCategoryContext";
 import { GameVariantContext } from "./contex/GameVariantContext";
@@ -49,15 +50,18 @@ function GameModule(props) {
 
   const [numberOfGames] = useState(2);
   const [numberOfGamesCompleted, setNumberOfGamesCompleted] = useState(0);
-  const [countStart, setCountStart] = useState(5);
+  const [countStart, setCountdownStart] = useState(5);
   const [countTimer, setCountTimer] = useState(30);
   const [delayStart] = useState(750);
   const [delayTimer, setDelayTimer] = useState(highNumber);
   const [isRunningStart, setIsRunningStart] = useState(false);
   const [isRunningTimer, setIsRunningTimer] = useState(false);
-  const [showDivCounterStart, setShowDivCounterStart] = useState(false);
-  const [showDivCounterTimer, setShowDivCounterTimer] = useState(true);
-  const [stopDivCounterTimer, setStopDivCounterTimer] = useState(true);
+
+  const [showCountdown, setShowCountdown] = useState(false);
+
+  const [showCounterTimer, setShowCounterTimer] = useState(false);
+  const [showQuestions, setShowQuestions] = useState(false);
+
   const [currentQuestion, setCurrentQuestion] = useState("");
 
   const [clickOnSkip, setClickOnSkip] = useState(false);
@@ -75,6 +79,9 @@ function GameModule(props) {
   const [pointsObject, setPointsObject] = useState("");
   const [transitionOff, setTransitionOff] = useState(false);
 
+  const [orientationChanged, setOrientationChanged] = useState(true);
+
+  const [showResult, setShowResult] = useState(false);
   const { muteSounds } = props;
 
   let history = useHistory();
@@ -83,7 +90,7 @@ function GameModule(props) {
     clickSound.play();
     setTimeout(() => {
       history.push("/gamemenu");
-    }, 700);
+    }, 200);
     setTransitionOff(true);
   };
 
@@ -157,7 +164,7 @@ function GameModule(props) {
 
   useInterval(
     () => {
-      setCountStart(countStart - 1);
+      setCountdownStart(countStart - 1);
     },
     isRunningStart ? delayStart : null
   );
@@ -169,13 +176,9 @@ function GameModule(props) {
     isRunningTimer ? delayTimer : null
   );
 
-  const handleClickOnSkipOff = () => {
-    setClickOnSkip(false);
-  };
-
   const handleGameRefresh = () => {
     clickSound.play();
-    history.push("/gamemodule");
+    history.push("/gamemenu");
   };
 
   //Returns random question
@@ -191,7 +194,9 @@ function GameModule(props) {
     if (gameCategory && gameVariant) {
       setIsRunningStart(true);
       setIsRunningTimer(true);
-      setShowDivCounterStart(true);
+      setShowCountdown(true);
+
+      window.screen.orientation.lock("landscape");
     }
   }, [gameCategory, gameVariant]);
 
@@ -212,24 +217,32 @@ function GameModule(props) {
     });
   }
 
+  useEffect(() => {
+    if (countStart === 0) {
+      setTimeout(() => {
+        setShowQuestions(true);
+      }, 700);
+    }
+  }, [countStart]);
+
   //Beginning of the game after countdown, setting all counters and question
   useEffect(() => {
-    if (countStart === -1) {
+    if (showQuestions) {
       setIsRunningStart(false);
       setClickOnSkip(true);
       setTiltOnCorrect(true);
-      setShowDivCounterStart(false);
-      setShowDivCounterTimer(false);
+      setShowCountdown(false);
+      setShowCounterTimer(true);
       setDelayTimer(1000);
       setCurrentQuestion(GetRandomQuestion([numberOfGamesCompleted]));
     }
   }, [countStart, numberOfGamesCompleted]);
 
-  //Skip questin and reset timer on div click
+  //Skip questin and reset timer on click
   const handleClickOnSkip = () => {
     if (clickOnSkip) {
       setCountTimer(0);
-      setStopDivCounterTimer(false);
+      setShowCounterTimer(false);
       setSkippedAnswer(true);
       failureSound.play();
     }
@@ -239,7 +252,7 @@ function GameModule(props) {
   const handleTiltOnCorrect = () => {
     if (tiltOnCorrect) {
       setCountTimer(0);
-      setStopDivCounterTimer(false);
+      setShowCounterTimer(false);
       setCorrectAnswer(true);
       successSound.play();
 
@@ -250,12 +263,12 @@ function GameModule(props) {
   //End of each round
   useEffect(() => {
     if (countTimer === 0 && skippedAnswer === true) {
-      setStopDivCounterTimer(false);
+      setShowCounterTimer(false);
       setPoints(points - 1);
       failureSound.play();
     }
     if (countTimer === 0 && correctAnswer === true) {
-      setStopDivCounterTimer(false);
+      setShowCounterTimer(false);
       setPoints(points + 1);
       successSound.play();
     }
@@ -278,7 +291,7 @@ function GameModule(props) {
       setCorrectAnswer(false);
       setSkippedAnswer(false);
 
-      setStopDivCounterTimer(true);
+      setShowCounterTimer(false);
       setCountTimer(skipTimer);
       setNumberOfGamesCompleted(numberOfGamesCompleted + 1);
 
@@ -303,71 +316,75 @@ function GameModule(props) {
       setIsRunningTimer(false);
       setCountTimer("");
       setCurrentQuestion("");
-      setShowDivCounterTimer(true);
-
+      setShowCounterTimer(false);
       setClickOnSkip(false);
       setTiltOnCorrect(false);
+      setShowResult(true);
     }
   }, [numberOfGamesCompleted, numberOfGames]);
 
   const pageTransition = {
-    inBox: {
+    inModule: {
       opacity: 1,
+      x: 0,
       transition: {
         duration: 1,
       },
     },
-    outBox: {
+    outModule: {
       opacity: 0,
+      x: -200,
       transition: {
         duration: 1,
       },
     },
   };
+
   return (
-    // <DeviceOrientation lockOrientation={"landscape"}>
-    //   <Orientation orientation="landscape" angle="90" alwaysRender={false}>
-    //   </Orientation>
-    //   <Orientation orientation="portrait" alwaysRender={false}>
-    //     <ChangeOrientationBox></ChangeOrientationBox>
-    //   </Orientation>
-    // </DeviceOrientation>
-    <motion.div
-      variants={pageTransition}
-      initial={transitionOff ? "inBox" : "outBox"}
-      animate={transitionOff ? "outBox" : "inBox"}
-      exit={transitionOff ? "inBox" : "outBox"}
-      style={backgroundColor}
-      className="GameModule"
-      onClick={handleClickOnSkip}
-    >
-      <BackButton handleGoBack={handleGoBack} />
+    <DeviceOrientation lockOrientation={"landscape"}>
+      <Orientation orientation="landscape" angle="90" alwaysRender={false}>
+        <motion.div
+          variants={orientationChanged ? pageTransition : ""}
+          initial={transitionOff ? "inModule" : "outModule"}
+          animate={transitionOff ? "outModule" : "inModule"}
+          exit={transitionOff ? "inModule" : "outModule"}
+          style={backgroundColor}
+          className="GameModule"
+          onClick={handleClickOnSkip}
+        >
+          <BackButton handleGoBack={handleGoBack} />
 
-      <CounterStart
-        countdownSound={countdownSound}
-        countStart={countStart}
-        showDivCounterStart={showDivCounterStart}
-      />
+          {showCountdown ? (
+            <CountDown
+              countdownSound={countdownSound}
+              countStart={countStart}
+            />
+          ) : (
+            <Questions
+              showCounterTimer={showCounterTimer}
+              currentQuestion={currentQuestion}
+              skipTimer={skipTimer}
+            />
+          )}
 
-      <Questions
-        currentQuestion={currentQuestion}
-        showDivCounterTimer={showDivCounterTimer}
-        stopDivCounterTimer={stopDivCounterTimer}
-      />
+          <SkipOrCorrect
+            correctAnswer={correctAnswer}
+            skippedAnswer={skippedAnswer}
+          />
 
-      <SkipOrCorrect
-        correctAnswer={correctAnswer}
-        skippedAnswer={skippedAnswer}
-      />
-
-      {/* <Result
-        showResult={showResult}
-        points={points}
-        questionsResult={questionsResult}
-        handleGameRefresh={handleGameRefresh}
-        pointsObject={pointsObject}
-      /> */}
-    </motion.div>
+          <Result
+            showResult={showResult}
+            points={points}
+            questionsResult={questionsResult}
+            handleGameRefresh={handleGameRefresh}
+            pointsObject={pointsObject}
+          />
+        </motion.div>
+      </Orientation>
+      <Orientation orientation="portrait" alwaysRender={false}>
+        <ChangeOrientationBox></ChangeOrientationBox>
+      </Orientation>
+    </DeviceOrientation>
   );
 }
 // <ParticlesCanvas />

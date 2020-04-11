@@ -42,23 +42,6 @@ function Box(props) {
     setGameCategory(gameVariant);
   };
 
-  const boxTransition = {
-    inModule: {
-      opacity: 0,
-    },
-    animModule: {
-      opacity: 1,
-    },
-
-    outModule: {
-      opacity: 0,
-      transition: {
-        ease: "easeOut",
-        duration: 1,
-      },
-    },
-  };
-
   useEffect(() => {
     if (gameCategoryPicked) {
       history.push("/gamemenu");
@@ -68,11 +51,7 @@ function Box(props) {
   return (
     <motion.div
       style={backgroundImage}
-      variants={boxTransition}
       className="Box"
-      initial={"inModule"}
-      animate={"animModule"}
-      exit={"outModule"}
       whileHover={{ scale: 1.05 }}
       onClick={() => boxClicked()}
     >

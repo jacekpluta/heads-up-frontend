@@ -14,6 +14,7 @@ import { ParStyle, BlueBackgroundStyle } from "../styles/Layout";
 import { isBrowser } from "react-device-detect";
 import animalList from "./lists/AnimalsList";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 function App() {
   const [filmList, setFilmList] = useState([]);
@@ -34,7 +35,7 @@ function App() {
       questions: animalList,
       background: { backgroundImage: `url(${AnimalsTile})` },
       gameTile: { AnimalsTile },
-      description: "Can you pretend to be an elephant? "
+      description: "Czy umiesz udawać słonia? ",
     },
     {
       id: 1,
@@ -43,7 +44,7 @@ function App() {
       questions: filmList,
       background: { backgroundImage: `url(${MoviesTile})` },
       gameTile: { MoviesTile },
-      description: "aaa"
+      description: "aaa",
     },
     {
       id: 2,
@@ -52,7 +53,7 @@ function App() {
       questions: gameList,
       background: { backgroundImage: `url(${GamesTile})` },
       gameTile: { GamesTile },
-      description: "aaa"
+      description: "aaa",
     },
     {
       id: 3,
@@ -61,28 +62,28 @@ function App() {
       questions: animeList,
       background: { backgroundImage: `url(${AnimeTile})` },
       gameTile: { AnimeTile },
-      description: "aaa"
-    }
+      description: "aaa",
+    },
   ];
 
   async function fetchMyAPIFilms() {
     axios({
       method: "GET",
       url:
-        "https://api.themoviedb.org/3/movie/popular?api_key=01e57b363d38e654e9afbd273dce30c3&language=en-US&page=1"
+        "https://api.themoviedb.org/3/movie/popular?api_key=01e57b363d38e654e9afbd273dce30c3&language=en-US&page=1",
     })
-      .then(response => {
+      .then((response) => {
         Object.entries(response.data.results).map(([key, value]) =>
-          setFilmList(filmList => [
+          setFilmList((filmList) => [
             ...filmList,
-            response.data.results[key].name
+            response.data.results[key].name,
           ])
         );
       })
       .then(() => {
         setFilmsFetched(true);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -94,21 +95,21 @@ function App() {
       headers: {
         "content-type": "application/octet-stream",
         "x-rapidapi-host": "rawg-video-games-database.p.rapidapi.com",
-        "x-rapidapi-key": "e7ded30215msh9c35219cd4db934p1c9604jsn6de6432b8ee4"
-      }
+        "x-rapidapi-key": "e7ded30215msh9c35219cd4db934p1c9604jsn6de6432b8ee4",
+      },
     })
-      .then(response => {
+      .then((response) => {
         Object.entries(response.data.results).map(([key, value]) =>
-          setGameList(gameList => [
+          setGameList((gameList) => [
             ...gameList,
-            response.data.results[key].name
+            response.data.results[key].name,
           ])
         );
       })
       .then(() => {
         setGamesFetched(true);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -124,22 +125,22 @@ function App() {
           first:
             "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=1",
           next: "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=2",
-          last: "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=3"
-        }
-      }
+          last: "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=3",
+        },
+      },
     })
-      .then(response => {
+      .then((response) => {
         Object.entries(response.data.data).map(([key, value]) =>
-          setAnimeList(animeList => [
+          setAnimeList((animeList) => [
             ...animeList,
-            response.data.data[key].attributes.titles.en_jp
+            response.data.data[key].attributes.titles.en_jp,
           ])
         );
       })
       .then(() => {
         setAnimeFetched(true);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       });
   }
@@ -149,6 +150,7 @@ function App() {
 
   useEffect(() => {
     if (!isBrowser) {
+      window.screen.orientation.lock("landscape");
       // fetchMyAPIFilms();
       // fetchMyAPIAnime();
       // fetchMyAPIGames();
@@ -161,6 +163,20 @@ function App() {
     }
   }, [animeFetched, gamesFetched, filmsFetched]);
 
+  const pageTransition = {
+    inModule: {
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+      },
+    },
+    outModule: {
+      opacity: 0,
+      transition: {
+        duration: 0.3,
+      },
+    },
+  };
   if (isBrowser) {
     return (
       <BlueBackgroundStyle>
@@ -171,14 +187,21 @@ function App() {
     );
   } else if (!allFechted) {
     return (
-      <div className="App">
+      <motion.div
+        className="App"
+        variants={pageTransition}
+        initial={"outModule"}
+        animate={"inModule"}
+        exit={"outModule"}
+      >
         <Header handleMuteSounds={handleMuteSounds} />
+
         <Main
           allFechted={allFechted}
           gameVariantsList={gameVariantsList}
           muteSounds={muteSounds}
         ></Main>
-      </div>
+      </motion.div>
     );
   } else
     return (
@@ -189,7 +212,7 @@ function App() {
         justify="center"
         style={{
           background: "linearGradient(180deg, #013064, #1255a0)",
-          minHeight: "100vh"
+          minHeight: "100vh",
         }}
       >
         <CircularProgress thickness={5} color="secondary" />

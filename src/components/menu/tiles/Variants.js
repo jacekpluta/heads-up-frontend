@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 //SOUDS
 const clickSound = new UIfx(buttonClick, {
   volume: 1,
-  throttleMs: 100
+  throttleMs: 100,
 });
 
 export default function GameMenu() {
@@ -22,7 +22,7 @@ export default function GameMenu() {
   };
 
   return (
-    <Grid container style={{ paddingTop: "5%" }}>
+    <Grid container style={{ paddingTop: "10%" }}>
       <Grid
         container
         item
@@ -47,21 +47,6 @@ export default function GameMenu() {
       <Grid container item xs={6} justify="center">
         <ChallangeTile handleStartGame={handleStartGame} />
       </Grid>
-      {/* <Grid item xs={6} className="gameVariantBox">
-      
-      </Grid>
-
-      <Grid item xs={6} className="gameVariantBox">
-      
-      </Grid>
-
-      <Grid item xs={6} className="gameVariantBox">
-        <ChallangeTile />
-      </Grid>
-
-      <Grid item xs={6} className="gameVariantBox">
-        <DrawTile />
-      </Grid> */}
     </Grid>
   );
 }
