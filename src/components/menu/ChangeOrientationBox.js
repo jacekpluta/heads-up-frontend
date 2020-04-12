@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 import { ParStyle } from "../../styles/Layout";
 
 export default function ChangeOrientationBox(props) {
@@ -21,18 +21,16 @@ export default function ChangeOrientationBox(props) {
   };
 
   return (
-    <AnimatePresence>
-      <motion.div
-        className="ChangeOrientationBox"
-        variants={pageTransition}
-        initial={"outModule"}
-        animate={"inModule"}
-        exit={"outModule"}
-      >
-        <ParStyle style={{ marginTop: "44vh", fontSize: "7vw" }}>
-          Please rotate your device
-        </ParStyle>
-      </motion.div>
-    </AnimatePresence>
+    <motion.div
+      className="ChangeOrientationBox"
+      variants={pageTransition}
+      initial={"outModule"}
+      animate={"inModule"}
+      exit={"outModule"}
+    >
+      <ParStyle style={{ marginTop: "44vh", fontSize: "7vw" }}>
+        Please rotate your device
+      </ParStyle>
+    </motion.div>
   );
 }

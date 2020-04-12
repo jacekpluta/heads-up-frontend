@@ -16,9 +16,14 @@ export const DivLink = styled.div`
 
 export const ParStyle = styled.p`
   text-align: center;
-  width: 100%;
-  font-size: 5vw;
+  font-size: 7vw;
   color: #fff;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
 `;
 
 export const BlueBackgroundStyle = styled.div`

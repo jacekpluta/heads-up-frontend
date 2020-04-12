@@ -180,7 +180,7 @@ function App() {
   if (isBrowser) {
     return (
       <BlueBackgroundStyle>
-        <ParStyle style={{ marginTop: "25%", fontSize: "5vw" }}>
+        <ParStyle style={{ fontSize: "5vw" }}>
           This content is only aviable on phone or tablet devices
         </ParStyle>
       </BlueBackgroundStyle>
