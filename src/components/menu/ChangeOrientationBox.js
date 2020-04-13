@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ParStyle } from "../../styles/Layout";
+import { ParStyleCentered } from "../../styles/Layout";
 
 export default function ChangeOrientationBox(props) {
   const pageTransition = {
@@ -20,6 +20,23 @@ export default function ChangeOrientationBox(props) {
     },
   };
 
+  const textTransition = {
+    inModule: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 1,
+      },
+    },
+    outModule: {
+      opacity: 0,
+      x: 50,
+      transition: {
+        duration: 1,
+      },
+    },
+  };
+
   return (
     <motion.div
       className="ChangeOrientationBox"
@@ -28,9 +45,9 @@ export default function ChangeOrientationBox(props) {
       animate={"inModule"}
       exit={"outModule"}
     >
-      <ParStyle style={{ marginTop: "44vh", fontSize: "7vw" }}>
-        Please rotate your device
-      </ParStyle>
+      <ParStyleCentered style={{ fontSize: "10vw" }}>
+        PRZYŁÓŻ TELEFON DO CZOŁA
+      </ParStyleCentered>
     </motion.div>
   );
 }

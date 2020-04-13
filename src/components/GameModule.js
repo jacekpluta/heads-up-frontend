@@ -8,7 +8,6 @@ import BackButton from "./BackButton";
 import Questions from "./Questions";
 import SkipOrCorrect from "./SkipOrCorrect";
 import Result from "./Result";
-import CounterTimer from "./CounterTimer";
 
 import { GameCategoryContext } from "./contex/GameCategoryContext";
 import { GameVariantContext } from "./contex/GameVariantContext";
@@ -43,6 +42,23 @@ const failureSound = new UIfx(FailureRing, {
   throttleMs: 100,
 });
 
+const pageTransition = {
+  inModule: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 1,
+    },
+  },
+  outModule: {
+    opacity: 0,
+    x: -200,
+    transition: {
+      duration: 1,
+    },
+  },
+};
+
 function GameModule(props) {
   const highNumber = 99999999999999999999;
   const { gameCategory } = useContext(GameCategoryContext);
@@ -71,7 +87,7 @@ function GameModule(props) {
   const [questionsResult, setQuestionsResult] = useState([]);
 
   const [backgroundColor, setBackgroundColor] = useState("");
-  const [skipTimer, setSkipTimer] = useState(0);
+  const [timerSeconds, setTimerSeconds] = useState(0);
   const [correctAnswer, setCorrectAnswer] = useState(false);
   const [skippedAnswer, setSkippedAnswer] = useState(false);
   const [tiltDone, setTiltDone] = useState(true);
@@ -79,7 +95,9 @@ function GameModule(props) {
   const [pointsObject, setPointsObject] = useState("");
   const [transitionOff, setTransitionOff] = useState(false);
 
-  const [orientationChanged, setOrientationChanged] = useState(true);
+  const [orientationChanged, setOrientationChanged] = useState(false);
+
+  const [currentOrientation, setCurrentOrientation] = useState(null);
 
   const [showResult, setShowResult] = useState(false);
   const { muteSounds } = props;
@@ -116,10 +134,9 @@ function GameModule(props) {
     const backgroundColorDescribe = {
       background: "linear-gradient((180deg, #05f, #09f))",
     };
-
     setBackgroundColor(backgroundColorDescribe);
     setCountTimer(30);
-    setSkipTimer(30);
+    setTimerSeconds(30);
   };
 
   const handleGameVariantShow = () => {
@@ -128,7 +145,7 @@ function GameModule(props) {
     };
     setBackgroundColor(backgroundColorShow);
     setCountTimer(90);
-    setSkipTimer(90);
+    setTimerSeconds(90);
   };
 
   const handleGameVariantChallange = () => {
@@ -138,7 +155,7 @@ function GameModule(props) {
     };
     setBackgroundColor(backgroundColorChallange);
     setCountTimer(80);
-    setSkipTimer(80);
+    setTimerSeconds(80);
   };
 
   const handleGameVariantDraw = () => {
@@ -147,7 +164,7 @@ function GameModule(props) {
     };
     setBackgroundColor(backgroundColorDraw);
     setCountTimer(120);
-    setSkipTimer(120);
+    setTimerSeconds(120);
   };
 
   useEffect(() => {
@@ -162,6 +179,7 @@ function GameModule(props) {
     }
   }, [gameCategory, gameVariant]);
 
+  //counter for coundown
   useInterval(
     () => {
       setCountdownStart(countStart - 1);
@@ -169,6 +187,7 @@ function GameModule(props) {
     isRunningStart ? delayStart : null
   );
 
+  //counter for timer
   useInterval(
     () => {
       setCountTimer(countTimer - 1);
@@ -182,7 +201,7 @@ function GameModule(props) {
   };
 
   //Returns random question
-  const GetRandomQuestion = (rand) => {
+  const getRandomQuestion = (rand) => {
     return (rand =
       gameCategory.questions[
         Math.floor(Math.random() * gameCategory.questions.length)
@@ -191,14 +210,14 @@ function GameModule(props) {
 
   //Game menu
   useEffect(() => {
-    if (gameCategory && gameVariant) {
+    if (gameCategory && gameVariant && currentOrientation == "landscape") {
       setIsRunningStart(true);
       setIsRunningTimer(true);
       setShowCountdown(true);
 
       window.screen.orientation.lock("landscape");
     }
-  }, [gameCategory, gameVariant]);
+  }, [gameCategory, gameVariant, currentOrientation]);
 
   //Scren tilt Y axis, +1 point, correct answer
   const update = function (value) {
@@ -221,7 +240,7 @@ function GameModule(props) {
     if (countStart === 0) {
       setTimeout(() => {
         setShowQuestions(true);
-      }, 700);
+      }, 725);
     }
   }, [countStart]);
 
@@ -234,7 +253,7 @@ function GameModule(props) {
       setShowCountdown(false);
       setShowCounterTimer(true);
       setDelayTimer(1000);
-      setCurrentQuestion(GetRandomQuestion([numberOfGamesCompleted]));
+      setCurrentQuestion(getRandomQuestion([numberOfGamesCompleted]));
     }
   }, [countStart, numberOfGamesCompleted]);
 
@@ -292,17 +311,17 @@ function GameModule(props) {
       setSkippedAnswer(false);
 
       setShowCounterTimer(false);
-      setCountTimer(skipTimer);
+      setCountTimer(timerSeconds);
       setNumberOfGamesCompleted(numberOfGamesCompleted + 1);
 
-      setCurrentQuestion(GetRandomQuestion([numberOfGamesCompleted]));
+      setCurrentQuestion(getRandomQuestion([numberOfGamesCompleted]));
       setQuestionsResult((questionsResult) => [
         ...questionsResult,
         currentQuestion,
       ]);
     }
   }, [
-    skipTimer,
+    timerSeconds,
     countTimer,
     numberOfGamesCompleted,
     numberOfGames,
@@ -323,28 +342,17 @@ function GameModule(props) {
     }
   }, [numberOfGamesCompleted, numberOfGames]);
 
-  const pageTransition = {
-    inModule: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 1,
-      },
-    },
-    outModule: {
-      opacity: 0,
-      x: -200,
-      transition: {
-        duration: 1,
-      },
-    },
-  };
-
   return (
-    <DeviceOrientation lockOrientation={"landscape"}>
+    <DeviceOrientation
+      lockOrientation={"landscape"}
+      onOrientationChange={(orientation) => {
+        setCurrentOrientation(orientation);
+        setOrientationChanged(true);
+      }}
+    >
       <Orientation orientation="landscape" angle="90" alwaysRender={false}>
         <motion.div
-          variants={orientationChanged ? pageTransition : ""}
+          variants={orientationChanged ? "" : pageTransition}
           initial={transitionOff ? "inModule" : "outModule"}
           animate={transitionOff ? "outModule" : "inModule"}
           exit={transitionOff ? "inModule" : "outModule"}
@@ -354,17 +362,20 @@ function GameModule(props) {
         >
           <BackButton handleGoBack={handleGoBack} />
 
-          {showCountdown ? (
-            <CountDown
-              countdownSound={countdownSound}
-              countStart={countStart}
-            />
-          ) : (
+          <CountDown
+            countdownSound={countdownSound}
+            countStart={countStart}
+            showCountdown={showCountdown}
+          />
+
+          {showCounterTimer ? (
             <Questions
               showCounterTimer={showCounterTimer}
               currentQuestion={currentQuestion}
-              skipTimer={skipTimer}
+              timerSeconds={timerSeconds}
             />
+          ) : (
+            ""
           )}
 
           <SkipOrCorrect

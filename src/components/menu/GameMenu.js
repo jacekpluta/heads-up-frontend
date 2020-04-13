@@ -76,7 +76,7 @@ export default function GameMenu(props) {
       >
         <div style={gameTitleStyle}>
           <BackButton handleGoBack={handleGoBack} />
-          <GlowingEffect></GlowingEffect>
+          {/* <GlowingEffect></GlowingEffect> */}
           <GameTitle gameCategoryImage={gameCategory.background} />
           <ParStyle>{gameCategory.description}</ParStyle>
         </div>

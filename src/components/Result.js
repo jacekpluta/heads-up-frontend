@@ -1,15 +1,17 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import "../styles/Refresh.scss";
+import "../styles/RefreshButton.scss";
 import { Table } from "semantic-ui-react";
 
 function Result(props) {
+  const { handleGameRefresh, points, pointsObject, questionsResult } = props;
+
   const pStyle = {
     textAlign: "center",
     width: "100%",
     fontSize: "30px",
     color: "#f8f8ff",
-    textShadow: "0 3px 0 #b2a98f,0 14px 10px rgba(0,0,0,0.15)"
+    textShadow: "0 3px 0 #b2a98f,0 14px 10px rgba(0,0,0,0.15)",
   };
 
   const tableStyle = {
@@ -18,7 +20,7 @@ function Result(props) {
     width: "50%",
     fontSize: "20px",
     color: "#f8f8ff",
-    textShadow: "0 3px 0 #b2a98f,0 14px 10px rgba(0,0,0,0.15)"
+    textShadow: "0 3px 0 #b2a98f,0 14px 10px rgba(0,0,0,0.15)",
   };
 
   return (
@@ -27,16 +29,16 @@ function Result(props) {
         <motion.div
           style={{
             opacity: 0,
-            display: "block"
+            display: "block",
           }}
           className="Result"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
           exit={{ opacity: 0 }}
-          onClick={() => props.handleGameRefresh()}
+          onClick={() => handleGameRefresh()}
         >
-          <p style={pStyle}>Points: {props.points}</p>
+          <p style={pStyle}>Points: {points}</p>
 
           <Table inverted style={tableStyle}>
             <Table.Header>
@@ -48,11 +50,11 @@ function Result(props) {
             </Table.Header>
 
             <Table.Body>
-              {props.questionsResult.map((question, key) => (
+              {questionsResult.map((question, key) => (
                 <Table.Row key={key}>
                   <Table.Cell>{key + 1}</Table.Cell>
                   <Table.Cell>{question}</Table.Cell>
-                  <Table.Cell>{props.pointsObject[key]}</Table.Cell>
+                  <Table.Cell>{pointsObject[key]}</Table.Cell>
                 </Table.Row>
               ))}
             </Table.Body>

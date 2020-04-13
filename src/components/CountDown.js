@@ -1,9 +1,26 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import "../styles/counter.scss";
+import "../styles/Countdown.scss";
+
+const pageTransition = {
+  inModule: {
+    opacity: 1,
+
+    transition: {
+      duration: 1,
+    },
+  },
+  outModule: {
+    opacity: 0,
+
+    transition: {
+      duration: 1,
+    },
+  },
+};
 
 const CountDown = (props) => {
-  const { countdownSound } = props;
+  const { countdownSound, showCountdown } = props;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -13,7 +30,13 @@ const CountDown = (props) => {
   }, []);
 
   return (
-    <motion.div className="demo">
+    <motion.div
+      className="demo"
+      variants={pageTransition}
+      initial={showCountdown ? "outModule" : "inModule"}
+      animate={showCountdown ? "inModule" : "outModule"}
+      exit={showCountdown ? "outModule" : "inModule"}
+    >
       <div className="demo__colored-blocks">
         <div className="demo__colored-blocks-rotater">
           <div className="demo__colored-block"></div>

@@ -10,7 +10,7 @@ $blue: #21bdff;
 $blocksColors: (
   1: $red,
   2: $yellow,
-  3: $blue
+  3: $blue,
 );
 
 $size: 140px;
@@ -106,6 +106,7 @@ $totalLen: $num1Len + $num2Len + $num3Len + $numJoin1-2 + $numJoin2-3 +
   }
   &__text {
     position: absolute;
+    font-family: "Lucida Console", Courier, monospace;
     left: 50%;
     top: 0;
     width: $sizeBig;

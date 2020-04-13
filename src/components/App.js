@@ -124,8 +124,6 @@ function App() {
         links: {
           first:
             "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=1",
-          next: "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=2",
-          last: "https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=3",
         },
       },
     })
@@ -181,7 +179,7 @@ function App() {
     return (
       <BlueBackgroundStyle>
         <ParStyle style={{ fontSize: "5vw" }}>
-          This content is only aviable on phone or tablet devices
+          Gra działa tylko na urządzeniach mobilnych
         </ParStyle>
       </BlueBackgroundStyle>
     );
