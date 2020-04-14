@@ -9,9 +9,12 @@ function Questions(props) {
 
   const styleCounter = {
     position: "absolute",
-    width: "50%",
-    margin: "0 auto",
-
+    top: " 65%",
+    left: "calc(50% - 37.7px)",
+    transform: "translate(-50%, -50%)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     color: "#f8f8ff",
     fontSize: "14vh",
     fontWeight: 700,
@@ -20,6 +23,20 @@ function Questions(props) {
 
   const pStyleTask = {
     position: "absolute",
+    top: "20%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "#f8f8ff",
+    fontSize: "8vh",
+    fontWeight: 700,
+    textShadow: "5px 5px 10px #474747",
+  };
+
+  const pStyleQuestion = {
+    position: "absolute",
     top: "40%",
     left: "50%",
     transform: "translate(-50%, -50%)",
@@ -27,22 +44,11 @@ function Questions(props) {
     alignItems: "center",
     justifyContent: "center",
     color: "#f8f8ff",
-    fontSize: "7vh",
-    fontWeight: 700,
-  };
-
-  const pStyleQuestion = {
-    position: "absolute",
-    top: " 45%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "#f8f8ff",
-    fontSize: "14vh",
+    fontSize: "12vh",
     fontWeight: 700,
     textAlign: "center",
+    width: "100%",
+    textShadow: "5px 5px 10px #474747",
   };
 
   const pageTransition = {
@@ -67,7 +73,7 @@ function Questions(props) {
           seconds={timerSeconds}
           color="white"
           alpha={0.9}
-          size={100}
+          size={70}
           //  onComplete={}
         />
       </p>
@@ -82,8 +88,10 @@ function Questions(props) {
       animate={showCounterTimer ? "inModule" : "outModule"}
       exit={showCounterTimer ? "outModule" : "inModule"}
     >
-      {rednerCounter()}
-      <p style={pStyleQuestion}>{currentQuestion}</p>
+      {currentQuestion ? rednerCounter() : ""}
+      <p style={pStyleQuestion}>
+        {currentQuestion ? currentQuestion.toUpperCase() : ""}
+      </p>
       <p style={pStyleTask}>{gameVariant ? gameVariant.toUpperCase() : ""}</p>
     </motion.div>
   );

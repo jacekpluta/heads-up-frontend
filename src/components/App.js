@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
+
 import "../styles/styles.css";
+import "../styles/styles.scss";
+
 import { CircularProgress, Grid } from "@material-ui/core/";
 
 import Header from "./Header";
@@ -15,6 +18,7 @@ import { isBrowser } from "react-device-detect";
 import animalList from "./lists/AnimalsList";
 import axios from "axios";
 import { motion } from "framer-motion";
+import GamesApi from "./api/GamesApi";
 
 function App() {
   const [filmList, setFilmList] = useState([]);
@@ -27,7 +31,7 @@ function App() {
   const [allFechted, setAllFechted] = useState(false);
   const [muteSounds, setMuteSounds] = useState(false);
 
-  const gameVariantsList = [
+  const gameCategoriesList = [
     {
       id: 0,
       name: "animals",
@@ -89,15 +93,7 @@ function App() {
   }
 
   async function fetchMyAPIGames() {
-    axios({
-      method: "GET",
-      url: "https://rawg-video-games-database.p.rapidapi.com/games",
-      headers: {
-        "content-type": "application/octet-stream",
-        "x-rapidapi-host": "rawg-video-games-database.p.rapidapi.com",
-        "x-rapidapi-key": "e7ded30215msh9c35219cd4db934p1c9604jsn6de6432b8ee4",
-      },
-    })
+    GamesApi()
       .then((response) => {
         Object.entries(response.data.results).map(([key, value]) =>
           setGameList((gameList) => [
@@ -149,9 +145,9 @@ function App() {
   useEffect(() => {
     if (!isBrowser) {
       window.screen.orientation.lock("landscape");
-      // fetchMyAPIFilms();
-      // fetchMyAPIAnime();
-      // fetchMyAPIGames();
+      //fetchMyAPIFilms();
+      fetchMyAPIAnime();
+      fetchMyAPIGames();
     }
   }, []);
 
@@ -196,7 +192,7 @@ function App() {
 
         <Main
           allFechted={allFechted}
-          gameVariantsList={gameVariantsList}
+          gameCategoriesList={gameCategoriesList}
           muteSounds={muteSounds}
         ></Main>
       </motion.div>

@@ -3,52 +3,64 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const pStyle = {
   position: "absolute",
-  top: "42%",
+  top: "40%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   color: "#f8f8ff",
-  fontSize: "10vh",
-  textShadow:
-    "0 3px 0 #b2a98f,0 14px 10px rgba(0,0,0,0.15), 0 24px 2px rgba(0,0,0,0.1), 0 34px 30px rgba(0,0,0,0.1)",
+  fontSize: "12vh",
   fontWeight: 700,
+  textAlign: "center",
+  width: "100%",
+  textShadow: "5px 5px 10px #474747",
+};
+
+const pageTransition = {
+  inModule: {
+    opacity: 0,
+    transition: {
+      duration: 0.3,
+    },
+  },
+  outModule: {
+    opacity: 1,
+    transition: {
+      duration: 0.3,
+    },
+  },
 };
 
 const SkipOrCorrect = (props) => {
-  return (
-    <AnimatePresence>
-      {props.skippedAnswer && (
-        <motion.div
-          style={{
-            opacity: 0,
-            display: "block",
-          }}
-          className="Skip"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          <p style={pStyle}>SKIPPED</p>
-        </motion.div>
-      )}
+  const { skippedAnswer, correctAnswer } = props;
 
-      {props.correctAnswer && (
-        <motion.div
-          style={{
-            opacity: 0,
-            display: "block",
-          }}
-          className="Correct"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          <p style={pStyle}>CORRECT</p>
-        </motion.div>
-      )}
-    </AnimatePresence>
+  return (
+    <React.Fragment>
+      <motion.div
+        className="SkipCorrect"
+        variants={pageTransition}
+        initial={"inModule"}
+        animate={skippedAnswer ? "outModule" : "inModule"}
+        exit={skippedAnswer ? "inModule" : "outModule"}
+      >
+        <p style={pStyle}>POMINIĘTE</p>
+      </motion.div>
+
+      <motion.div
+        className="SkipCorrect"
+        style={{
+          background:
+            "linear-gradient(180deg, rgb(7, 255, 48), rgb(2, 255, 171))",
+        }}
+        variants={pageTransition}
+        initial={"inModule"}
+        animate={correctAnswer ? "outModule" : "inModule"}
+        exit={correctAnswer ? "inModule" : "outModule"}
+      >
+        <p style={pStyle}>DOBRZE</p>
+      </motion.div>
+    </React.Fragment>
   );
 };
 

@@ -12,7 +12,7 @@ function Box(props) {
 
   const { setGameCategory } = useContext(GameCategoryContext);
 
-  const { backgroundImage, gameVariant, muteSounds } = props;
+  const { backgroundImage, gameCategory, muteSounds } = props;
 
   let history = useHistory();
 
@@ -22,12 +22,14 @@ function Box(props) {
     throttleMs: 100,
   });
 
+  //plays click on box click
   const boxClicked = () => {
-    if (gameVariant) {
+    if (gameCategory) {
       clickSound.play();
     }
   };
 
+  //mutes click sound
   useEffect(() => {
     if (muteSounds) {
       clickSound.setVolume(0);
@@ -39,7 +41,7 @@ function Box(props) {
   //OPEN GAME MENU AFTER PICKING GAME CATEGORY
   const handleGameCategoryPicked = () => {
     setGameCategoryPicked(!gameCategoryPicked);
-    setGameCategory(gameVariant);
+    setGameCategory(gameCategory);
   };
 
   useEffect(() => {

@@ -7,7 +7,6 @@ import useInterval from "./UseInterval";
 import BackButton from "./BackButton";
 import Questions from "./Questions";
 import SkipOrCorrect from "./SkipOrCorrect";
-import Result from "./Result";
 
 import { GameCategoryContext } from "./contex/GameCategoryContext";
 import { GameVariantContext } from "./contex/GameVariantContext";
@@ -21,6 +20,9 @@ import CountdownRing from "../sounds/countdown.mp3";
 
 import ChangeOrientationBox from "./menu/ChangeOrientationBox";
 import DeviceOrientation, { Orientation } from "react-screen-orientation";
+
+import { connect } from "react-redux";
+import { setPoints, setQuestionsResult } from "../actions";
 
 const clickSound = new UIfx(buttonClick, {
   volume: 1,
@@ -66,44 +68,41 @@ function GameModule(props) {
 
   const [numberOfGames] = useState(2);
   const [numberOfGamesCompleted, setNumberOfGamesCompleted] = useState(0);
-  const [countStart, setCountdownStart] = useState(5);
+  const [countdownStart, setCountdownStart] = useState(5);
   const [countTimer, setCountTimer] = useState(30);
   const [delayStart] = useState(750);
   const [delayTimer, setDelayTimer] = useState(highNumber);
+  const [backgroundColor, setBackgroundColor] = useState("");
+  const [transitionOff, setTransitionOff] = useState(false);
+  const [orientationChanged, setOrientationChanged] = useState(false);
+  const [currentOrientation, setCurrentOrientation] = useState(null);
+
   const [isRunningStart, setIsRunningStart] = useState(false);
   const [isRunningTimer, setIsRunningTimer] = useState(false);
+  const [timerSeconds, setTimerSeconds] = useState(0);
 
   const [showCountdown, setShowCountdown] = useState(false);
-
   const [showCounterTimer, setShowCounterTimer] = useState(false);
-  const [showQuestions, setShowQuestions] = useState(false);
 
+  const [showQuestions, setShowQuestions] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState("");
 
-  const [clickOnSkip, setClickOnSkip] = useState(false);
-  const [tiltOnCorrect, setTiltOnCorrect] = useState(false);
-
-  const [points, setPoints] = useState(0);
-  const [questionsResult, setQuestionsResult] = useState([]);
-
-  const [backgroundColor, setBackgroundColor] = useState("");
-  const [timerSeconds, setTimerSeconds] = useState(0);
   const [correctAnswer, setCorrectAnswer] = useState(false);
   const [skippedAnswer, setSkippedAnswer] = useState(false);
   const [tiltDone, setTiltDone] = useState(true);
-
-  const [pointsObject, setPointsObject] = useState("");
-  const [transitionOff, setTransitionOff] = useState(false);
-
-  const [orientationChanged, setOrientationChanged] = useState(false);
-
-  const [currentOrientation, setCurrentOrientation] = useState(null);
-
+  const [clickOnSkip, setClickOnSkip] = useState(false);
+  const [tiltOnCorrect, setTiltOnCorrect] = useState(false);
   const [showResult, setShowResult] = useState(false);
+
+  const [points, setPoints] = useState(0);
+  const [questionsResult, setQuestionsResult] = useState([]);
+  const [pointsObject, setPointsObject] = useState("");
+
   const { muteSounds } = props;
 
   let history = useHistory();
 
+  //routes back to gamemenu
   const handleGoBack = () => {
     clickSound.play();
     setTimeout(() => {
@@ -112,12 +111,23 @@ function GameModule(props) {
     setTransitionOff(true);
   };
 
+  //routes to result
+  useEffect(() => {
+    if (showResult) {
+      setTimeout(() => {
+        history.push("/result");
+      }, 200);
+    }
+  }, [showResult]);
+
+  //returns to main if there is no gameVariant or gameCategory
   useEffect(() => {
     if (!gameVariant || !gameCategory) {
       history.push("/");
     }
   }, [gameVariant, gameCategory]);
 
+  //mutes sounds
   useEffect(() => {
     if (muteSounds) {
       successSound.setVolume(0);
@@ -130,6 +140,7 @@ function GameModule(props) {
     }
   }, [muteSounds]);
 
+  //changing game variant based on gameVariantContext
   const handleGameVariantDescribe = () => {
     const backgroundColorDescribe = {
       background: "linear-gradient((180deg, #05f, #09f))",
@@ -168,7 +179,7 @@ function GameModule(props) {
   };
 
   useEffect(() => {
-    if (gameCategory && gameVariant === "describe") {
+    if (gameCategory && gameVariant === "opowiadaj") {
       handleGameVariantDescribe();
     } else if (gameCategory && gameVariant === "show") {
       handleGameVariantShow();
@@ -179,10 +190,16 @@ function GameModule(props) {
     }
   }, [gameCategory, gameVariant]);
 
+  //set points and questions actions
+  useEffect(() => {
+    props.setQuestionsResult(questionsResult);
+    props.setPoints(pointsObject);
+  }, [questionsResult, pointsObject]);
+
   //counter for coundown
   useInterval(
     () => {
-      setCountdownStart(countStart - 1);
+      setCountdownStart(countdownStart - 1);
     },
     isRunningStart ? delayStart : null
   );
@@ -195,11 +212,6 @@ function GameModule(props) {
     isRunningTimer ? delayTimer : null
   );
 
-  const handleGameRefresh = () => {
-    clickSound.play();
-    history.push("/gamemenu");
-  };
-
   //Returns random question
   const getRandomQuestion = (rand) => {
     return (rand =
@@ -208,7 +220,7 @@ function GameModule(props) {
       ]);
   };
 
-  //Game menu
+  //Game start
   useEffect(() => {
     if (gameCategory && gameVariant && currentOrientation == "landscape") {
       setIsRunningStart(true);
@@ -223,7 +235,7 @@ function GameModule(props) {
   const update = function (value) {
     if (value) {
       value = Math.floor(value);
-      if (value === 45 && countStart < 0 && tiltDone === true) {
+      if (value === 45 && countdownStart < 0 && tiltDone === true) {
         handleTiltOnCorrect();
         setTiltDone(false);
       }
@@ -236,13 +248,14 @@ function GameModule(props) {
     });
   }
 
+  //Shows question if countdown = 0
   useEffect(() => {
-    if (countStart === 0) {
+    if (countdownStart === 0) {
       setTimeout(() => {
         setShowQuestions(true);
       }, 725);
     }
-  }, [countStart]);
+  }, [countdownStart]);
 
   //Beginning of the game after countdown, setting all counters and question
   useEffect(() => {
@@ -255,7 +268,7 @@ function GameModule(props) {
       setDelayTimer(1000);
       setCurrentQuestion(getRandomQuestion([numberOfGamesCompleted]));
     }
-  }, [countStart, numberOfGamesCompleted]);
+  }, [countdownStart, numberOfGamesCompleted]);
 
   //Skip questin and reset timer on click
   const handleClickOnSkip = () => {
@@ -275,7 +288,7 @@ function GameModule(props) {
       setCorrectAnswer(true);
       successSound.play();
 
-      setPointsObject((pointsObject) => [...pointsObject, "+1"]);
+      setPoints((pointsObject) => [...pointsObject, "+1"]);
     }
   };
 
@@ -364,7 +377,6 @@ function GameModule(props) {
 
           <CountDown
             countdownSound={countdownSound}
-            countStart={countStart}
             showCountdown={showCountdown}
           />
 
@@ -382,14 +394,6 @@ function GameModule(props) {
             correctAnswer={correctAnswer}
             skippedAnswer={skippedAnswer}
           />
-
-          <Result
-            showResult={showResult}
-            points={points}
-            questionsResult={questionsResult}
-            handleGameRefresh={handleGameRefresh}
-            pointsObject={pointsObject}
-          />
         </motion.div>
       </Orientation>
       <Orientation orientation="portrait" alwaysRender={false}>
@@ -399,4 +403,5 @@ function GameModule(props) {
   );
 }
 // <ParticlesCanvas />
-export default GameModule;
+
+export default connect(null, { setQuestionsResult, setPoints })(GameModule);

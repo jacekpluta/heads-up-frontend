@@ -1,3 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 $bgColor: #32386d;
 
 $numOfColBlocks: 3; // must be higher than 2
@@ -30,6 +42,7 @@ $numJoin3-0: 40;
 $totalLen: $num1Len + $num2Len + $num3Len + $numJoin1-2 + $numJoin2-3 +
   $numJoin3-0;
 
+//Countdown Animation
 .demo {
   position: absolute;
   left: 50%;

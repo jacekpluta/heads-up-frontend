@@ -6,7 +6,7 @@ import { GameVariantContext } from "../../contex/GameVariantContext";
 const describleTileStyle = {
   backgroundImage: `url(${DescribePic})`,
   cursor: `pointer`,
-  borderColor: "#09f"
+  borderColor: "#09f",
 };
 
 function DescribeTile(props) {
@@ -20,7 +20,7 @@ function DescribeTile(props) {
       style={describleTileStyle}
       onClick={() => {
         handleStartGame();
-        setGameVariant("describe");
+        setGameVariant("opowiadaj");
       }}
     ></motion.div>
   );

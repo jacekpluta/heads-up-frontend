@@ -7,7 +7,7 @@ import UIfx from "uifx";
 
 import { useHistory } from "react-router-dom";
 
-import GlowingEffect from "./GlowingEffect";
+//import GlowingEffect from "./GlowingEffect";
 import GameTitle from "./GameTitle";
 import Variants from "./tiles/Variants";
 import { ParStyle } from "../../styles/Layout";
@@ -62,7 +62,7 @@ export default function GameMenu(props) {
     borderWidth: "0px",
     borderBottomLeftRadius: "30px",
     borderBottomRightRadius: "30px",
-    paddingBottom: "10px",
+    paddingBottom: "2px",
   };
 
   if (gameCategory) {
@@ -78,7 +78,9 @@ export default function GameMenu(props) {
           <BackButton handleGoBack={handleGoBack} />
           {/* <GlowingEffect></GlowingEffect> */}
           <GameTitle gameCategoryImage={gameCategory.background} />
-          <ParStyle>{gameCategory.description}</ParStyle>
+          <ParStyle style={{ marginTop: "25px" }}>
+            {gameCategory.description}
+          </ParStyle>
         </div>
 
         <Variants />

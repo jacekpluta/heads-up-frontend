@@ -4,22 +4,22 @@ import { Grid } from "@material-ui/core/";
 import { motion } from "framer-motion";
 
 const Main = (props) => {
-  const { gameVariantsList, muteSounds } = props;
+  const { gameCategoriesList, muteSounds } = props;
 
   return (
     <motion.div className="Main">
       <Grid container spacing={0}>
-        {gameVariantsList.map((gameVariant) => (
+        {gameCategoriesList.map((gameCategory) => (
           <Grid
             item
             xs={6}
             style={{ paddingBottom: "5%" }}
-            key={gameVariant.name}
+            key={gameCategory.name}
           >
             <Box
-              backgroundImage={gameVariant.background}
-              muteSounds={muteSounds}
-              gameVariant={gameVariant}
+              backgroundImage={gameCategory.background}
+              muteSounds={gameCategory}
+              gameCategory={gameCategory}
             ></Box>
           </Grid>
         ))}
