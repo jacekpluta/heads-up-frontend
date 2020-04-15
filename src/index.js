@@ -2,15 +2,17 @@ import React, { useState, useMemo } from "react";
 import ReactDOM from "react-dom";
 import { GameCategoryContext } from "./components/contex/GameCategoryContext";
 import { GameVariantContext } from "./components/contex/GameVariantContext";
+import { AnimatePresence } from "framer-motion";
 
 import * as serviceWorker from "./serviceWorker";
 import App from "./components/App";
 
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Switch,
   Route,
   withRouter,
+  useLocation,
 } from "react-router-dom";
 import GameMenu from "./components/menu/GameMenu";
 import GameModule from "./components/GameModule";
@@ -40,32 +42,41 @@ const Root = (props) => {
     setGameVariant,
   ]);
 
+  const location = useLocation();
+  const [_, rootPath] = location.pathname.split("/");
+
   return (
-    <Switch>
-      <GameCategoryContext.Provider value={gameCategoryValue}>
-        <GameVariantContext.Provider value={gameVariantValue}>
-          <Route exact path="/" render={(props) => <App {...props} />}></Route>
-          <Route
-            path="/gamemenu"
-            render={(props) => <GameMenu {...props} />}
-          ></Route>
-          <Route
-            path="/gamemodule"
-            render={(props) => <GameModule {...props} />}
-          ></Route>
-          <Route
-            path="/result"
-            render={(props) => (
-              <Result
-                {...props}
-                points={points}
-                questionsResult={questionsResult}
-              />
-            )}
-          ></Route>
-        </GameVariantContext.Provider>
-      </GameCategoryContext.Provider>
-    </Switch>
+    <AnimatePresence exitBeforeEnter initial={false}>
+      <Switch location={location} key={rootPath}>
+        <GameCategoryContext.Provider value={gameCategoryValue}>
+          <GameVariantContext.Provider value={gameVariantValue}>
+            <Route
+              exact
+              path="/"
+              render={(props) => <App {...props} />}
+            ></Route>
+            <Route
+              path="/gamemenu"
+              render={(props) => <GameMenu {...props} />}
+            ></Route>
+            <Route
+              path="/gamemodule"
+              render={(props) => <GameModule {...props} />}
+            ></Route>
+            <Route
+              path="/result"
+              render={(props) => (
+                <Result
+                  {...props}
+                  points={points}
+                  questionsResult={questionsResult}
+                />
+              )}
+            ></Route>
+          </GameVariantContext.Provider>
+        </GameCategoryContext.Provider>
+      </Switch>
+    </AnimatePresence>
   );
 };
 
@@ -78,9 +89,9 @@ const RootWithAuth = withRouter(connect(mapStateToProps)(Root));
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
+    <BrowserRouter>
       <RootWithAuth />
-    </Router>
+    </BrowserRouter>
   </Provider>,
   document.getElementById("root")
 );

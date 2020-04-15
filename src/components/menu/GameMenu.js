@@ -56,12 +56,12 @@ export default function GameMenu(props) {
     setTransitionOff(true);
   };
 
-  const gameTitleStyle = {
+  const gameTileDescriptionContainer = {
     borderBottomStyle: "solid",
     background: "#023875",
     borderWidth: "0px",
-    borderBottomLeftRadius: "30px",
-    borderBottomRightRadius: "30px",
+    borderRadius: "30px",
+
     paddingBottom: "2px",
   };
 
@@ -74,7 +74,7 @@ export default function GameMenu(props) {
         exit={transitionOff ? "inModule" : "outModule"}
         className="gameMenu"
       >
-        <div style={gameTitleStyle}>
+        <div style={gameTileDescriptionContainer}>
           <BackButton handleGoBack={handleGoBack} />
           {/* <GlowingEffect></GlowingEffect> */}
           <GameTitle gameCategoryImage={gameCategory.background} />

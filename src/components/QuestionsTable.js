@@ -44,7 +44,7 @@ export default function QuestionsTable(props) {
 
   return (
     <motion.div
-      className="questions-table"
+      className="result-questions-container-questions-table "
       variants={questionsTransitionContainer}
       initial="hidden"
       animate="visible"

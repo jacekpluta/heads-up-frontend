@@ -13,6 +13,23 @@ const medalSilverStyle = {
 const medalGoldStyle = {
   backgroundImage: `url(${medalGold})`,
 };
+
+const pointsBronzeStyle = {
+  background: "linear-gradient(#d2761e, #b98c4e )",
+  webkitBackgroundClip: "text",
+  webkitTextFillColor: "transparent",
+};
+const pointsSilverStyle = {
+  background: "linear-gradient(#eee, #333)",
+  webkitBackgroundClip: "text",
+  webkitTextFillColor: "transparent",
+};
+const pointsGoldStyle = {
+  background: "linear-gradient(#FCF6BA, #BF953F)",
+  webkitBackgroundClip: "text",
+  webkitTextFillColor: "transparent",
+};
+
 export default function Medal(props) {
   const { countPoints } = props;
 
@@ -28,12 +45,22 @@ export default function Medal(props) {
     }
   };
 
+  const pointsStyle = () => {
+    if (allPoints < 4) {
+      return pointsBronzeStyle;
+    } else if (allPoints < 7) {
+      return pointsSilverStyle;
+    } else {
+      return pointsGoldStyle;
+    }
+  };
+
   return (
     <motion.div
       style={medalStyle()}
-      className="medal"
+      className="result-container-medal"
       initial={{ scale: 0 }}
-      animate={{ rotate: 360, scale: 1 }}
+      animate={{ scale: 1 }}
       transition={{
         duration: 2,
         type: "spring",
@@ -43,7 +70,12 @@ export default function Medal(props) {
       }}
     >
       {" "}
-      {<p className="points"> {allPoints}</p>}
+      {
+        <p className="result-container-medal-points" style={pointsStyle()}>
+          {" "}
+          {allPoints}
+        </p>
+      }
     </motion.div>
   );
 }

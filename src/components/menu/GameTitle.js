@@ -6,7 +6,7 @@ function GameTitle(props) {
     borderStyle: "solid",
     borderColor: "white",
     borderRadius: "10px",
-    borderWidth: "5px",
+    borderWidth: "10px",
     minWidth: "60%",
     backgroundSize: "100% 100%",
     backgroundImage: `${props.gameCategoryImage.backgroundImage}`,

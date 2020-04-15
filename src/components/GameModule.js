@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { BrowserRouter as Router, useHistory } from "react-router-dom";
-import { motion } from "framer-motion";
+import { useHistory, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import CountDown from "./CountDown";
 
 import useInterval from "./UseInterval";
@@ -49,14 +49,14 @@ const pageTransition = {
     opacity: 1,
     x: 0,
     transition: {
-      duration: 1,
+      duration: 0.5,
     },
   },
   outModule: {
     opacity: 0,
     x: -200,
     transition: {
-      duration: 1,
+      duration: 0.5,
     },
   },
 };
@@ -100,7 +100,8 @@ function GameModule(props) {
 
   const { muteSounds } = props;
 
-  let history = useHistory();
+  const location = useLocation();
+  const history = useHistory();
 
   //routes back to gamemenu
   const handleGoBack = () => {
@@ -360,41 +361,47 @@ function GameModule(props) {
       lockOrientation={"landscape"}
       onOrientationChange={(orientation) => {
         setCurrentOrientation(orientation);
-        setOrientationChanged(true);
+
+        console.log(orientation);
+        if (orientation === "landscape") {
+          setOrientationChanged(true);
+        }
       }}
     >
       <Orientation orientation="landscape" angle="90" alwaysRender={false}>
-        <motion.div
-          variants={orientationChanged ? "" : pageTransition}
-          initial={transitionOff ? "inModule" : "outModule"}
-          animate={transitionOff ? "outModule" : "inModule"}
-          exit={transitionOff ? "inModule" : "outModule"}
-          style={backgroundColor}
-          className="GameModule"
-          onClick={handleClickOnSkip}
-        >
-          <BackButton handleGoBack={handleGoBack} />
+        <AnimatePresence>
+          <motion.div
+            variants={orientationChanged ? "" : pageTransition}
+            initial={transitionOff ? "inModule" : "outModule"}
+            animate={transitionOff ? "outModule" : "inModule"}
+            exit={transitionOff ? "inModule" : "outModule"}
+            style={backgroundColor}
+            className="GameModule"
+            onClick={handleClickOnSkip}
+          >
+            <BackButton handleGoBack={handleGoBack} />
 
-          <CountDown
-            countdownSound={countdownSound}
-            showCountdown={showCountdown}
-          />
-
-          {showCounterTimer ? (
-            <Questions
-              showCounterTimer={showCounterTimer}
-              currentQuestion={currentQuestion}
-              timerSeconds={timerSeconds}
+            <CountDown
+              countdownSound={countdownSound}
+              showCountdown={showCountdown}
             />
-          ) : (
-            ""
-          )}
 
-          <SkipOrCorrect
-            correctAnswer={correctAnswer}
-            skippedAnswer={skippedAnswer}
-          />
-        </motion.div>
+            {showCounterTimer ? (
+              <Questions
+                showCounterTimer={showCounterTimer}
+                currentQuestion={currentQuestion}
+                timerSeconds={timerSeconds}
+              />
+            ) : (
+              ""
+            )}
+
+            <SkipOrCorrect
+              correctAnswer={correctAnswer}
+              skippedAnswer={skippedAnswer}
+            />
+          </motion.div>
+        </AnimatePresence>
       </Orientation>
       <Orientation orientation="portrait" alwaysRender={false}>
         <ChangeOrientationBox></ChangeOrientationBox>

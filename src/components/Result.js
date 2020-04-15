@@ -51,7 +51,6 @@ const refreshIconContainerStyle = {
   paddingBottom: "15px",
   width: "65%",
   textAlign: "center",
-  // transform: "scale(1.10,1)",
 };
 
 const backIconContainerStyle = {
@@ -111,7 +110,7 @@ function Result(props) {
 
   return (
     <motion.div
-      className="Result"
+      className="result-container"
       variants={pageTransition}
       initial={transitionOff ? "inModule" : "outModule"}
       animate={transitionOff ? "outModule" : "inModule"}
@@ -120,7 +119,7 @@ function Result(props) {
       <p style={pStyle}>TWÓJ WYNIK </p>
       <Medal countPoints={countPoints}> </Medal>
 
-      <div className="results-container">
+      <div className="result-questions-container">
         <QuestionsTable questionsResult={questionsResult} points={points} />
 
         <Grid container>
@@ -129,7 +128,7 @@ function Result(props) {
             item
             xs={6}
             justify="center"
-            className={"results-container-back-button"}
+            className={"result-container-back-button"}
           >
             <motion.div
               whileHover={{ scale: 1.2 }}
@@ -152,7 +151,7 @@ function Result(props) {
             item
             xs={6}
             justify="center"
-            className={"results-container-refresh-button"}
+            className={"result-container-refresh-button"}
           >
             <motion.div
               whileHover={{ scale: 1.2 }}
