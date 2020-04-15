@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Table } from "semantic-ui-react";
+
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRedo, faCaretSquareLeft } from "@fortawesome/free-solid-svg-icons";
-
+import QuestionsTable from "./QuestionsTable";
+import Medal from "./Medal";
 import { Grid } from "@material-ui/core/";
 
 import buttonClick from "../sounds/buttonClick.mp3";
@@ -18,42 +19,52 @@ const clickSound = new UIfx(buttonClick, {
 const pStyle = {
   textAlign: "center",
   width: "100%",
-  fontSize: "30px",
+  fontSize: "5vh",
   color: "#f8f8ff",
-  textShadow: "0 3px 0 #b2a98f,0 14px 10px rgba(0,0,0,0.15)",
-};
-
-const tableStyle = {
-  marginLeft: "auto",
-  marginRight: "auto",
-  width: "50%",
-  fontSize: "20px",
-  color: "#f8f8ff",
-  textShadow: "0 3px 0 #b2a98f,0 14px 10px rgba(0,0,0,0.15)",
+  paddingTop: "15px",
+  fontWeight: 700,
 };
 
 const pageTransition = {
   inModule: {
     opacity: 1,
-    x: 0,
     transition: {
       duration: 1,
     },
   },
   outModule: {
     opacity: 0,
-    x: -200,
     transition: {
       duration: 1,
     },
   },
 };
 
-const refreshIconStyle = {
-  marginLeft: "50%",
+const refreshIconContainerStyle = {
+  borderStyle: "ridge",
+  borderWidth: "10px",
+  borderRadius: "30%",
+  borderColor: " #1b85ff",
+
+  background: " #1b85ff",
+  paddingTop: "15px",
+  paddingBottom: "15px",
+  width: "65%",
+  textAlign: "center",
+  // transform: "scale(1.10,1)",
 };
-const backIconStyle = {
-  marginLeft: "50%",
+
+const backIconContainerStyle = {
+  borderStyle: "ridge",
+  borderWidth: "10px",
+  borderRadius: "30%",
+  borderColor: "#0adaff",
+
+  background: "#0adaff",
+  paddingTop: "15px",
+  paddingBottom: "15px",
+  width: "60%",
+  textAlign: "center",
 };
 
 function Result(props) {
@@ -66,18 +77,14 @@ function Result(props) {
 
   const countPoints = () => {
     let allPoints = 0;
-    points.map((point) => {
-      if (point === 1) {
-        allPoints = parseInt(point) + allPoints;
-      }
-    });
-    if (allPoints === 0) {
-      return allPoints + " punktów";
-    } else if (allPoints < 5) {
-      return allPoints + " punkty";
-    } else {
-      return allPoints + " punktów";
+    if (points) {
+      points.map((point) => {
+        if (point === 1) {
+          allPoints = parseInt(point) + allPoints;
+        }
+      });
     }
+    return allPoints;
   };
 
   useEffect(() => {
@@ -110,52 +117,63 @@ function Result(props) {
       animate={transitionOff ? "outModule" : "inModule"}
       exit={transitionOff ? "inModule" : "outModule"}
     >
-      <p style={pStyle}>TWÓJ WYNIK: {points ? countPoints() : ""}</p>
+      <p style={pStyle}>TWÓJ WYNIK </p>
+      <Medal countPoints={countPoints}> </Medal>
 
-      <Table inverted style={tableStyle}>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Lp.</Table.HeaderCell>
-            <Table.HeaderCell>Pytanie</Table.HeaderCell>
-            <Table.HeaderCell>Punkty</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
+      <div className="results-container">
+        <QuestionsTable questionsResult={questionsResult} points={points} />
 
-        <Table.Body>
-          {questionsResult
-            ? questionsResult.map((question, key) => (
-                <Table.Row key={key} style={{ marginLeft: "10px" }}>
-                  <Table.Cell>{key + 1}</Table.Cell>
-                  <Table.Cell>{question}</Table.Cell>
-                  <Table.Cell>{points[key]}</Table.Cell>
-                </Table.Row>
-              ))
-            : ""}
-        </Table.Body>
-      </Table>
-      <Grid container>
-        <Grid container item xs={6} justify="center">
-          <FontAwesomeIcon
-            onClick={() => {
-              setRefreshGame(true);
-              setTransitionOff(true);
-            }}
-            icon={faRedo}
-            size="3x"
-            color="white"
-            style={refreshIconStyle}
-          />
+        <Grid container>
+          <Grid
+            container
+            item
+            xs={6}
+            justify="center"
+            className={"results-container-back-button"}
+          >
+            <motion.div
+              whileHover={{ scale: 1.2 }}
+              whileTap={{
+                scale: 0.8,
+              }}
+              style={backIconContainerStyle}
+            >
+              <FontAwesomeIcon
+                onClick={handleGoBack}
+                icon={faCaretSquareLeft}
+                size="4x"
+                color="white"
+              />
+            </motion.div>
+          </Grid>
+
+          <Grid
+            container
+            item
+            xs={6}
+            justify="center"
+            className={"results-container-refresh-button"}
+          >
+            <motion.div
+              whileHover={{ scale: 1.2 }}
+              whileTap={{
+                scale: 0.8,
+              }}
+              style={refreshIconContainerStyle}
+            >
+              <FontAwesomeIcon
+                onClick={() => {
+                  setRefreshGame(true);
+                  setTransitionOff(true);
+                }}
+                icon={faRedo}
+                size="4x"
+                color="white"
+              />
+            </motion.div>
+          </Grid>
         </Grid>
-        <Grid container item xs={6} justify="center">
-          <FontAwesomeIcon
-            onClick={handleGoBack}
-            icon={faCaretSquareLeft}
-            size="3x"
-            color="white"
-            style={backIconStyle}
-          />
-        </Grid>
-      </Grid>
+      </div>
     </motion.div>
   );
 }

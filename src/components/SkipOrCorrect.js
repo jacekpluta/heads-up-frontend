@@ -3,14 +3,14 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const pStyle = {
   position: "absolute",
-  top: "40%",
+  top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   color: "#f8f8ff",
-  fontSize: "12vh",
+  fontSize: "14vh",
   fontWeight: 700,
   textAlign: "center",
   width: "100%",
@@ -37,6 +37,7 @@ const SkipOrCorrect = (props) => {
 
   return (
     <React.Fragment>
+      {/* SKIPPED ANSWER */}
       <motion.div
         className="SkipCorrect"
         variants={pageTransition}
@@ -47,6 +48,7 @@ const SkipOrCorrect = (props) => {
         <p style={pStyle}>POMINIĘTE</p>
       </motion.div>
 
+      {/* CORRENT ANSWER */}
       <motion.div
         className="SkipCorrect"
         style={{

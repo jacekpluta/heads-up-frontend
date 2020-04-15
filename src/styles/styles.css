@@ -67,6 +67,73 @@ body,
   height: 20vh;
   background-size: 100% 100%;
 }
+.results-container {
+  margin-top: 50%;
+  border-top-style: solid;
+  border-color: #074285;
+  border-width: 55px;
+  border-top-left-radius: 300px;
+  border-top-right-radius: 300px;
+  z-index: 1;
+}
+.questions-table {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  top: 50vh;
+}
+.results-container-back-button {
+  position: absolute;
+  z-index: 2;
+
+  top: 70vh;
+}
+.results-container-refresh-button {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 70vh;
+}
+
+.medal {
+  position: absolute;
+  text-align: center;
+  top: 50px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  min-height: inherit;
+  min-width: 20%;
+  height: 30vh;
+  width: 120px;
+
+  background-size: 100% 100%;
+  margin-top: 15px;
+}
+
+.points {
+  position: absolute;
+  text-align: center;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  min-height: inherit;
+  min-width: 20%;
+  height: 30vh;
+  width: 120px;
+
+  font-size: 8vh;
+  font-weight: 700;
+  background: -webkit-linear-gradient(#eee, #333);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
 .GameModule {
   border-style: solid;
@@ -91,7 +158,7 @@ body,
   height: 100%;
   left: 0;
   top: 0;
-  background: linear-gradient(180deg, #0adaff, #1b85ff);
+  background: rgb(2, 55, 116);
 }
 
 .SkipCorrect {
@@ -102,7 +169,7 @@ body,
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, rgb(255, 95, 3), rgb(255, 7, 7));
+  background: linear-gradient(180deg, #ff5f03, #ff0707);
   /* background-image: url("../pic/failPic.jpg"); */
   /* background-image: url("../pic/correctPic.jpg"); */
   background-repeat: no-repeat;

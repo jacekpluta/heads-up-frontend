@@ -9,7 +9,7 @@ function Questions(props) {
 
   const styleCounter = {
     position: "absolute",
-    top: " 65%",
+    top: "75%",
     left: "calc(50% - 37.7px)",
     transform: "translate(-50%, -50%)",
     display: "flex",
@@ -23,21 +23,21 @@ function Questions(props) {
 
   const pStyleTask = {
     position: "absolute",
-    top: "20%",
+    top: "30%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     color: "#f8f8ff",
-    fontSize: "8vh",
+    fontSize: "7vh",
     fontWeight: 700,
     textShadow: "5px 5px 10px #474747",
   };
 
   const pStyleQuestion = {
     position: "absolute",
-    top: "40%",
+    top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     display: "flex",
@@ -89,9 +89,11 @@ function Questions(props) {
       exit={showCounterTimer ? "outModule" : "inModule"}
     >
       {currentQuestion ? rednerCounter() : ""}
+
       <p style={pStyleQuestion}>
         {currentQuestion ? currentQuestion.toUpperCase() : ""}
       </p>
+
       <p style={pStyleTask}>{gameVariant ? gameVariant.toUpperCase() : ""}</p>
     </motion.div>
   );

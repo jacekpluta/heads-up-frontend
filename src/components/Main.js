@@ -18,7 +18,7 @@ const Main = (props) => {
           >
             <Box
               backgroundImage={gameCategory.background}
-              muteSounds={gameCategory}
+              muteSounds={muteSounds}
               gameCategory={gameCategory}
             ></Box>
           </Grid>
