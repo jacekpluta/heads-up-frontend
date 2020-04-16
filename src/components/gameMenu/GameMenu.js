@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { motion } from "framer-motion";
-import { GameCategoryContext } from "../contex/GameCategoryContext";
+import { GameCategoryContext } from "../../contex/GameCategoryContext";
 import BackButton from "../BackButton";
 import buttonClick from "../../sounds/buttonClick.mp3";
 import UIfx from "uifx";
@@ -9,23 +9,8 @@ import { useHistory } from "react-router-dom";
 
 //import GlowingEffect from "./GlowingEffect";
 import GameTitle from "./GameTitle";
-import Variants from "./tiles/Variants";
+import Variants from "./Variants";
 import { ParStyle } from "../../styles/Layout";
-
-const pageTransition = {
-  inModule: {
-    opacity: 1,
-    transition: {
-      duration: 0.3,
-    },
-  },
-  outModule: {
-    opacity: 0,
-    transition: {
-      duration: 0.3,
-    },
-  },
-};
 
 const clickSound = new UIfx(buttonClick, {
   volume: 1,
@@ -36,24 +21,22 @@ export default function GameMenu(props) {
   let history = useHistory();
 
   const { gameCategory } = useContext(GameCategoryContext);
-  const [transitionOff, setTransitionOff] = useState(false);
 
-  useEffect(() => {
-    window.screen.orientation.lock("landscape");
-  }, []);
+  // useEffect(() => {
+  //   window.screen.orientation.lock("landscape");
+  // }, []);
 
   useEffect(() => {
     if (!gameCategory) {
       history.push("/");
     }
-  }, [gameCategory]);
+  }, [gameCategory, history]);
 
   const handleGoBack = () => {
     clickSound.play();
     setTimeout(() => {
       history.push("/");
     }, 100);
-    setTransitionOff(true);
   };
 
   const gameTileDescriptionContainer = {
@@ -61,18 +44,36 @@ export default function GameMenu(props) {
     background: "#023875",
     borderWidth: "0px",
     borderRadius: "30px",
-
     paddingBottom: "2px",
+  };
+
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+      x: "-100vw",
+    },
+    in: {
+      opacity: 1,
+      x: 0,
+    },
+    out: { opacity: 0, x: "100vw" },
+  };
+
+  const pageTransition = {
+    type: "tween",
+    ease: "anticipate",
+    duration: 1,
   };
 
   if (gameCategory) {
     return (
       <motion.div
-        variants={pageTransition}
-        initial={transitionOff ? "inModule" : "outModule"}
-        animate={transitionOff ? "outModule" : "inModule"}
-        exit={transitionOff ? "inModule" : "outModule"}
         className="gameMenu"
+        variants={pageVariants}
+        transition={pageTransition}
+        initial="initial"
+        animate="in"
+        exit="out"
       >
         <div style={gameTileDescriptionContainer}>
           <BackButton handleGoBack={handleGoBack} />
@@ -87,6 +88,6 @@ export default function GameMenu(props) {
       </motion.div>
     );
   } else {
-    return <React.Fragment></React.Fragment>;
+    return <div></div>;
   }
 }

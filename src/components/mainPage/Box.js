@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 import UIfx from "uifx";
-import buttonClick from "../sounds/buttonClick.mp3";
-import { DivLink } from "../styles/Layout";
-import { GameCategoryContext } from "./contex/GameCategoryContext";
+import buttonClick from "../../sounds/buttonClick.mp3";
+import { DivLink } from "../../styles/Layout";
+import { GameCategoryContext } from "../../contex/GameCategoryContext";
 
 import { useHistory } from "react-router-dom";
 
@@ -36,7 +36,7 @@ function Box(props) {
     } else {
       clickSound.setVolume(1);
     }
-  }, [muteSounds]);
+  }, [muteSounds, clickSound, history]);
 
   //OPEN GAME MENU AFTER PICKING GAME CATEGORY
   const handleGameCategoryPicked = () => {
@@ -48,7 +48,7 @@ function Box(props) {
     if (gameCategoryPicked) {
       history.push("/gamemenu");
     }
-  }, [gameCategoryPicked]);
+  }, [gameCategoryPicked, history]);
 
   return (
     <motion.div

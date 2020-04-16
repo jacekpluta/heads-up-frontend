@@ -1,28 +1,26 @@
 import React, { useContext } from "react";
 import { motion } from "framer-motion";
-import ChallangePic from "../../../pic/challangePic.jpg";
-import { GameVariantContext } from "../../contex/GameVariantContext";
+import DrawPic from "../../../pic/drawPic.jpg";
+import { GameVariantContext } from "../../../contex/GameVariantContext";
 
-const challangeTileStyle = {
-  backgroundImage: `url(${ChallangePic})`,
+const drawTileStyle = {
+  backgroundImage: `url(${DrawPic})`,
   cursor: `pointer`,
-  borderColor: "rgb(66, 228, 66)"
+  borderColor: "rgb(111, 0, 255)",
 };
 
-export default function ChallangeTile(props) {
+export default function DrawTile(props) {
   const { setGameVariant } = useContext(GameVariantContext);
-
   const { handleStartGame } = props;
-
   return (
     <motion.div
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.8, transition: { duration: 1 } }}
       className="TileStyle"
-      style={challangeTileStyle}
+      style={drawTileStyle}
       onClick={() => {
         handleStartGame();
-        setGameVariant("challange");
+        setGameVariant("draw");
       }}
     ></motion.div>
   );

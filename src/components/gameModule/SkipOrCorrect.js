@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const pStyle = {
   position: "absolute",
@@ -21,13 +21,13 @@ const pageTransition = {
   inModule: {
     opacity: 0,
     transition: {
-      duration: 0.3,
+      duration: 0.5,
     },
   },
   outModule: {
     opacity: 1,
     transition: {
-      duration: 0.3,
+      duration: 0.5,
     },
   },
 };

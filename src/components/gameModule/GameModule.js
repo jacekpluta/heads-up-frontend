@@ -1,28 +1,28 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import CountDown from "./CountDown";
 
-import useInterval from "./UseInterval";
-import BackButton from "./BackButton";
-import Questions from "./Questions";
+import useInterval from "../../customHooks/UseInterval";
+import BackButton from "../BackButton";
+import Questions from "../gameModule/Questions";
 import SkipOrCorrect from "./SkipOrCorrect";
 
-import { GameCategoryContext } from "./contex/GameCategoryContext";
-import { GameVariantContext } from "./contex/GameVariantContext";
+import { GameCategoryContext } from "../../contex/GameCategoryContext";
+import { GameVariantContext } from "../../contex/GameVariantContext";
 
 import UIfx from "uifx";
-import buttonClick from "../sounds/buttonClick.mp3";
+import buttonClick from "../../sounds/buttonClick.mp3";
 
-import FailureRing from "../sounds/failure.mp3";
-import SuccessRing from "../sounds/success.mp3";
-import CountdownRing from "../sounds/countdown.mp3";
+import FailureRing from "../../sounds/failure.mp3";
+import SuccessRing from "../../sounds/success.mp3";
+import CountdownRing from "../../sounds/countdown.mp3";
 
-import ChangeOrientationBox from "./menu/ChangeOrientationBox";
+import ChangeOrientationBox from "./ChangeOrientationBox";
 import DeviceOrientation, { Orientation } from "react-screen-orientation";
 
 import { connect } from "react-redux";
-import { setPoints, setQuestionsResult } from "../actions";
+import { setPoints, setQuestionsResult } from "../../actions";
 
 const clickSound = new UIfx(buttonClick, {
   volume: 1,
@@ -44,23 +44,6 @@ const failureSound = new UIfx(FailureRing, {
   throttleMs: 100,
 });
 
-const pageTransition = {
-  inModule: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.5,
-    },
-  },
-  outModule: {
-    opacity: 0,
-    x: -200,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
-
 function GameModule(props) {
   const highNumber = 99999999999999999999;
   const { gameCategory } = useContext(GameCategoryContext);
@@ -73,9 +56,6 @@ function GameModule(props) {
   const [delayStart] = useState(750);
   const [delayTimer, setDelayTimer] = useState(highNumber);
   const [backgroundColor, setBackgroundColor] = useState("");
-  const [transitionOff, setTransitionOff] = useState(false);
-  const [orientationChanged, setOrientationChanged] = useState(false);
-  const [currentOrientation, setCurrentOrientation] = useState(null);
 
   const [isRunningStart, setIsRunningStart] = useState(false);
   const [isRunningTimer, setIsRunningTimer] = useState(false);
@@ -98,9 +78,11 @@ function GameModule(props) {
   const [questionsResult, setQuestionsResult] = useState([]);
   const [pointsObject, setPointsObject] = useState("");
 
+  const [orientationChanged, setOrientationChanged] = useState(false);
+  const [currentOrientation, setCurrentOrientation] = useState(null);
+
   const { muteSounds } = props;
 
-  const location = useLocation();
   const history = useHistory();
 
   //routes back to gamemenu
@@ -109,7 +91,6 @@ function GameModule(props) {
     setTimeout(() => {
       history.push("/gamemenu");
     }, 200);
-    setTransitionOff(true);
   };
 
   //routes to result
@@ -121,12 +102,13 @@ function GameModule(props) {
     }
   }, [showResult]);
 
-  //returns to main if there is no gameVariant or gameCategory
+  //  returns to main if there is no gameVariant or gameCategory
+
   useEffect(() => {
-    if (!gameVariant || !gameCategory) {
+    if (!gameCategory) {
       history.push("/");
     }
-  }, [gameVariant, gameCategory]);
+  }, [gameCategory]);
 
   //mutes sounds
   useEffect(() => {
@@ -228,7 +210,7 @@ function GameModule(props) {
       setIsRunningTimer(true);
       setShowCountdown(true);
 
-      window.screen.orientation.lock("landscape");
+      // window.screen.orientation.lock("landscape");
     }
   }, [gameCategory, gameVariant, currentOrientation]);
 
@@ -356,52 +338,68 @@ function GameModule(props) {
     }
   }, [numberOfGamesCompleted, numberOfGames]);
 
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+      x: "-100vw",
+    },
+    in: {
+      opacity: 1,
+      x: 0,
+    },
+    out: { opacity: 0, x: "100vw" },
+  };
+
+  const pageTransition = {
+    type: "tween",
+    ease: "anticipate",
+    duration: 1,
+  };
+
   return (
     <DeviceOrientation
       lockOrientation={"landscape"}
       onOrientationChange={(orientation) => {
         setCurrentOrientation(orientation);
 
-        console.log(orientation);
         if (orientation === "landscape") {
           setOrientationChanged(true);
         }
       }}
     >
       <Orientation orientation="landscape" angle="90" alwaysRender={false}>
-        <AnimatePresence>
-          <motion.div
-            variants={orientationChanged ? "" : pageTransition}
-            initial={transitionOff ? "inModule" : "outModule"}
-            animate={transitionOff ? "outModule" : "inModule"}
-            exit={transitionOff ? "inModule" : "outModule"}
-            style={backgroundColor}
-            className="GameModule"
-            onClick={handleClickOnSkip}
-          >
-            <BackButton handleGoBack={handleGoBack} />
+        <motion.div
+          variants={pageVariants}
+          transition={pageTransition}
+          initial="initial"
+          animate="in"
+          exit="out"
+          style={backgroundColor}
+          className="GameModule"
+          onClick={handleClickOnSkip}
+        >
+          <BackButton handleGoBack={handleGoBack} />
 
-            <CountDown
-              countdownSound={countdownSound}
-              showCountdown={showCountdown}
+          <CountDown
+            countdownSound={countdownSound}
+            showCountdown={showCountdown}
+          />
+
+          {showCounterTimer ? (
+            <Questions
+              showCounterTimer={showCounterTimer}
+              currentQuestion={currentQuestion}
+              timerSeconds={timerSeconds}
             />
+          ) : (
+            ""
+          )}
 
-            {showCounterTimer ? (
-              <Questions
-                showCounterTimer={showCounterTimer}
-                currentQuestion={currentQuestion}
-                timerSeconds={timerSeconds}
-              />
-            ) : (
-              ""
-            )}
-
-            <SkipOrCorrect
-              correctAnswer={correctAnswer}
-              skippedAnswer={skippedAnswer}
-            />
-          </motion.div>
-        </AnimatePresence>
+          <SkipOrCorrect
+            correctAnswer={correctAnswer}
+            skippedAnswer={skippedAnswer}
+          />
+        </motion.div>
       </Orientation>
       <Orientation orientation="portrait" alwaysRender={false}>
         <ChangeOrientationBox></ChangeOrientationBox>

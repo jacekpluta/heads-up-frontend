@@ -5,8 +5,8 @@ import "../styles/styles.scss";
 
 import { CircularProgress, Grid } from "@material-ui/core/";
 
-import Header from "./Header";
-import Main from "./Main";
+import Header from "./mainPage/Header";
+import Main from "./mainPage/Main";
 
 import AnimalsTile from "../pic/animalsTile.jpg";
 import MoviesTile from "../pic/moviesTile.jpg";
@@ -15,12 +15,12 @@ import AnimeTile from "../pic/animeTile.jpg";
 
 import { ParStyle, BlueBackgroundStyle } from "../styles/Layout";
 import { isBrowser } from "react-device-detect";
-import animalList from "./lists/AnimalsList";
+import animalList from "../lists/AnimalsList";
 import axios from "axios";
 import { motion } from "framer-motion";
-import GamesApi from "./api/GamesApi";
+import GamesApi from "../api/GamesApi";
 
-function App() {
+function App(props) {
   const [filmList, setFilmList] = useState([]);
   const [gameList, setGameList] = useState([]);
   const [animeList, setAnimeList] = useState([]);
@@ -29,8 +29,8 @@ function App() {
   const [filmsFetched, setFilmsFetched] = useState(false);
   const [gamesFetched, setGamesFetched] = useState(false);
   const [allFechted, setAllFechted] = useState(false);
-  const [muteSounds, setMuteSounds] = useState(false);
 
+  const { muteSounds, handleMuteSounds } = props;
   const gameCategoriesList = [
     {
       id: 0,
@@ -138,13 +138,10 @@ function App() {
         console.log(error);
       });
   }
-  const handleMuteSounds = () => {
-    setMuteSounds(!muteSounds);
-  };
 
   useEffect(() => {
     if (!isBrowser) {
-      window.screen.orientation.lock("landscape");
+      // window.screen.orientation.lock("landscape");
       //fetchMyAPIFilms();
       fetchMyAPIAnime();
       fetchMyAPIGames();
@@ -157,20 +154,24 @@ function App() {
     }
   }, [animeFetched, gamesFetched, filmsFetched]);
 
-  const pageTransition = {
-    inModule: {
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-      },
-    },
-    outModule: {
+  const pageVariants = {
+    initial: {
       opacity: 0,
-      transition: {
-        duration: 0.5,
-      },
+      x: "-100vw",
     },
+    in: {
+      opacity: 1,
+      x: 0,
+    },
+    out: { opacity: 0, x: "100vw" },
   };
+
+  const pageTransition = {
+    type: "tween",
+    ease: "anticipate",
+    duration: 1,
+  };
+
   if (isBrowser) {
     return (
       <BlueBackgroundStyle>
@@ -183,13 +184,13 @@ function App() {
     return (
       <motion.div
         className="App"
-        variants={pageTransition}
-        initial={"outModule"}
-        animate={"inModule"}
-        exit={"outModule"}
+        variants={pageVariants}
+        transition={pageTransition}
+        initial="initial"
+        animate="in"
+        exit="out"
       >
-        <Header handleMuteSounds={handleMuteSounds} />
-
+        <Header handleMuteSounds={handleMuteSounds} muteSounds={muteSounds} />
         <Main
           allFechted={allFechted}
           gameCategoriesList={gameCategoriesList}

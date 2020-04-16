@@ -8,7 +8,7 @@ import QuestionsTable from "./QuestionsTable";
 import Medal from "./Medal";
 import { Grid } from "@material-ui/core/";
 
-import buttonClick from "../sounds/buttonClick.mp3";
+import buttonClick from "../../sounds/buttonClick.mp3";
 import UIfx from "uifx";
 
 const clickSound = new UIfx(buttonClick, {
@@ -23,21 +23,6 @@ const pStyle = {
   color: "#f8f8ff",
   paddingTop: "15px",
   fontWeight: 700,
-};
-
-const pageTransition = {
-  inModule: {
-    opacity: 1,
-    transition: {
-      duration: 1,
-    },
-  },
-  outModule: {
-    opacity: 0,
-    transition: {
-      duration: 1,
-    },
-  },
 };
 
 const refreshIconContainerStyle = {
@@ -57,9 +42,9 @@ const backIconContainerStyle = {
   borderStyle: "ridge",
   borderWidth: "10px",
   borderRadius: "30%",
-  borderColor: "#0adaff",
+  borderColor: " #1b85ff",
 
-  background: "#0adaff",
+  background: " #1b85ff",
   paddingTop: "15px",
   paddingBottom: "15px",
   width: "60%",
@@ -72,7 +57,6 @@ function Result(props) {
   const { points, questionsResult } = props;
 
   const [refreshGame, setRefreshGame] = useState(false);
-  const [transitionOff, setTransitionOff] = useState(false);
 
   const countPoints = () => {
     let allPoints = 0;
@@ -81,6 +65,7 @@ function Result(props) {
         if (point === 1) {
           allPoints = parseInt(point) + allPoints;
         }
+        return <div></div>;
       });
     }
     return allPoints;
@@ -91,30 +76,48 @@ function Result(props) {
       clickSound.play();
       history.push("/gameModule");
     }
-  }, [refreshGame]);
+  }, [refreshGame, history]);
 
   const handleGoBack = () => {
     clickSound.play();
-    setTransitionOff(true);
+
     setTimeout(() => {
       history.push("/gamemenu");
     }, 200);
-    setTransitionOff(true);
   };
 
   useEffect(() => {
     if (!points && !questionsResult) {
       history.push("/");
     }
-  }, [points, questionsResult]);
+  }, [points, questionsResult, history]);
+
+  const pageVariants = {
+    initial: {
+      opacity: 0,
+      x: "-100vw",
+    },
+    in: {
+      opacity: 1,
+      x: 0,
+    },
+    out: { opacity: 0, x: "100vw" },
+  };
+
+  const pageTransition = {
+    type: "tween",
+    ease: "anticipate",
+    duration: 1,
+  };
 
   return (
     <motion.div
       className="result-container"
-      variants={pageTransition}
-      initial={transitionOff ? "inModule" : "outModule"}
-      animate={transitionOff ? "outModule" : "inModule"}
-      exit={transitionOff ? "inModule" : "outModule"}
+      variants={pageVariants}
+      transition={pageTransition}
+      initial="initial"
+      animate="in"
+      exit="out"
     >
       <p style={pStyle}>TWÓJ WYNIK </p>
       <Medal countPoints={countPoints}> </Medal>
@@ -136,9 +139,9 @@ function Result(props) {
                 scale: 0.8,
               }}
               style={backIconContainerStyle}
+              onClick={handleGoBack}
             >
               <FontAwesomeIcon
-                onClick={handleGoBack}
                 icon={faCaretSquareLeft}
                 size="4x"
                 color="white"
@@ -152,6 +155,9 @@ function Result(props) {
             xs={6}
             justify="center"
             className={"result-container-refresh-button"}
+            onClick={() => {
+              setRefreshGame(true);
+            }}
           >
             <motion.div
               whileHover={{ scale: 1.2 }}
@@ -160,15 +166,7 @@ function Result(props) {
               }}
               style={refreshIconContainerStyle}
             >
-              <FontAwesomeIcon
-                onClick={() => {
-                  setRefreshGame(true);
-                  setTransitionOff(true);
-                }}
-                icon={faRedo}
-                size="4x"
-                color="white"
-              />
+              <FontAwesomeIcon icon={faRedo} size="4x" color="white" />
             </motion.div>
           </Grid>
         </Grid>

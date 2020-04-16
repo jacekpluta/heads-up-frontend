@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { GameVariantContext } from "./contex/GameVariantContext";
+import { GameVariantContext } from "../../contex/GameVariantContext";
 import ReactCountdownClock from "react-countdown-clock";
 import { motion } from "framer-motion";
 
 function Questions(props) {
   const { gameVariant } = useContext(GameVariantContext);
-  const { currentQuestion, timerSeconds, showCounterTimer } = props;
+  const { currentQuestion, timerSeconds } = props;
 
   const styleCounter = {
     position: "absolute",
@@ -36,66 +36,56 @@ function Questions(props) {
   };
 
   const pStyleQuestion = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "#f8f8ff",
-    fontSize: "12vh",
-    fontWeight: 700,
-    textAlign: "center",
-    width: "100%",
-    textShadow: "5px 5px 10px #474747",
-  };
-
-  const pageTransition = {
-    inModule: {
-      opacity: 1,
-      transition: {
-        duration: 1,
-      },
-    },
-    outModule: {
-      opacity: 0,
-      transition: {
-        duration: 1,
-      },
-    },
+    // color: "#f8f8ff",
+    // fontSize: "12vh",
+    // fontWeight: 700,
+    // textAlign: "center",
+    // width: "100%",
+    // textShadow: "5px 5px 10px #474747",
   };
 
   const rednerCounter = () => {
     return (
-      <p style={styleCounter}>
+      <div style={styleCounter}>
         <ReactCountdownClock
+          style={styleCounter}
           seconds={timerSeconds}
           color="white"
           alpha={0.9}
           size={70}
-          //  onComplete={}
         />
-      </p>
+      </div>
     );
   };
 
   return (
-    <motion.div
-      id="countdown"
-      variants={pageTransition}
-      initial={showCounterTimer ? "outModule" : "inModule"}
-      animate={showCounterTimer ? "inModule" : "outModule"}
-      exit={showCounterTimer ? "outModule" : "inModule"}
-    >
-      {currentQuestion ? rednerCounter() : ""}
-
-      <p style={pStyleQuestion}>
-        {currentQuestion ? currentQuestion.toUpperCase() : ""}
-      </p>
-
+    <div>
+      {currentQuestion ? rednerCounter() : ""}{" "}
+      <motion.div
+        className="random-question"
+        animate={{
+          y: 0,
+          opacity: 1,
+        }}
+        initial={{
+          y: -50,
+          opacity: 0,
+        }}
+        exit={{
+          y: 100,
+          opacity: 0,
+        }}
+        transition={{
+          duration: 1,
+        }}
+      >
+        {" "}
+        <p style={pStyleQuestion}>
+          {currentQuestion ? currentQuestion.toUpperCase() : ""}
+        </p>
+      </motion.div>
       <p style={pStyleTask}>{gameVariant ? gameVariant.toUpperCase() : ""}</p>
-    </motion.div>
+    </div>
   );
 }
 

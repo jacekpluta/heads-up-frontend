@@ -1,8 +1,10 @@
 import React, { useState, useMemo } from "react";
 import ReactDOM from "react-dom";
-import { GameCategoryContext } from "./components/contex/GameCategoryContext";
-import { GameVariantContext } from "./components/contex/GameVariantContext";
+import { GameCategoryContext } from "./contex/GameCategoryContext";
+import { GameVariantContext } from "./contex/GameVariantContext";
 import { AnimatePresence } from "framer-motion";
+import buttonClick from "./sounds/buttonClick.mp3";
+import UIfx from "uifx";
 
 import * as serviceWorker from "./serviceWorker";
 import App from "./components/App";
@@ -14,15 +16,21 @@ import {
   withRouter,
   useLocation,
 } from "react-router-dom";
-import GameMenu from "./components/menu/GameMenu";
-import GameModule from "./components/GameModule";
-import Result from "./components/Result";
+import GameMenu from "./components/gameMenu/GameMenu";
+import GameModule from "./components/gameModule/GameModule";
+import Result from "./components/resultPage/Result";
 
 import { createStore } from "redux";
 import { Provider, connect } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import rootReducer from "./reducers/index";
+
+//SOUDS
+const clickSound = new UIfx(buttonClick, {
+  volume: 1,
+  throttleMs: 100,
+});
 
 const store = createStore(rootReducer, composeWithDevTools());
 
@@ -31,6 +39,14 @@ const Root = (props) => {
 
   const [gameCategory, setGameCategory] = useState(null);
   const [gameVariant, setGameVariant] = useState(null);
+  const [muteSounds, setMuteSounds] = useState(false);
+
+  const handleMuteSounds = () => {
+    if (!muteSounds) {
+      clickSound.play();
+    }
+    setMuteSounds(!muteSounds);
+  };
 
   const gameCategoryValue = useMemo(() => ({ gameCategory, setGameCategory }), [
     gameCategory,
@@ -43,26 +59,12 @@ const Root = (props) => {
   ]);
 
   const location = useLocation();
-  const [_, rootPath] = location.pathname.split("/");
 
   return (
-    <AnimatePresence exitBeforeEnter initial={false}>
-      <Switch location={location} key={rootPath}>
-        <GameCategoryContext.Provider value={gameCategoryValue}>
-          <GameVariantContext.Provider value={gameVariantValue}>
-            <Route
-              exact
-              path="/"
-              render={(props) => <App {...props} />}
-            ></Route>
-            <Route
-              path="/gamemenu"
-              render={(props) => <GameMenu {...props} />}
-            ></Route>
-            <Route
-              path="/gamemodule"
-              render={(props) => <GameModule {...props} />}
-            ></Route>
+    <GameCategoryContext.Provider value={gameCategoryValue}>
+      <GameVariantContext.Provider value={gameVariantValue}>
+        <AnimatePresence>
+          <Switch location={location} key={location.pathname}>
             <Route
               path="/result"
               render={(props) => (
@@ -73,10 +75,23 @@ const Root = (props) => {
                 />
               )}
             ></Route>
-          </GameVariantContext.Provider>
-        </GameCategoryContext.Provider>
-      </Switch>
-    </AnimatePresence>
+            <Route path="/gamemodule" component={GameModule} />
+            <Route path="/gamemenu" component={GameMenu} />
+            <Route
+              exact
+              path="/"
+              render={(props) => (
+                <App
+                  {...props}
+                  handleMuteSounds={handleMuteSounds}
+                  muteSounds={muteSounds}
+                />
+              )}
+            ></Route>
+          </Switch>
+        </AnimatePresence>
+      </GameVariantContext.Provider>
+    </GameCategoryContext.Provider>
   );
 };
 

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import HeaderPic from "../pic//headerPic.jpg";
+import HeaderPic from "../pic//headerPic.png";
 
 export const DivLink = styled.div`
   cursor: pointer;

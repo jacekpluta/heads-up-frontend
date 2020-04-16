@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import { motion } from "framer-motion";
-import DescribePic from "../../../pic/describePic.jpg";
-import { GameVariantContext } from "../../contex/GameVariantContext";
+import ShowPic from "../../../pic/showPic.jpg";
+import { GameVariantContext } from "../../../contex/GameVariantContext";
 
-const describleTileStyle = {
-  backgroundImage: `url(${DescribePic})`,
+const showTileStyle = {
+  backgroundImage: `url(${ShowPic})`,
   cursor: `pointer`,
-  borderColor: "#09f",
+  borderColor: "rgb(255, 168, 6)",
 };
 
-function DescribeTile(props) {
+export default function ShowTile(props) {
   const { setGameVariant } = useContext(GameVariantContext);
   const { handleStartGame } = props;
   return (
@@ -17,13 +17,11 @@ function DescribeTile(props) {
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.8, transition: { duration: 1 } }}
       className="TileStyle"
-      style={describleTileStyle}
+      style={showTileStyle}
       onClick={() => {
         handleStartGame();
-        setGameVariant("opowiadaj");
+        setGameVariant("show");
       }}
     ></motion.div>
   );
 }
-
-export default DescribeTile;

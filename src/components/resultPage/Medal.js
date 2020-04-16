@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import medalBronze from "../pic/medalBronze.png";
-import medalSilver from "../pic/medalSilver.png";
-import medalGold from "../pic/medalGold.png";
+import medalBronze from "../../pic/medalBronze.png";
+import medalSilver from "../../pic/medalSilver.png";
+import medalGold from "../../pic/medalGold.png";
 
 const medalBronzeStyle = {
   backgroundImage: `url(${medalBronze})`,
@@ -16,18 +16,18 @@ const medalGoldStyle = {
 
 const pointsBronzeStyle = {
   background: "linear-gradient(#d2761e, #b98c4e )",
-  webkitBackgroundClip: "text",
-  webkitTextFillColor: "transparent",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
 };
 const pointsSilverStyle = {
   background: "linear-gradient(#eee, #333)",
   webkitBackgroundClip: "text",
-  webkitTextFillColor: "transparent",
+  WebkitTextFillColor: "transparent",
 };
 const pointsGoldStyle = {
   background: "linear-gradient(#FCF6BA, #BF953F)",
-  webkitBackgroundClip: "text",
-  webkitTextFillColor: "transparent",
+  WebkitBackgroundClip: "text",
+  WebkitTextFillColor: "transparent",
 };
 
 export default function Medal(props) {

@@ -26,7 +26,7 @@ const CountDown = (props) => {
       countdownSound.play();
     }, 900);
     return () => clearTimeout(timer);
-  }, []);
+  }, [countdownSound]);
 
   return (
     <motion.div

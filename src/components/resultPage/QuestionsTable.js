@@ -53,34 +53,30 @@ export default function QuestionsTable(props) {
         <Table.Body>
           {questionsResult
             ? questionsResult.map((question, key) => (
-                <Table.Row
+                <motion.tr
                   points={key}
-                  style={{
-                    marginLeft: "10px",
-                  }}
+                  key={key}
+                  variants={questionsTransition}
+                  style={
+                    points[key] === "-1"
+                      ? {
+                          background:
+                            "-webkit-linear-gradient(left, #074285 0% ,#ff0707 50%,  #074285 100%)",
+                          marginTop: "1px",
+                          marginBottom: "1px",
+                          marginLeft: "10px",
+                        }
+                      : {
+                          background:
+                            "-webkit-linear-gradient(left, #074285 0% ,#07ff30 50%,  #074285 100%)",
+                          marginTop: "1px",
+                          marginBottom: "1px",
+                          marginLeft: "10px",
+                        }
+                  }
                 >
-                  <motion.div
-                    variants={questionsTransition}
-                    style={
-                      points[key] === "-1"
-                        ? {
-                            background:
-                              "-webkit-linear-gradient(left, #074285 0% ,#ff0707 50%,  #074285 100%)",
-                            marginTop: "1px",
-                            marginBottom: "1px",
-                          }
-                        : {
-                            background:
-                              "-webkit-linear-gradient(left, #074285 0% ,#07ff30 50%,  #074285 100%)",
-                            marginTop: "1px",
-                            marginBottom: "1px",
-                          }
-                    }
-                  >
-                    <p style={pStyle}>{question}</p>
-                  </motion.div>
-                  {/* <Table.Cell>{points[key]}</Table.Cell> */}
-                </Table.Row>
+                  <td style={pStyle}>{question}</td>
+                </motion.tr>
               ))
             : ""}
         </Table.Body>
