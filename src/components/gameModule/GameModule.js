@@ -61,7 +61,7 @@ function GameModule(props) {
   const [isRunningTimer, setIsRunningTimer] = useState(false);
   const [timerSeconds, setTimerSeconds] = useState(0);
 
-  const [showCountdown, setShowCountdown] = useState(false);
+  const [showCountdown, setShowCountdown] = useState(true);
   const [showCounterTimer, setShowCounterTimer] = useState(false);
 
   const [showQuestions, setShowQuestions] = useState(false);
@@ -80,7 +80,7 @@ function GameModule(props) {
 
   const [currentOrientation, setCurrentOrientation] = useState(null);
 
-  const { muteSounds, fullScreenCheck } = props;
+  const { muteSounds } = props;
 
   const history = useHistory();
 
@@ -202,6 +202,14 @@ function GameModule(props) {
       ]);
   };
 
+  const fullScreenCheck = () => {
+    if (document.fullscreenElement) {
+      return;
+    } else {
+      return document.documentElement.requestFullscreen();
+    }
+  };
+
   useEffect(() => {
     if (currentOrientation === "landscape") {
       window.screen.orientation.lock("landscape");
@@ -252,21 +260,24 @@ function GameModule(props) {
 
   //Skip questin and reset timer on phone forward tilt
   const handleTiltOnCorrect = () => {
-    if (!tiltDone) {
-      // setShowCounterTimer(false);
+    if (tiltDone) {
       successSound.play();
       setCounterTimer(0);
       setCorrectAnswer(true);
+      setTiltDone(false);
     }
   };
 
   useEffect(() => {
     window.addEventListener("deviceorientation", (e) => {
-      let tiltValue = e.gamma;
-      console.log(tiltValue);
-      if (tiltValue) {
-        tiltValue = Math.floor(tiltValue);
-        if (tiltValue < 55 && countdownStart < 0 && tiltDone === false) {
+      if (e && e.gamma) {
+        e.gamma = Math.floor(e.gamma);
+        if (
+          e.gamma < 50 &&
+          e.gamma > 0 &&
+          tiltDone === false &&
+          showCounterTimer
+        ) {
           handleTiltOnCorrect();
           setTiltDone(true);
         }
@@ -329,7 +340,7 @@ function GameModule(props) {
       setCurrentQuestion("");
       setShowCounterTimer(false);
       setClickOnSkip(false);
-
+      setShowCountdown(false);
       setShowResult(true);
     }
   }, [numberOfGamesCompleted, numberOfGames]);

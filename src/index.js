@@ -94,7 +94,7 @@ const Root = (props) => {
             />
             <Route
               path="/gamemenu"
-              crender={(props) => (
+              render={(props) => (
                 <GameMenu {...props} fullScreenCheck={fullScreenCheck} />
               )}
             />

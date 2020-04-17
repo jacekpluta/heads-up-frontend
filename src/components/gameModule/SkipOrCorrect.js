@@ -38,17 +38,16 @@ const SkipOrCorrect = (props) => {
   return (
     <React.Fragment>
       {/* SKIPPED ANSWER */}
+
       <motion.div
         className="SkipCorrect"
         variants={pageTransition}
-        initial={"inModule"}
+        initial={skippedAnswer ? "inModule" : "outModule"}
         animate={skippedAnswer ? "outModule" : "inModule"}
-        exit={skippedAnswer ? "inModule" : "outModule"}
       >
         <p style={pStyle}>POMINIĘTE</p>
       </motion.div>
-
-      {/* CORRENT ANSWER */}
+      {/* CORRECT ANSWER */}
       <motion.div
         className="SkipCorrect"
         style={{
@@ -56,9 +55,8 @@ const SkipOrCorrect = (props) => {
             "linear-gradient(180deg, rgb(7, 255, 48), rgb(2, 255, 171))",
         }}
         variants={pageTransition}
-        initial={"inModule"}
+        initial={correctAnswer ? "inModule" : "outModule"}
         animate={correctAnswer ? "outModule" : "inModule"}
-        exit={correctAnswer ? "inModule" : "outModule"}
       >
         <p style={pStyle}>DOBRZE</p>
       </motion.div>
