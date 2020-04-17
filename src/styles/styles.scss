@@ -119,7 +119,6 @@ $totalLen: $num1Len + $num2Len + $num3Len + $numJoin1-2 + $numJoin2-3 +
   }
   &__text {
     position: absolute;
-    font-family: "Lucida Console", Courier, monospace;
     left: 50%;
     top: 0;
     width: $sizeBig;
@@ -128,7 +127,8 @@ $totalLen: $num1Len + $num2Len + $num3Len + $numJoin1-2 + $numJoin2-3 +
     text-align: center;
     line-height: $size;
     font-size: 33px;
-    color: #fff;
+    color: #f8f8ff;
+    text-shadow: 5px 5px 10px #474747;
     text-transform: uppercase;
     letter-spacing: 15px;
     transform: translateX(10px);

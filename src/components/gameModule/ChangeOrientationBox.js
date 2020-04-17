@@ -26,7 +26,6 @@ export default function ChangeOrientationBox(props) {
       transition={pageTransition}
       initial="initial"
       animate="in"
-      exit="out"
     >
       <ParStyle style={{ fontSize: "10vw" }}>PRZYŁÓŻ TELEFON DO CZOŁA</ParStyle>
     </motion.div>
