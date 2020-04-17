@@ -259,31 +259,23 @@ function GameModule(props) {
   };
 
   //Skip questin and reset timer on phone forward tilt
-  const handleTiltOnCorrect = () => {
-    if (tiltDone) {
-      successSound.play();
-      setCounterTimer(0);
-      setCorrectAnswer(true);
-      setTiltDone(false);
-    }
-  };
-
   useEffect(() => {
     window.addEventListener("deviceorientation", (e) => {
-      if (e && e.gamma) {
-        e.gamma = Math.floor(e.gamma);
-        if (
-          e.gamma < 50 &&
-          e.gamma > 0 &&
-          tiltDone === false &&
-          showCounterTimer
-        ) {
-          handleTiltOnCorrect();
-          setTiltDone(true);
-        }
+      e.gamma = Math.floor(e.gamma);
+
+      if (
+        e.gamma < 50 &&
+        e.gamma > 0 &&
+        tiltDone === false &&
+        showCounterTimer
+      ) {
+        successSound.play();
+        setCounterTimer(0);
+        setCorrectAnswer(true);
+        setTiltDone(true);
       }
     });
-  }, []);
+  }, [tiltDone]);
 
   //End of each round
   useEffect(() => {
@@ -291,11 +283,13 @@ function GameModule(props) {
       setShowCounterTimer(false);
       setPoints(points - 1);
       failureSound.play();
+      setTiltDone(false);
     }
     if (counterTimer === 0 && correctAnswer === true) {
       setShowCounterTimer(false);
       setPoints(points + 1);
       successSound.play();
+      setTiltDone(false);
     }
   }, [counterTimer, correctAnswer, skippedAnswer]);
 
@@ -310,7 +304,6 @@ function GameModule(props) {
   useEffect(() => {
     if (counterTimer === -2 && numberOfGamesCompleted <= numberOfGames) {
       setTiltDone(false);
-
       setClickOnSkip(true);
       setCorrectAnswer(false);
       setSkippedAnswer(false);
@@ -363,88 +356,88 @@ function GameModule(props) {
     duration: 1,
   };
 
-  if (currentOrientation !== "landscape") {
-    return (
-      <DeviceOrientation
-        lockOrientation={"landscape"}
-        onOrientationChange={(orientation) => {
-          setCurrentOrientation(orientation);
-        }}
-      >
-        <Orientation orientation="landscape" angle="90" alwaysRender={false}>
-          <motion.div
-            variants={pageVariants}
-            transition={pageTransition}
-            initial="initial"
-            animate="in"
-            exit="out"
-            style={backgroundColor}
-            className="GameModule"
-            onClick={handleClickOnSkip}
-          >
-            <BackButton handleGoBack={handleGoBack} />
+  // if (currentOrientation !== "landscape") {
+  //   return (
+  //     <DeviceOrientation
+  //       lockOrientation={"landscape"}
+  //       onOrientationChange={(orientation) => {
+  //         setCurrentOrientation(orientation);
+  //       }}
+  //     >
+  //       <Orientation orientation="landscape" angle="90" alwaysRender={false}>
+  //         <motion.div
+  //           variants={pageVariants}
+  //           transition={pageTransition}
+  //           initial="initial"
+  //           animate="in"
+  //           exit="out"
+  //           style={backgroundColor}
+  //           className="GameModule"
+  //           onClick={handleClickOnSkip}
+  //         >
+  //           <BackButton handleGoBack={handleGoBack} />
 
-            <CountDown
-              countdownSound={countdownSound}
-              showCountdown={showCountdown}
-            />
+  //           <CountDown
+  //             countdownSound={countdownSound}
+  //             showCountdown={showCountdown}
+  //           />
 
-            {showCounterTimer ? (
-              <Questions
-                showCounterTimer={showCounterTimer}
-                currentQuestion={currentQuestion}
-                timerSeconds={timerSeconds}
-              />
-            ) : (
-              ""
-            )}
+  //           {showCounterTimer ? (
+  //             <Questions
+  //               showCounterTimer={showCounterTimer}
+  //               currentQuestion={currentQuestion}
+  //               timerSeconds={timerSeconds}
+  //             />
+  //           ) : (
+  //             ""
+  //           )}
 
-            <SkipOrCorrect
-              correctAnswer={correctAnswer}
-              skippedAnswer={skippedAnswer}
-            />
-          </motion.div>
-        </Orientation>
-        <Orientation orientation="portrait" alwaysRender={false}>
-          <ChangeOrientationBox></ChangeOrientationBox>
-        </Orientation>
-      </DeviceOrientation>
-    );
-  } else {
-    return (
-      <motion.div
-        variants={pageVariants}
-        transition={pageTransition}
-        initial="initial"
-        animate="in"
-        exit="out"
-        style={backgroundColor}
-        className="GameModule"
-        onClick={handleClickOnSkip}
-      >
-        <BackButton handleGoBack={handleGoBack} />
+  //           <SkipOrCorrect
+  //             correctAnswer={correctAnswer}
+  //             skippedAnswer={skippedAnswer}
+  //           />
+  //         </motion.div>
+  //       </Orientation>
+  //       <Orientation orientation="portrait" alwaysRender={false}>
+  //         <ChangeOrientationBox></ChangeOrientationBox>
+  //       </Orientation>
+  //     </DeviceOrientation>
+  //   );
+  // } else {
+  return (
+    <motion.div
+      variants={pageVariants}
+      transition={pageTransition}
+      initial="initial"
+      animate="in"
+      exit="out"
+      style={backgroundColor}
+      className="GameModule"
+      onClick={handleClickOnSkip}
+    >
+      <BackButton handleGoBack={handleGoBack} />
 
-        <CountDown
-          countdownSound={countdownSound}
-          showCountdown={showCountdown}
+      <CountDown
+        countdownSound={countdownSound}
+        showCountdown={showCountdown}
+      />
+
+      {showCounterTimer ? (
+        <Questions
+          showCounterTimer={showCounterTimer}
+          currentQuestion={currentQuestion}
+          timerSeconds={timerSeconds}
         />
+      ) : (
+        ""
+      )}
 
-        {showCounterTimer ? (
-          <Questions
-            showCounterTimer={showCounterTimer}
-            currentQuestion={currentQuestion}
-            timerSeconds={timerSeconds}
-          />
-        ) : (
-          ""
-        )}
-
-        <SkipOrCorrect
-          correctAnswer={correctAnswer}
-          skippedAnswer={skippedAnswer}
-        />
-      </motion.div>
-    );
-  }
+      <SkipOrCorrect
+        correctAnswer={correctAnswer}
+        skippedAnswer={skippedAnswer}
+      />
+    </motion.div>
+  );
 }
+
 export default connect(null, { setQuestionsResult, setPoints })(GameModule);
