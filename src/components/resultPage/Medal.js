@@ -62,14 +62,13 @@ export default function Medal(props) {
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{
-        duration: 2,
+        duration: 3,
         type: "spring",
         stiffness: 260,
         damping: 20,
         mass: 2,
       }}
     >
-      {" "}
       {
         <p className="result-container-medal-points" style={pointsStyle()}>
           {" "}

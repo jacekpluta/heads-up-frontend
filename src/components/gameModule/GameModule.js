@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { motion } from "framer-motion";
 import CountDown from "./CountDown";
 
@@ -52,7 +52,7 @@ function GameModule(props) {
   const [numberOfGames] = useState(2);
   const [numberOfGamesCompleted, setNumberOfGamesCompleted] = useState(0);
   const [countdownStart, setCountdownStart] = useState(5);
-  const [countTimer, setCountTimer] = useState(30);
+  const [counterTimer, setCounterTimer] = useState(30);
   const [delayStart] = useState(750);
   const [delayTimer, setDelayTimer] = useState(highNumber);
   const [backgroundColor, setBackgroundColor] = useState("");
@@ -69,9 +69,9 @@ function GameModule(props) {
 
   const [correctAnswer, setCorrectAnswer] = useState(false);
   const [skippedAnswer, setSkippedAnswer] = useState(false);
-  const [tiltDone, setTiltDone] = useState(true);
+  const [tiltDone, setTiltDone] = useState(false);
   const [clickOnSkip, setClickOnSkip] = useState(false);
-  const [tiltOnCorrect, setTiltOnCorrect] = useState(false);
+
   const [showResult, setShowResult] = useState(false);
 
   const [points, setPoints] = useState(0);
@@ -100,7 +100,7 @@ function GameModule(props) {
         history.push("/result");
       }, 200);
     }
-  }, [showResult]);
+  }, [showResult, history]);
 
   //  returns to main if there is no gameVariant or gameCategory
 
@@ -108,7 +108,7 @@ function GameModule(props) {
     if (!gameCategory) {
       history.push("/");
     }
-  }, [gameCategory]);
+  }, [gameCategory, history]);
 
   //mutes sounds
   useEffect(() => {
@@ -129,7 +129,7 @@ function GameModule(props) {
       background: "linear-gradient((180deg, #05f, #09f))",
     };
     setBackgroundColor(backgroundColorDescribe);
-    setCountTimer(30);
+    setCounterTimer(30);
     setTimerSeconds(30);
   };
 
@@ -138,7 +138,7 @@ function GameModule(props) {
       background: "linear-gradient(180deg, rgb(0, 255, 34), rgb(40, 236, 220))",
     };
     setBackgroundColor(backgroundColorShow);
-    setCountTimer(90);
+    setCounterTimer(90);
     setTimerSeconds(90);
   };
 
@@ -148,7 +148,7 @@ function GameModule(props) {
         "linear-gradient(180deg, rgb(216, 15, 243), rgb(205, 241, 74))",
     };
     setBackgroundColor(backgroundColorChallange);
-    setCountTimer(80);
+    setCounterTimer(80);
     setTimerSeconds(80);
   };
 
@@ -157,7 +157,7 @@ function GameModule(props) {
       background: "linear-gradient(180deg, rgb(81, 255, 0), rgb(255, 0, 234))",
     };
     setBackgroundColor(backgroundColorDraw);
-    setCountTimer(120);
+    setCounterTimer(120);
     setTimerSeconds(120);
   };
 
@@ -190,7 +190,7 @@ function GameModule(props) {
   //counter for timer
   useInterval(
     () => {
-      setCountTimer(countTimer - 1);
+      setCounterTimer(counterTimer - 1);
     },
     isRunningTimer ? delayTimer : null
   );
@@ -205,7 +205,7 @@ function GameModule(props) {
 
   //Game start
   useEffect(() => {
-    if (gameCategory && gameVariant && currentOrientation == "landscape") {
+    if (gameCategory && gameVariant && currentOrientation === "landscape") {
       setIsRunningStart(true);
       setIsRunningTimer(true);
       setShowCountdown(true);
@@ -213,23 +213,6 @@ function GameModule(props) {
       // window.screen.orientation.lock("landscape");
     }
   }, [gameCategory, gameVariant, currentOrientation]);
-
-  //Scren tilt Y axis, +1 point, correct answer
-  const update = function (value) {
-    if (value) {
-      value = Math.floor(value);
-      if (value === 45 && countdownStart < 0 && tiltDone === true) {
-        handleTiltOnCorrect();
-        setTiltDone(false);
-      }
-    }
-  };
-
-  if (window.DeviceOrientationEvent) {
-    window.addEventListener("deviceorientation", function (e) {
-      update(e.gamma);
-    });
-  }
 
   //Shows question if countdown = 0
   useEffect(() => {
@@ -245,7 +228,7 @@ function GameModule(props) {
     if (showQuestions) {
       setIsRunningStart(false);
       setClickOnSkip(true);
-      setTiltOnCorrect(true);
+
       setShowCountdown(false);
       setShowCounterTimer(true);
       setDelayTimer(1000);
@@ -256,60 +239,68 @@ function GameModule(props) {
   //Skip questin and reset timer on click
   const handleClickOnSkip = () => {
     if (clickOnSkip) {
-      setCountTimer(0);
-      setShowCounterTimer(false);
+      setCounterTimer(0);
       setSkippedAnswer(true);
       failureSound.play();
+      setClickOnSkip(false);
     }
   };
 
   //Skip questin and reset timer on phone forward tilt
   const handleTiltOnCorrect = () => {
-    if (tiltOnCorrect) {
-      setCountTimer(0);
-      setShowCounterTimer(false);
+    if (!tiltDone) {
+      // setShowCounterTimer(false);
+      // successSound.play();
+      setCounterTimer(0);
       setCorrectAnswer(true);
-      successSound.play();
-
-      setPoints((pointsObject) => [...pointsObject, "+1"]);
     }
   };
 
+  useEffect(() => {
+    window.addEventListener("deviceorientation", (e) => {
+      let tiltValue = e.gamma;
+      if (tiltValue) {
+        tiltValue = Math.floor(tiltValue);
+        if (tiltValue < 55 && countdownStart < 0 && tiltDone === false) {
+          handleTiltOnCorrect();
+          setTiltDone(true);
+        }
+      }
+    });
+  }, []);
+
   //End of each round
   useEffect(() => {
-    if (countTimer === 0 && skippedAnswer === true) {
+    if (counterTimer === 0 && skippedAnswer === true) {
       setShowCounterTimer(false);
       setPoints(points - 1);
       failureSound.play();
     }
-    if (countTimer === 0 && correctAnswer === true) {
+    if (counterTimer === 0 && correctAnswer === true) {
       setShowCounterTimer(false);
       setPoints(points + 1);
       successSound.play();
     }
-  }, [countTimer, correctAnswer, skippedAnswer]);
+  }, [counterTimer, correctAnswer, skippedAnswer]);
 
   //Set points if skipped or time runs out
   useEffect(() => {
-    if (countTimer === 0 && correctAnswer === false) {
+    if (counterTimer === 0 && correctAnswer === false) {
       setPointsObject((pointsObject) => [...pointsObject, "-1"]);
       setSkippedAnswer(true);
     }
-  }, [countTimer]);
+  }, [counterTimer, correctAnswer]);
 
   useEffect(() => {
-    if (countTimer === -2 && numberOfGamesCompleted <= numberOfGames) {
-      setTiltDone(true);
-      setTiltOnCorrect(true);
-      setClickOnSkip(true);
+    if (counterTimer === -2 && numberOfGamesCompleted <= numberOfGames) {
+      setTiltDone(false);
 
+      setClickOnSkip(true);
       setCorrectAnswer(false);
       setSkippedAnswer(false);
-
       setShowCounterTimer(false);
-      setCountTimer(timerSeconds);
+      setCounterTimer(timerSeconds);
       setNumberOfGamesCompleted(numberOfGamesCompleted + 1);
-
       setCurrentQuestion(getRandomQuestion([numberOfGamesCompleted]));
       setQuestionsResult((questionsResult) => [
         ...questionsResult,
@@ -318,7 +309,7 @@ function GameModule(props) {
     }
   }, [
     timerSeconds,
-    countTimer,
+    counterTimer,
     numberOfGamesCompleted,
     numberOfGames,
     points,
@@ -329,11 +320,11 @@ function GameModule(props) {
   useEffect(() => {
     if (numberOfGamesCompleted > numberOfGames) {
       setIsRunningTimer(false);
-      setCountTimer("");
+      setCounterTimer("");
       setCurrentQuestion("");
       setShowCounterTimer(false);
       setClickOnSkip(false);
-      setTiltOnCorrect(false);
+
       setShowResult(true);
     }
   }, [numberOfGamesCompleted, numberOfGames]);

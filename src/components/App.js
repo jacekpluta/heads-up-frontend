@@ -141,10 +141,11 @@ function App(props) {
 
   useEffect(() => {
     if (!isBrowser) {
-      // window.screen.orientation.lock("landscape");
+      window.screen.orientation.lock("portrait");
+      console.log(window.screen.orientation.lock("portrait"));
       //fetchMyAPIFilms();
-      fetchMyAPIAnime();
-      fetchMyAPIGames();
+      // fetchMyAPIAnime();
+      // fetchMyAPIGames();
     }
   }, []);
 

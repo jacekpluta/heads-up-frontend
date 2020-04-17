@@ -39,14 +39,6 @@ export default function GameMenu(props) {
     }, 100);
   };
 
-  const gameTileDescriptionContainer = {
-    borderBottomStyle: "solid",
-    background: "#023875",
-    borderWidth: "0px",
-    borderRadius: "30px",
-    paddingBottom: "2px",
-  };
-
   const pageVariants = {
     initial: {
       opacity: 0,
@@ -68,14 +60,14 @@ export default function GameMenu(props) {
   if (gameCategory) {
     return (
       <motion.div
-        className="gameMenu"
+        className="game-menu-container"
         variants={pageVariants}
         transition={pageTransition}
         initial="initial"
         animate="in"
         exit="out"
       >
-        <div style={gameTileDescriptionContainer}>
+        <div className="game-menu-container-game-tile-description">
           <BackButton handleGoBack={handleGoBack} />
           {/* <GlowingEffect></GlowingEffect> */}
           <GameTitle gameCategoryImage={gameCategory.background} />

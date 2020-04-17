@@ -23,6 +23,7 @@ const pStyle = {
   color: "#f8f8ff",
   paddingTop: "15px",
   fontWeight: 700,
+  textShadow: "6px 6px 0px rgba(0,0,0,0.2)",
 };
 
 const refreshIconContainerStyle = {

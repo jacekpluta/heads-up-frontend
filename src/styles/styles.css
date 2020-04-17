@@ -1,15 +1,17 @@
 html,
-body,
-.App {
+body {
   margin: 0;
-  min-height: 100%;
+
   height: 100%;
   width: 100%;
   background: linear-gradient(180deg, #013064, #1255a0);
   border-style: hidden;
   border-color: #ffffff;
-
   border-width: 10px;
+}
+
+.App {
+  position: absolute;
 }
 
 .Main {
@@ -54,13 +56,24 @@ body,
   z-index: 5;
 }
 
-.gameMenu {
-  background: linear-gradient(180deg, #013064, #1255a0);
+.game-menu-container {
+  position: fixed;
+  width: 100%;
   height: 100vh;
+  left: 0%;
+  top: 0%;
+
   border-style: solid;
   border-color: white;
-
   border-width: 10px;
+}
+
+.game-menu-container-game-tile-description {
+  border-bottom-style: solid;
+  background: #023875;
+  border-width: 0px;
+  border-radius: 30px;
+  padding-bottom: 10px;
 }
 
 .TileStyle {

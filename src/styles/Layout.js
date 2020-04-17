@@ -22,20 +22,7 @@ export const ParStyle = styled.p`
   font-size: 5vw;
   color: #fff;
   position: relative;
-
-  text-shadow: 2px 2px 2px #474747;
-`;
-
-export const ParStyleCentered = styled.p`
-  text-align: center;
-  font-size: 14vw;
-  color: #fff;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  text-shadow: 2px 2px 2px #474747;
+  text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
 `;
 
 export const BlueBackgroundStyle = styled.div`

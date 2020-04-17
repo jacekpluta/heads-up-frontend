@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ParStyleCentered } from "../../styles/Layout";
+import { ParStyle } from "../../styles/Layout";
 
 const pageVariants = {
   initial: {
@@ -30,9 +30,7 @@ export default function ChangeOrientationBox(props) {
       animate="in"
       exit="out"
     >
-      <ParStyleCentered style={{ fontSize: "10vw" }}>
-        PRZYŁÓŻ TELEFON DO CZOŁA
-      </ParStyleCentered>
+      <ParStyle style={{ fontSize: "10vw" }}>PRZYŁÓŻ TELEFON DO CZOŁA</ParStyle>
     </motion.div>
   );
 }
