@@ -4,6 +4,7 @@ import Icon from "@mdi/react";
 import { mdiArrowLeftCircle } from "@mdi/js";
 
 function BackButton(props) {
+  console.log(props.egamma);
   return (
     <motion.div
       //  onMouseOver={() => props.handleClickOnSkipOff()}
@@ -12,7 +13,9 @@ function BackButton(props) {
       onClick={() => props.handleGoBack()}
       className="BackButtonContainer"
     >
-      <Icon color="white" path={mdiArrowLeftCircle} />
+      {props.egamma}
+
+      {/* <Icon color="white" path={mdiArrowLeftCircle} /> */}
     </motion.div>
   );
 }

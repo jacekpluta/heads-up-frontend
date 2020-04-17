@@ -267,24 +267,52 @@ function GameModule(props) {
   //   }
   // };
 
+  const [added, setAdded] = React.useState(false);
+
+  // Similar to componentDidMount and componentDidUpdate:
+
   useEffect(() => {
     window.addEventListener("deviceorientation", (e) => {
       if (e && e.gamma) {
         e.gamma = Math.floor(e.gamma);
-        if (
-          e.gamma < 55 &&
-          countdownStart < 0 &&
-          tiltDone === false &&
-          showCounterTimer
-        ) {
-          setTiltDone(true);
+
+        if (!added && e.gamma < 50 && e.gamma > 0) {
+          setAdded(true);
           successSound.play();
           setCounterTimer(0);
           setCorrectAnswer(true);
         }
       }
     });
-  }, [tiltDone]);
+  }, [added]);
+
+  useEffect(() => {
+    if (added) {
+      setTimeout(() => {
+        setAdded(false);
+      }, 3000);
+    }
+  }, [added]);
+
+  // useEffect(() => {
+  //   window.addEventListener("deviceorientation", (e) => {
+  //     if (e && e.gamma) {
+  //       e.gamma = Math.floor(e.gamma);
+
+  //       if (
+  //         e.gamma < 55 &&
+  //         countdownStart < 0 &&
+  //         tiltDone === false &&
+  //         showCounterTimer
+  //       ) {
+  //         setTiltDone(true);
+  //         successSound.play();
+  //         setCounterTimer(0);
+  //         setCorrectAnswer(true);
+  //       }
+  //     }
+  //   });
+  // }, [tiltDone]);
 
   //End of each round
   useEffect(() => {
@@ -362,7 +390,7 @@ function GameModule(props) {
   const pageTransition = {
     type: "tween",
     ease: "anticipate",
-    duration: 1,
+    duration: 2,
   };
 
   if (currentOrientation !== "landscape") {

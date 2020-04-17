@@ -48,13 +48,16 @@ export default function GameMenu(props) {
       opacity: 1,
       x: 0,
     },
-    out: { opacity: 0, x: "100vw" },
+    out: {
+      opacity: 0,
+      // x: "100vw"
+    },
   };
 
   const pageTransition = {
     type: "tween",
     ease: "anticipate",
-    duration: 1,
+    duration: 2,
   };
 
   if (gameCategory) {
