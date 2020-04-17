@@ -34,7 +34,6 @@ const CountDown = (props) => {
       variants={pageTransition}
       initial={showCountdown ? "outModule" : "inModule"}
       animate={showCountdown ? "inModule" : "outModule"}
-      exit={showCountdown ? "outModule" : "inModule"}
     >
       <div className="demo__colored-blocks">
         <div className="demo__colored-blocks-rotater">
