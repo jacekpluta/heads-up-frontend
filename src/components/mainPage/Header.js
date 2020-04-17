@@ -17,8 +17,8 @@ function Header(props) {
           color="white"
           style={{
             float: "left",
-            marginLeft: "2%",
-            marginTop: "33px",
+            marginLeft: "10px",
+            marginTop: "10px",
             backgroundColor: "#1b85ff",
             borderColor: " #1b63ff",
             borderStyle: "ridge",

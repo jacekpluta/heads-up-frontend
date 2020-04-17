@@ -15,7 +15,7 @@ function BackButton(props) {
     >
       {props.egamma}
 
-      {/* <Icon color="white" path={mdiArrowLeftCircle} /> */}
+      <Icon color="white" path={mdiArrowLeftCircle} />
     </motion.div>
   );
 }

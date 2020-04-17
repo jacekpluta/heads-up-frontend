@@ -50,7 +50,7 @@ export default function GameMenu(props) {
     },
     out: {
       opacity: 0,
-      // x: "100vw"
+      x: "100vw",
     },
   };
 

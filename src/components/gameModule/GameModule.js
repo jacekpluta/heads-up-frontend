@@ -269,30 +269,28 @@ function GameModule(props) {
 
   const [added, setAdded] = React.useState(false);
 
-  // Similar to componentDidMount and componentDidUpdate:
-
-  useEffect(() => {
+  React.useEffect(() => {
     window.addEventListener("deviceorientation", (e) => {
-      if (e && e.gamma) {
-        e.gamma = Math.floor(e.gamma);
+      e.gamma = Math.floor(e.gamma);
 
-        if (!added && e.gamma < 50 && e.gamma > 0) {
-          setAdded(true);
-          successSound.play();
-          setCounterTimer(0);
-          setCorrectAnswer(true);
-        }
+      if (!added && e.gamma < 50 && e.gamma > 0) {
+        setAdded(true);
+        successSound.play();
+        setCounterTimer(0);
+        setCorrectAnswer(true);
+        setShowCounterTimer(false);
+        setPoints(points + 1);
       }
     });
-  }, [added]);
+  }, [added]); // ✅ Deps are OK
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (added) {
       setTimeout(() => {
         setAdded(false);
       }, 3000);
     }
-  }, [added]);
+  }, [added]); // ✅ Deps are OK
 
   // useEffect(() => {
   //   window.addEventListener("deviceorientation", (e) => {
@@ -323,9 +321,9 @@ function GameModule(props) {
       //  setTiltDone(false);
     }
     if (counterTimer === 0 && correctAnswer === true) {
-      setShowCounterTimer(false);
-      setPoints(points + 1);
-      successSound.play();
+      // setShowCounterTimer(false);
+      // setPoints(points + 1);
+      // successSound.play();
       // setTiltDone(false);
     }
   }, [counterTimer, correctAnswer, skippedAnswer]);
