@@ -12,10 +12,14 @@ body {
 
 .App {
   position: absolute;
+  margin: 0;
+  height: auto;
+  background: linear-gradient(180deg, #013064, #1255a0);
+
+  width: 100%;
 }
 
 .Main {
-  background: linear-gradient(180deg, #013064, #1255a0);
   height: 100vh;
   padding-left: calc(2% + 25px);
   padding-right: 2%;
@@ -108,7 +112,7 @@ body {
 
   position: absolute;
   width: 100%;
-
+  height: 100%;
   background-color: #074285;
 }
 

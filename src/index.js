@@ -48,6 +48,16 @@ const Root = (props) => {
     setMuteSounds(!muteSounds);
   };
 
+  const fullScreenCheck = () => {
+    if (document.fullscreenElement) {
+      window.screen.orientation.lock("portrait");
+      return;
+    } else {
+      window.screen.orientation.lock("portrait");
+      return document.documentElement.requestFullscreen();
+    }
+  };
+
   const gameCategoryValue = useMemo(() => ({ gameCategory, setGameCategory }), [
     gameCategory,
     setGameCategory,
@@ -72,11 +82,22 @@ const Root = (props) => {
                   {...props}
                   points={points}
                   questionsResult={questionsResult}
+                  fullScreenCheck={fullScreenCheck}
                 />
               )}
             ></Route>
-            <Route path="/gamemodule" component={GameModule} />
-            <Route path="/gamemenu" component={GameMenu} />
+            <Route
+              path="/gamemodule"
+              render={(props) => (
+                <GameModule {...props} fullScreenCheck={fullScreenCheck} />
+              )}
+            />
+            <Route
+              path="/gamemenu"
+              crender={(props) => (
+                <GameMenu {...props} fullScreenCheck={fullScreenCheck} />
+              )}
+            />
             <Route
               exact
               path="/"
@@ -85,6 +106,7 @@ const Root = (props) => {
                   {...props}
                   handleMuteSounds={handleMuteSounds}
                   muteSounds={muteSounds}
+                  fullScreenCheck={fullScreenCheck}
                 />
               )}
             ></Route>

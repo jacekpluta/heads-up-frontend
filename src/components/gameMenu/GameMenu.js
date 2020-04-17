@@ -19,12 +19,12 @@ const clickSound = new UIfx(buttonClick, {
 
 export default function GameMenu(props) {
   let history = useHistory();
-
+  const { fullScreenCheck } = props;
   const { gameCategory } = useContext(GameCategoryContext);
 
-  // useEffect(() => {
-  //   window.screen.orientation.lock("landscape");
-  // }, []);
+  useEffect(() => {
+    fullScreenCheck();
+  }, []);
 
   useEffect(() => {
     if (!gameCategory) {

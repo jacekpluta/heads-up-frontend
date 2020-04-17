@@ -78,10 +78,9 @@ function GameModule(props) {
   const [questionsResult, setQuestionsResult] = useState([]);
   const [pointsObject, setPointsObject] = useState("");
 
-  const [orientationChanged, setOrientationChanged] = useState(false);
   const [currentOrientation, setCurrentOrientation] = useState(null);
 
-  const { muteSounds } = props;
+  const { muteSounds, fullScreenCheck } = props;
 
   const history = useHistory();
 
@@ -203,14 +202,19 @@ function GameModule(props) {
       ]);
   };
 
+  useEffect(() => {
+    if (currentOrientation === "landscape") {
+      window.screen.orientation.lock("landscape");
+    }
+  }, [currentOrientation]);
+
   //Game start
   useEffect(() => {
     if (gameCategory && gameVariant && currentOrientation === "landscape") {
+      fullScreenCheck();
       setIsRunningStart(true);
       setIsRunningTimer(true);
       setShowCountdown(true);
-
-      // window.screen.orientation.lock("landscape");
     }
   }, [gameCategory, gameVariant, currentOrientation]);
 
@@ -234,7 +238,7 @@ function GameModule(props) {
       setDelayTimer(1000);
       setCurrentQuestion(getRandomQuestion([numberOfGamesCompleted]));
     }
-  }, [countdownStart, numberOfGamesCompleted]);
+  }, [showQuestions, numberOfGamesCompleted]);
 
   //Skip questin and reset timer on click
   const handleClickOnSkip = () => {
@@ -250,7 +254,7 @@ function GameModule(props) {
   const handleTiltOnCorrect = () => {
     if (!tiltDone) {
       // setShowCounterTimer(false);
-      // successSound.play();
+      successSound.play();
       setCounterTimer(0);
       setCorrectAnswer(true);
     }
@@ -259,6 +263,7 @@ function GameModule(props) {
   useEffect(() => {
     window.addEventListener("deviceorientation", (e) => {
       let tiltValue = e.gamma;
+      console.log(tiltValue);
       if (tiltValue) {
         tiltValue = Math.floor(tiltValue);
         if (tiltValue < 55 && countdownStart < 0 && tiltDone === false) {
@@ -347,57 +352,88 @@ function GameModule(props) {
     duration: 1,
   };
 
-  return (
-    <DeviceOrientation
-      lockOrientation={"landscape"}
-      onOrientationChange={(orientation) => {
-        setCurrentOrientation(orientation);
+  if (currentOrientation !== "landscape") {
+    return (
+      <DeviceOrientation
+        lockOrientation={"landscape"}
+        onOrientationChange={(orientation) => {
+          setCurrentOrientation(orientation);
+        }}
+      >
+        <Orientation orientation="landscape" angle="90" alwaysRender={false}>
+          <motion.div
+            variants={pageVariants}
+            transition={pageTransition}
+            initial="initial"
+            animate="in"
+            exit="out"
+            style={backgroundColor}
+            className="GameModule"
+            onClick={handleClickOnSkip}
+          >
+            <BackButton handleGoBack={handleGoBack} />
 
-        if (orientation === "landscape") {
-          setOrientationChanged(true);
-        }
-      }}
-    >
-      <Orientation orientation="landscape" angle="90" alwaysRender={false}>
-        <motion.div
-          variants={pageVariants}
-          transition={pageTransition}
-          initial="initial"
-          animate="in"
-          exit="out"
-          style={backgroundColor}
-          className="GameModule"
-          onClick={handleClickOnSkip}
-        >
-          <BackButton handleGoBack={handleGoBack} />
-
-          <CountDown
-            countdownSound={countdownSound}
-            showCountdown={showCountdown}
-          />
-
-          {showCounterTimer ? (
-            <Questions
-              showCounterTimer={showCounterTimer}
-              currentQuestion={currentQuestion}
-              timerSeconds={timerSeconds}
+            <CountDown
+              countdownSound={countdownSound}
+              showCountdown={showCountdown}
             />
-          ) : (
-            ""
-          )}
 
-          <SkipOrCorrect
-            correctAnswer={correctAnswer}
-            skippedAnswer={skippedAnswer}
+            {showCounterTimer ? (
+              <Questions
+                showCounterTimer={showCounterTimer}
+                currentQuestion={currentQuestion}
+                timerSeconds={timerSeconds}
+              />
+            ) : (
+              ""
+            )}
+
+            <SkipOrCorrect
+              correctAnswer={correctAnswer}
+              skippedAnswer={skippedAnswer}
+            />
+          </motion.div>
+        </Orientation>
+        <Orientation orientation="portrait" alwaysRender={false}>
+          <ChangeOrientationBox></ChangeOrientationBox>
+        </Orientation>
+      </DeviceOrientation>
+    );
+  } else {
+    return (
+      <motion.div
+        variants={pageVariants}
+        transition={pageTransition}
+        initial="initial"
+        animate="in"
+        exit="out"
+        style={backgroundColor}
+        className="GameModule"
+        onClick={handleClickOnSkip}
+      >
+        <BackButton handleGoBack={handleGoBack} />
+
+        <CountDown
+          countdownSound={countdownSound}
+          showCountdown={showCountdown}
+        />
+
+        {showCounterTimer ? (
+          <Questions
+            showCounterTimer={showCounterTimer}
+            currentQuestion={currentQuestion}
+            timerSeconds={timerSeconds}
           />
-        </motion.div>
-      </Orientation>
-      <Orientation orientation="portrait" alwaysRender={false}>
-        <ChangeOrientationBox></ChangeOrientationBox>
-      </Orientation>
-    </DeviceOrientation>
-  );
-}
-// <ParticlesCanvas />
+        ) : (
+          ""
+        )}
 
+        <SkipOrCorrect
+          correctAnswer={correctAnswer}
+          skippedAnswer={skippedAnswer}
+        />
+      </motion.div>
+    );
+  }
+}
 export default connect(null, { setQuestionsResult, setPoints })(GameModule);

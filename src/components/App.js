@@ -30,7 +30,7 @@ function App(props) {
   const [gamesFetched, setGamesFetched] = useState(false);
   const [allFechted, setAllFechted] = useState(false);
 
-  const { muteSounds, handleMuteSounds } = props;
+  const { muteSounds, handleMuteSounds, fullScreenCheck } = props;
   const gameCategoriesList = [
     {
       id: 0,
@@ -141,8 +141,8 @@ function App(props) {
 
   useEffect(() => {
     if (!isBrowser) {
-      window.screen.orientation.lock("portrait");
-      console.log(window.screen.orientation.lock("portrait"));
+      fullScreenCheck();
+
       //fetchMyAPIFilms();
       // fetchMyAPIAnime();
       // fetchMyAPIGames();
@@ -173,15 +173,16 @@ function App(props) {
     duration: 1,
   };
 
-  if (isBrowser) {
-    return (
-      <BlueBackgroundStyle>
-        <ParStyle style={{ fontSize: "5vw" }}>
-          Gra działa tylko na urządzeniach mobilnych
-        </ParStyle>
-      </BlueBackgroundStyle>
-    );
-  } else if (!allFechted) {
+  // if (isBrowser) {
+  //   return (
+  //     <BlueBackgroundStyle>
+  //       <ParStyle style={{ fontSize: "5vw" }}>
+  //         Gra działa tylko na urządzeniach mobilnych
+  //       </ParStyle>
+  //     </BlueBackgroundStyle>
+  //   );
+  // } else
+  if (!allFechted) {
     return (
       <motion.div
         className="App"

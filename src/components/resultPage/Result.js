@@ -55,7 +55,7 @@ const backIconContainerStyle = {
 function Result(props) {
   let history = useHistory();
 
-  const { points, questionsResult } = props;
+  const { points, questionsResult, fullScreenCheck } = props;
 
   const [refreshGame, setRefreshGame] = useState(false);
 
@@ -71,6 +71,10 @@ function Result(props) {
     }
     return allPoints;
   };
+
+  useEffect(() => {
+    fullScreenCheck();
+  }, []);
 
   useEffect(() => {
     if (refreshGame) {
