@@ -223,10 +223,15 @@ function GameModule(props) {
       setIsRunningTimer(true);
       setShowCountdown(true);
 
-      if (document.fullscreenElement) {
-        return;
-      } else {
-        return document.documentElement.requestFullscreen();
+      const page = document.documentElement;
+      if (page.requestFullscreen) {
+        page.requestFullscreen();
+      } else if (page.mozRequestFullScreen) {
+        page.mozRequestFullScreen();
+      } else if (page.webkitRequestFullscreen) {
+        page.webkitRequestFullscreen();
+      } else if (page.msRequestFullscreen) {
+        page.msRequestFullscreen();
       }
     }
   }, [gameCategory, gameVariant, currentOrientation]);
