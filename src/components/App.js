@@ -173,7 +173,7 @@ function App(props) {
   const pageTransition = {
     type: "tween",
     ease: "anticipate",
-    duration: 2,
+    duration: 1,
   };
 
   // if (isBrowser) {
