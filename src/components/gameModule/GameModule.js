@@ -210,14 +210,6 @@ function GameModule(props) {
       ]);
   };
 
-  const fullScreenCheck = () => {
-    if (document.fullscreenElement) {
-      return;
-    } else {
-      return document.documentElement.requestFullscreen();
-    }
-  };
-
   useEffect(() => {
     if (currentOrientation === "landscape") {
       window.screen.orientation.lock("landscape");
@@ -227,10 +219,15 @@ function GameModule(props) {
   //Game start
   useEffect(() => {
     if (gameCategory && gameVariant && currentOrientation === "landscape") {
-      fullScreenCheck();
       setIsRunningStart(true);
       setIsRunningTimer(true);
       setShowCountdown(true);
+
+      if (document.fullscreenElement) {
+        return;
+      } else {
+        return document.documentElement.requestFullscreen();
+      }
     }
   }, [gameCategory, gameVariant, currentOrientation]);
 
@@ -281,13 +278,7 @@ function GameModule(props) {
   React.useEffect(() => {
     window.addEventListener("deviceorientation", (e) => {
       if (e && e.gamma) {
-        if (
-          !added &&
-          e.gamma < 50 &&
-          e.gamma > 0 &&
-          !showCountdown &&
-          showCounterTimer
-        ) {
+        if (!added && e.gamma < 50 && e.gamma > 0 && !showCountdown) {
           setAdded(true);
         }
       }

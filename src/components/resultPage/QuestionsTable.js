@@ -70,9 +70,7 @@ export default function QuestionsTable(props) {
                   key={key}
                   variants={questionsTransition}
                   style={
-                    points[key] === "0"
-                      ? { wrongColorCell }
-                      : { correctColorCell }
+                    points[key] === "0" ? wrongColorCell : correctColorCell
                   }
                 >
                   <td style={pStyle}>{question}</td>

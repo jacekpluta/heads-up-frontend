@@ -88,9 +88,7 @@ const Root = (props) => {
             ></Route>
             <Route
               path="/gamemodule"
-              render={(props) => (
-                <GameModule {...props} fullScreenCheck={fullScreenCheck} />
-              )}
+              render={(props) => <GameModule {...props} />}
             />
             <Route
               path="/gamemenu"
