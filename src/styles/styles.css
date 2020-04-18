@@ -102,7 +102,7 @@ body {
   border-color: white;
   border-width: 10px;
 
-  background: linear-gradient(180deg, #023774 75%, #074285 25%);
+  background: linear-gradient(180deg, #023774 65%, #074285 35%);
 }
 
 .result-questions-container {
