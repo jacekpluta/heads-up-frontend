@@ -55,7 +55,7 @@ const backIconContainerStyle = {
 function Result(props) {
   let history = useHistory();
 
-  const { points, questionsResult, fullScreenCheck } = props;
+  const { points, questionsResult } = props;
 
   const [refreshGame, setRefreshGame] = useState(false);
 
@@ -71,9 +71,25 @@ function Result(props) {
     return allPoints;
   };
 
+  const [lockPortrait, setLockPortrait] = useState(false);
+
   useEffect(() => {
-    fullScreenCheck();
+    if (document.fullscreenElement) {
+      setLockPortrait(true);
+      return;
+    } else {
+      setTimeout(() => {
+        setLockPortrait(true);
+      }, 300);
+      return document.documentElement.requestFullscreen();
+    }
   }, []);
+
+  useEffect(() => {
+    if (lockPortrait) {
+      window.screen.orientation.lock("portrait");
+    }
+  }, [lockPortrait]);
 
   useEffect(() => {
     if (refreshGame) {

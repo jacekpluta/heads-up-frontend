@@ -278,8 +278,16 @@ function GameModule(props) {
   React.useEffect(() => {
     window.addEventListener("deviceorientation", (e) => {
       if (e && e.gamma) {
-        if (!added && e.gamma < 50 && e.gamma > 0 && !showCountdown) {
+        if (
+          !added &&
+          e.gamma < 50 &&
+          e.gamma > 0 &&
+          !showCountdown &&
+          countdownStart < 0
+        ) {
+          // if (showCounterTimer) {
           setAdded(true);
+          // }
         }
       }
     });
@@ -298,26 +306,6 @@ function GameModule(props) {
       }, 2000);
     }
   }, [added]);
-
-  // useEffect(() => {
-  //   window.addEventListener("deviceorientation", (e) => {
-  //     if (e && e.gamma) {
-  //       e.gamma = Math.floor(e.gamma);
-
-  //       if (
-  //         e.gamma < 55 &&
-  //         countdownStart < 0 &&
-  //         tiltDone === false &&
-  //         showCounterTimer
-  //       ) {
-  //
-  //         successSound.play();
-  //         setCounterTimer(0);
-  //         setCorrectAnswer(true);
-  //       }
-  //     }
-  //   });
-  // }, [tiltDone]);
 
   //End of each round
   useEffect(() => {

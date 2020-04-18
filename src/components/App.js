@@ -13,7 +13,6 @@ import MoviesTile from "../pic/moviesTile.jpg";
 import GamesTile from "../pic/gamesTile.jpg";
 import AnimeTile from "../pic/animeTile.jpg";
 
-import { ParStyle, BlueBackgroundStyle } from "../styles/Layout";
 import { isBrowser } from "react-device-detect";
 import animalList from "../lists/AnimalsList";
 import axios from "axios";
@@ -30,7 +29,7 @@ function App(props) {
   const [gamesFetched, setGamesFetched] = useState(false);
   const [allFechted, setAllFechted] = useState(false);
 
-  const { muteSounds, handleMuteSounds, fullScreenCheck } = props;
+  const { muteSounds, handleMuteSounds } = props;
   const gameCategoriesList = [
     {
       id: 0,
@@ -138,16 +137,31 @@ function App(props) {
         console.log(error);
       });
   }
+  const [lockPortrait, setLockPortrait] = useState(false);
 
   useEffect(() => {
     if (!isBrowser) {
-      fullScreenCheck();
+      if (document.fullscreenElement) {
+        setLockPortrait(true);
+        return;
+      } else {
+        setTimeout(() => {
+          setLockPortrait(true);
+        }, 300);
+        return document.documentElement.requestFullscreen();
+      }
 
       //fetchMyAPIFilms();
       // fetchMyAPIAnime();
       // fetchMyAPIGames();
     }
   }, []);
+
+  useEffect(() => {
+    if (lockPortrait) {
+      window.screen.orientation.lock("portrait");
+    }
+  }, [lockPortrait]);
 
   useEffect(() => {
     if (animeFetched && gamesFetched && filmsFetched) {

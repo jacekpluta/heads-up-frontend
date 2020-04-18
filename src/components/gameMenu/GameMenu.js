@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { GameCategoryContext } from "../../contex/GameCategoryContext";
 import BackButton from "../BackButton";
@@ -19,12 +19,27 @@ const clickSound = new UIfx(buttonClick, {
 
 export default function GameMenu(props) {
   let history = useHistory();
-  const { fullScreenCheck } = props;
+
   const { gameCategory } = useContext(GameCategoryContext);
+  const [lockPortrait, setLockPortrait] = useState(false);
 
   useEffect(() => {
-    fullScreenCheck();
+    if (document.fullscreenElement) {
+      setLockPortrait(true);
+      return;
+    } else {
+      setTimeout(() => {
+        setLockPortrait(true);
+      }, 300);
+      return document.documentElement.requestFullscreen();
+    }
   }, []);
+
+  useEffect(() => {
+    if (lockPortrait) {
+      window.screen.orientation.lock("portrait");
+    }
+  }, [lockPortrait]);
 
   useEffect(() => {
     if (!gameCategory) {
