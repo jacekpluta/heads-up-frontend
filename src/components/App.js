@@ -137,20 +137,9 @@ function App(props) {
         console.log(error);
       });
   }
-  const [lockPortrait, setLockPortrait] = useState(false);
 
   useEffect(() => {
     if (!isBrowser) {
-      if (document.fullscreenElement) {
-        setLockPortrait(true);
-        return;
-      } else {
-        setTimeout(() => {
-          setLockPortrait(true);
-        }, 300);
-        return document.documentElement.requestFullscreen();
-      }
-
       //fetchMyAPIFilms();
       // fetchMyAPIAnime();
       // fetchMyAPIGames();
@@ -158,10 +147,18 @@ function App(props) {
   }, []);
 
   useEffect(() => {
-    if (lockPortrait) {
-      window.screen.orientation.lock("portrait");
+    if (document.fullscreenElement) {
+      return;
+    } else {
+      return document.documentElement.requestFullscreen();
     }
-  }, [lockPortrait]);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      window.screen.orientation.lock("portrait");
+    }, 200);
+  }, []);
 
   useEffect(() => {
     if (animeFetched && gamesFetched && filmsFetched) {

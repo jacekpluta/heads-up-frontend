@@ -21,25 +21,20 @@ export default function GameMenu(props) {
   let history = useHistory();
 
   const { gameCategory } = useContext(GameCategoryContext);
-  const [lockPortrait, setLockPortrait] = useState(false);
 
   useEffect(() => {
     if (document.fullscreenElement) {
-      setLockPortrait(true);
       return;
     } else {
-      setTimeout(() => {
-        setLockPortrait(true);
-      }, 300);
       return document.documentElement.requestFullscreen();
     }
   }, []);
 
   useEffect(() => {
-    if (lockPortrait) {
+    setTimeout(() => {
       window.screen.orientation.lock("portrait");
-    }
-  }, [lockPortrait]);
+    }, 200);
+  }, []);
 
   useEffect(() => {
     if (!gameCategory) {
