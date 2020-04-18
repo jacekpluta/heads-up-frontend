@@ -125,7 +125,7 @@ function Result(props) {
   const pageTransition = {
     type: "tween",
     ease: "anticipate",
-    duration: 1,
+    duration: 2,
   };
 
   return (

@@ -74,7 +74,6 @@ function GameModule(props) {
 
   const [showResult, setShowResult] = useState(false);
 
-  const [points, setPoints] = useState(0);
   const [questionsResult, setQuestionsResult] = useState([]);
   const [pointsObject, setPointsObject] = useState("");
 
@@ -304,7 +303,8 @@ function GameModule(props) {
       setCounterTimer(0);
       setCorrectAnswer(true);
       setShowCounterTimer(false);
-      setPoints(points + 1);
+
+      setPointsObject((pointsObject) => [...pointsObject, "1"]);
 
       setTimeout(() => {
         setAdded(false);
@@ -316,7 +316,6 @@ function GameModule(props) {
   useEffect(() => {
     if (counterTimer === 0 && skippedAnswer === true) {
       setShowCounterTimer(false);
-      setPoints(points - 1);
       failureSound.play();
     }
   }, [counterTimer, correctAnswer, skippedAnswer]);
@@ -348,7 +347,7 @@ function GameModule(props) {
     counterTimer,
     numberOfGamesCompleted,
     numberOfGames,
-    points,
+
     currentQuestion,
   ]);
 
@@ -382,7 +381,7 @@ function GameModule(props) {
   const pageTransition = {
     type: "tween",
     ease: "anticipate",
-    duration: 1,
+    duration: 2,
   };
 
   const renderGameModule = () => {
