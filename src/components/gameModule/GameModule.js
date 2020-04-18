@@ -245,6 +245,8 @@ function GameModule(props) {
       setShowCounterTimer(true);
       setDelayTimer(1000);
       setCurrentQuestion(getRandomQuestion([numberOfGamesCompleted]));
+
+      setAdded(false);
     }
   }, [showQuestions, numberOfGamesCompleted]);
 
@@ -267,7 +269,7 @@ function GameModule(props) {
   //   }
   // };
 
-  const [added, setAdded] = React.useState(false);
+  const [added, setAdded] = React.useState(true);
 
   React.useEffect(() => {
     window.addEventListener("deviceorientation", (e) => {
