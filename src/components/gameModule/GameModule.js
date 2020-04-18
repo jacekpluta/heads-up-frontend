@@ -272,7 +272,7 @@ function GameModule(props) {
   React.useEffect(() => {
     window.addEventListener("deviceorientation", (e) => {
       if (e && e.gamma) {
-        if (!added && e.gamma < 50 && e.gamma > 0) {
+        if (!added && e.gamma < 50 && (e.gamma > 0) & showCounterTimer) {
           setAdded(true);
         }
       }
