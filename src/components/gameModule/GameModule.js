@@ -92,6 +92,14 @@ function GameModule(props) {
     }, 200);
   };
 
+  const turnOffClickOnSkip = () => {
+    setClickOnSkip(false);
+  };
+
+  const turnOnClickOnSkip = () => {
+    setClickOnSkip(true);
+  };
+
   //routes to result
   useEffect(() => {
     if (showResult) {
@@ -240,7 +248,6 @@ function GameModule(props) {
     if (showQuestions) {
       setIsRunningStart(false);
       setClickOnSkip(true);
-
       setShowCountdown(false);
       setShowCounterTimer(true);
       setDelayTimer(1000);
@@ -274,7 +281,13 @@ function GameModule(props) {
   React.useEffect(() => {
     window.addEventListener("deviceorientation", (e) => {
       if (e && e.gamma) {
-        if (!added && e.gamma < 50 && e.gamma > 0 && showCountdown) {
+        if (
+          !added &&
+          e.gamma < 50 &&
+          e.gamma > 0 &&
+          !showCountdown &&
+          showCounterTimer
+        ) {
           setAdded(true);
         }
       }
@@ -291,7 +304,7 @@ function GameModule(props) {
 
       setTimeout(() => {
         setAdded(false);
-      }, 3000);
+      }, 2000);
     }
   }, [added]);
 
@@ -321,11 +334,6 @@ function GameModule(props) {
       setShowCounterTimer(false);
       setPoints(points - 1);
       failureSound.play();
-    }
-    if (counterTimer === 0 && correctAnswer === true) {
-      // setShowCounterTimer(false);
-      // setPoints(points + 1);
-      // successSound.play();
     }
   }, [counterTimer, correctAnswer, skippedAnswer]);
 
@@ -368,7 +376,6 @@ function GameModule(props) {
       setCurrentQuestion("");
       setShowCounterTimer(false);
       setClickOnSkip(false);
-
       setShowResult(true);
     }
   }, [numberOfGamesCompleted, numberOfGames]);
@@ -394,54 +401,7 @@ function GameModule(props) {
     duration: 1,
   };
 
-  if (currentOrientation !== "landscape") {
-    return (
-      <DeviceOrientation
-        lockOrientation={"landscape"}
-        onOrientationChange={(orientation) => {
-          setCurrentOrientation(orientation);
-        }}
-      >
-        <Orientation orientation="landscape" angle="90" alwaysRender={false}>
-          <motion.div
-            variants={pageVariants}
-            transition={pageTransition}
-            initial="initial"
-            animate="in"
-            exit="out"
-            style={backgroundColor}
-            className="GameModule"
-            onClick={handleClickOnSkip}
-          >
-            <BackButton handleGoBack={handleGoBack} />
-
-            <CountDown
-              countdownSound={countdownSound}
-              showCountdown={showCountdown}
-            />
-
-            {showCounterTimer ? (
-              <Questions
-                showCounterTimer={showCounterTimer}
-                currentQuestion={currentQuestion}
-                timerSeconds={timerSeconds}
-              />
-            ) : (
-              ""
-            )}
-
-            <SkipOrCorrect
-              correctAnswer={correctAnswer}
-              skippedAnswer={skippedAnswer}
-            />
-          </motion.div>
-        </Orientation>
-        <Orientation orientation="portrait" alwaysRender={false}>
-          <ChangeOrientationBox></ChangeOrientationBox>
-        </Orientation>
-      </DeviceOrientation>
-    );
-  } else {
+  const renderGameModule = () => {
     return (
       <motion.div
         variants={pageVariants}
@@ -453,7 +413,12 @@ function GameModule(props) {
         className="GameModule"
         onClick={handleClickOnSkip}
       >
-        <BackButton handleGoBack={handleGoBack} />
+        <BackButton
+          handleGoBack={handleGoBack}
+          turnOffClickOnSkip={turnOffClickOnSkip}
+          turnOnClickOnSkip={turnOnClickOnSkip}
+          showCounterTimer={showCounterTimer}
+        />
 
         <CountDown
           countdownSound={countdownSound}
@@ -476,6 +441,27 @@ function GameModule(props) {
         />
       </motion.div>
     );
+  };
+
+  if (currentOrientation !== "landscape") {
+    return (
+      <DeviceOrientation
+        lockOrientation={"landscape"}
+        onOrientationChange={(orientation) => {
+          setCurrentOrientation(orientation);
+        }}
+      >
+        <Orientation orientation="landscape" angle="90" alwaysRender={false}>
+          {renderGameModule()}
+        </Orientation>
+        <Orientation orientation="portrait" alwaysRender={false}>
+          <ChangeOrientationBox></ChangeOrientationBox>
+        </Orientation>
+      </DeviceOrientation>
+    );
+  } else {
+    return <React.Fragment> {renderGameModule()}</React.Fragment>;
   }
 }
+
 export default connect(null, { setQuestionsResult, setPoints })(GameModule);
