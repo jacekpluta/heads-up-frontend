@@ -180,7 +180,7 @@ function GameModule(props) {
     }
   }, [gameCategory, gameVariant]);
 
-  //set points and questions actions
+  //set points and questions actions using redux
   useEffect(() => {
     props.setQuestionsResult(questionsResult);
     props.setPoints(pointsObject);
@@ -283,7 +283,7 @@ function GameModule(props) {
           e.gamma < 50 &&
           e.gamma > 0 &&
           !showCountdown &&
-          countdownStart < 0
+          showCounterTimer
         ) {
           // if (showCounterTimer) {
           setAdded(true);
@@ -291,7 +291,7 @@ function GameModule(props) {
         }
       }
     });
-  }, [added]);
+  }, [added, showCountdown, showCounterTimer]);
 
   React.useEffect(() => {
     if (added) {

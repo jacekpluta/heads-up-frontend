@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { motion } from "framer-motion";
 import { GameCategoryContext } from "../../contex/GameCategoryContext";
 import BackButton from "../BackButton";
