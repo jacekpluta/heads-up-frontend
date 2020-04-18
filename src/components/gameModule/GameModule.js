@@ -268,20 +268,12 @@ function GameModule(props) {
   // };
 
   const [added, setAdded] = React.useState(false);
-  const [egamma, setEgamma] = React.useState(0);
 
   React.useEffect(() => {
     window.addEventListener("deviceorientation", (e) => {
       if (e && e.gamma) {
-        setEgamma(e.gamma);
-
         if (!added && e.gamma < 50 && e.gamma > 0) {
           setAdded(true);
-          successSound.play();
-          setCounterTimer(0);
-          setCorrectAnswer(true);
-          setShowCounterTimer(false);
-          setPoints(points + 1);
         }
       }
     });
@@ -289,6 +281,12 @@ function GameModule(props) {
 
   React.useEffect(() => {
     if (added) {
+      successSound.play();
+      setCounterTimer(0);
+      setCorrectAnswer(true);
+      setShowCounterTimer(false);
+      setPoints(points + 1);
+
       setTimeout(() => {
         setAdded(false);
       }, 3000);
@@ -413,8 +411,7 @@ function GameModule(props) {
             className="GameModule"
             onClick={handleClickOnSkip}
           >
-            {egamma}
-            {/* <BackButton handleGoBack={handleGoBack} />
+            <BackButton handleGoBack={handleGoBack} />
 
             <CountDown
               countdownSound={countdownSound}
@@ -434,7 +431,7 @@ function GameModule(props) {
             <SkipOrCorrect
               correctAnswer={correctAnswer}
               skippedAnswer={skippedAnswer}
-            /> */}
+            />
           </motion.div>
         </Orientation>
         <Orientation orientation="portrait" alwaysRender={false}>
@@ -454,8 +451,7 @@ function GameModule(props) {
         className="GameModule"
         onClick={handleClickOnSkip}
       >
-        {egamma}
-        {/* <BackButton handleGoBack={handleGoBack} />
+        <BackButton handleGoBack={handleGoBack} />
 
         <CountDown
           countdownSound={countdownSound}
@@ -475,7 +471,7 @@ function GameModule(props) {
         <SkipOrCorrect
           correctAnswer={correctAnswer}
           skippedAnswer={skippedAnswer}
-        /> */}
+        />
       </motion.div>
     );
   }
