@@ -6,10 +6,7 @@ const tableStyle = {
   marginLeft: "auto",
   marginRight: "auto",
   width: "70%",
-
   color: "#f8f8ff",
-
-  // textShadow: "0 3px 0 #b2a98f,0 14px 10px rgba(0,0,0,0.15)",
 };
 
 const questionsTransitionContainer = {
@@ -31,13 +28,28 @@ const questionsTransition = {
     opacity: 1,
   },
 };
+
 const pStyle = {
   textAlign: "center",
   width: "100%",
   fontSize: "3.5vh",
   color: "#f8f8ff",
+};
 
-  // textShadow: "0 3px 0 #b2a98f,0 14px 10px rgba(0,0,0,0.15)",
+const wrongColorCell = {
+  background:
+    "-webkit-linear-gradient(left, #074285 0% ,#ff0707 50%,  #074285 100%)",
+  marginTop: "1px",
+  marginBottom: "1px",
+  marginLeft: "10px",
+};
+
+const correctColorCell = {
+  background:
+    "-webkit-linear-gradient(left, #074285 0% ,#07ff30 50%,  #074285 100%)",
+  marginTop: "1px",
+  marginBottom: "1px",
+  marginLeft: "10px",
 };
 export default function QuestionsTable(props) {
   const { questionsResult, points } = props;
@@ -58,21 +70,9 @@ export default function QuestionsTable(props) {
                   key={key}
                   variants={questionsTransition}
                   style={
-                    points[key] === "-1"
-                      ? {
-                          background:
-                            "-webkit-linear-gradient(left, #074285 0% ,#ff0707 50%,  #074285 100%)",
-                          marginTop: "1px",
-                          marginBottom: "1px",
-                          marginLeft: "10px",
-                        }
-                      : {
-                          background:
-                            "-webkit-linear-gradient(left, #074285 0% ,#07ff30 50%,  #074285 100%)",
-                          marginTop: "1px",
-                          marginBottom: "1px",
-                          marginLeft: "10px",
-                        }
+                    points[key] === "0"
+                      ? { wrongColorCell }
+                      : { correctColorCell }
                   }
                 >
                   <td style={pStyle}>{question}</td>

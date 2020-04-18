@@ -69,7 +69,7 @@ function GameModule(props) {
 
   const [correctAnswer, setCorrectAnswer] = useState(false);
   const [skippedAnswer, setSkippedAnswer] = useState(false);
-  const [tiltDone, setTiltDone] = useState(false);
+
   const [clickOnSkip, setClickOnSkip] = useState(false);
 
   const [showResult, setShowResult] = useState(false);
@@ -269,17 +269,17 @@ function GameModule(props) {
   //   }
   // };
 
-  const [added, setAdded] = React.useState(true);
+  const [added, setAdded] = React.useState(false);
 
   React.useEffect(() => {
     window.addEventListener("deviceorientation", (e) => {
       if (e && e.gamma) {
-        if (!added && e.gamma < 50 && e.gamma > 0) {
+        if (!added && e.gamma < 50 && e.gamma > 0 && showCountdown) {
           setAdded(true);
         }
       }
     });
-  }, [added]); // ✅ Deps are OK
+  }, [added]);
 
   React.useEffect(() => {
     if (added) {
@@ -293,7 +293,7 @@ function GameModule(props) {
         setAdded(false);
       }, 3000);
     }
-  }, [added]); // ✅ Deps are OK
+  }, [added]);
 
   // useEffect(() => {
   //   window.addEventListener("deviceorientation", (e) => {
@@ -306,7 +306,7 @@ function GameModule(props) {
   //         tiltDone === false &&
   //         showCounterTimer
   //       ) {
-  //         setTiltDone(true);
+  //
   //         successSound.play();
   //         setCounterTimer(0);
   //         setCorrectAnswer(true);
@@ -321,27 +321,24 @@ function GameModule(props) {
       setShowCounterTimer(false);
       setPoints(points - 1);
       failureSound.play();
-      //  setTiltDone(false);
     }
     if (counterTimer === 0 && correctAnswer === true) {
       // setShowCounterTimer(false);
       // setPoints(points + 1);
       // successSound.play();
-      // setTiltDone(false);
     }
   }, [counterTimer, correctAnswer, skippedAnswer]);
 
   //Set points if skipped or time runs out
   useEffect(() => {
     if (counterTimer === 0 && correctAnswer === false) {
-      setPointsObject((pointsObject) => [...pointsObject, "-1"]);
+      setPointsObject((pointsObject) => [...pointsObject, "0"]);
       setSkippedAnswer(true);
     }
   }, [counterTimer, correctAnswer]);
 
   useEffect(() => {
     if (counterTimer === -2 && numberOfGamesCompleted <= numberOfGames) {
-      setTiltDone(false);
       setClickOnSkip(true);
       setCorrectAnswer(false);
       setSkippedAnswer(false);

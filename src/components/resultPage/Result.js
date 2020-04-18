@@ -63,10 +63,9 @@ function Result(props) {
     let allPoints = 0;
     if (points) {
       points.map((point) => {
-        if (point === 1) {
-          allPoints = parseInt(point) + allPoints;
+        if (point === "1") {
+          allPoints = allPoints + parseInt(point);
         }
-        return <div></div>;
       });
     }
     return allPoints;
