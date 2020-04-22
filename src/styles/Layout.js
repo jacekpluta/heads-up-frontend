@@ -21,7 +21,7 @@ export const ParStyle = styled.p`
   text-align: center;
   font-size: 5vw;
   color: #fff;
-  position: relative;
+  position: absolute;
   text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
 `;
 

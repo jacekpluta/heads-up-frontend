@@ -2,10 +2,10 @@ import * as actionTypes from "../actions/types";
 import { combineReducers } from "redux";
 
 const initialQuestionsResultState = {
-  questionsResult: null,
+  questionsResult: [],
 };
 
-const questionsResult_reducer = (
+export const questionsResult_reducer = (
   state = initialQuestionsResultState,
   action
 ) => {
@@ -20,7 +20,7 @@ const questionsResult_reducer = (
 };
 
 const initialPointsState = {
-  points: null,
+  points: [],
 };
 
 const points_reducer = (state = initialPointsState, action) => {

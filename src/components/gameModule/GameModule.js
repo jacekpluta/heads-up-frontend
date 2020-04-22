@@ -10,6 +10,7 @@ import SkipOrCorrect from "./SkipOrCorrect";
 
 import { GameCategoryContext } from "../../contex/GameCategoryContext";
 import { GameVariantContext } from "../../contex/GameVariantContext";
+import { MuteSoundContext } from "../../contex/MuteSoundContext";
 
 import UIfx from "uifx";
 import buttonClick from "../../sounds/buttonClick.mp3";
@@ -79,7 +80,7 @@ function GameModule(props) {
 
   const [currentOrientation, setCurrentOrientation] = useState(null);
 
-  const { muteSounds } = props;
+  const { muteSound } = useContext(MuteSoundContext);
 
   const history = useHistory();
 
@@ -118,7 +119,7 @@ function GameModule(props) {
 
   //mutes sounds
   useEffect(() => {
-    if (muteSounds) {
+    if (muteSound) {
       successSound.setVolume(0);
       countdownSound.setVolume(0);
       failureSound.setVolume(0);
@@ -127,7 +128,7 @@ function GameModule(props) {
       countdownSound.setVolume(1);
       failureSound.setVolume(1);
     }
-  }, [muteSounds]);
+  }, [muteSound]);
 
   //changing game variant based on gameVariantContext
   const handleGameVariantDescribe = () => {

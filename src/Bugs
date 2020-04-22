@@ -1,4 +1,6 @@
 To do:
 1. animated header
-2. disable animation when screen rotated
-3. medal and gametile glowing effect
+2. medal and gametile glowing effect
+
+BUGS:
+1. sometimes skipped screen stays 

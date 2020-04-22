@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeUp, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
 
 import { HeaderStyle } from "../../styles/Layout";
+import { MuteSoundContext } from "../../contex/MuteSoundContext";
 
-function Header(props) {
-  const { handleMuteSounds, muteSounds } = props;
+import buttonClick from "../../sounds/buttonClick.mp3";
+import UIfx from "uifx";
+//SOUDS
+const clickSound = new UIfx(buttonClick, {
+  volume: 1,
+  throttleMs: 100,
+});
+
+function Header() {
+  const { muteSound, setMuteSound } = useContext(MuteSoundContext);
+
+  const handleMuteSound = () => {
+    if (!muteSound) {
+      clickSound.play();
+    }
+    setMuteSound(!muteSound);
+  };
 
   return (
     <HeaderStyle>
-      {!muteSounds ? (
+      {!muteSound ? (
         <FontAwesomeIcon
-          onClick={handleMuteSounds}
+          onClick={handleMuteSound}
           icon={faVolumeMute}
           size="2x"
           color="white"
@@ -29,7 +45,7 @@ function Header(props) {
         />
       ) : (
         <FontAwesomeIcon
-          onClick={handleMuteSounds}
+          onClick={handleMuteSound}
           icon={faVolumeUp}
           size="2x"
           color="white"

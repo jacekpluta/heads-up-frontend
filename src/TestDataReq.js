@@ -10,9 +10,9 @@ describe("App", () => {
     data: {
       hits: [
         { objectID: "1", url: "https://blog.com/hello", title: "hello" },
-        { objectID: "2", url: "https://blog.com/there", title: "there" }
-      ]
-    }
+        { objectID: "2", url: "https://blog.com/there", title: "there" },
+      ],
+    },
   };
 
   const promise = Promise.resolve(result);
@@ -26,7 +26,7 @@ describe("App", () => {
     axios.get.restore();
   });
 
-  it("renders data when it fetched data successfully", done => {
+  it("renders data when it fetched data successfully", (done) => {
     const wrapper = mount(<App />);
     expect(wrapper.find("p").text()).toEqual("Loading ...");
     promise.then(() => {
@@ -36,7 +36,7 @@ describe("App", () => {
     });
   });
 
-  it("renders data when it fetched data successfully", done => {
+  it("renders data when it fetched data successfully", (done) => {
     const wrapper = mount(<App />);
     expect(wrapper.find("p").text()).toEqual("Loading ...");
     promise.then(() => {

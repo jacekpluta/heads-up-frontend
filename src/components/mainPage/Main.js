@@ -3,7 +3,7 @@ import Box from "./Box";
 import { Grid } from "@material-ui/core/";
 
 const Main = (props) => {
-  const { gameCategoriesList, muteSounds } = props;
+  const { gameCategoriesList } = props;
 
   return (
     <div className="Main">
@@ -17,7 +17,6 @@ const Main = (props) => {
           >
             <Box
               backgroundImage={gameCategory.background}
-              muteSounds={muteSounds}
               gameCategory={gameCategory}
             ></Box>
           </Grid>

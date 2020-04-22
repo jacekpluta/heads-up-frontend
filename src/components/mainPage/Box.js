@@ -4,6 +4,7 @@ import UIfx from "uifx";
 import buttonClick from "../../sounds/buttonClick.mp3";
 import { DivLink } from "../../styles/Layout";
 import { GameCategoryContext } from "../../contex/GameCategoryContext";
+import { MuteSoundContext } from "../../contex/MuteSoundContext";
 
 import { useHistory } from "react-router-dom";
 
@@ -12,7 +13,9 @@ function Box(props) {
 
   const { setGameCategory } = useContext(GameCategoryContext);
 
-  const { backgroundImage, gameCategory, muteSounds } = props;
+  const { backgroundImage, gameCategory } = props;
+
+  const { muteSound } = useContext(MuteSoundContext);
 
   let history = useHistory();
 
@@ -31,12 +34,12 @@ function Box(props) {
 
   //mutes click sound
   useEffect(() => {
-    if (muteSounds) {
+    if (muteSound) {
       clickSound.setVolume(0);
     } else {
       clickSound.setVolume(1);
     }
-  }, [muteSounds, clickSound, history]);
+  }, [muteSound, clickSound]);
 
   //OPEN GAME MENU AFTER PICKING GAME CATEGORY
   const handleGameCategoryPicked = () => {

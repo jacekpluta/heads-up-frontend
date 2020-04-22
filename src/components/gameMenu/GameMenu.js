@@ -71,7 +71,7 @@ export default function GameMenu(props) {
   const pageTransition = {
     type: "tween",
     ease: "anticipate",
-    duration: 1,
+    duration: 2,
   };
 
   if (gameCategory) {
@@ -88,7 +88,7 @@ export default function GameMenu(props) {
           <BackButton handleGoBack={handleGoBack} />
           {/* <GlowingEffect></GlowingEffect> */}
           <GameTitle gameCategoryImage={gameCategory.background} />
-          <ParStyle style={{ marginTop: "25px" }}>
+          <ParStyle style={{ marginTop: "45px" }}>
             {gameCategory.description}
           </ParStyle>
         </div>
