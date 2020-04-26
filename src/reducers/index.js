@@ -36,7 +36,25 @@ const points_reducer = (state = initialPointsState, action) => {
   }
 };
 
+const initialUserState = {
+  user: null,
+};
+
+const user_reducer = (state = initialUserState, action) => {
+  switch (action.type) {
+    case actionTypes.SET_USER:
+      return {
+        ...state,
+        user: action.payload.user,
+      };
+
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
+  user: user_reducer,
   points: points_reducer,
   questionsResult: questionsResult_reducer,
 });

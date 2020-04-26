@@ -196,16 +196,9 @@ function App() {
       });
   }
 
-  const callAPI = () => {
-    fetch("http://localhost:9000/testAPI")
-      .then((res) => res.text())
-      .then((res) => console.log(res));
-  };
-
   useEffect(() => {
     if (animeFetched && gamesFetched && filmsFetched) {
       setAllFechted(true);
-      callAPI();
     }
   }, [animeFetched, gamesFetched, filmsFetched]);
 

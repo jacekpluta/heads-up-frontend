@@ -2,8 +2,6 @@ import React, { useContext, useEffect } from "react";
 import { motion } from "framer-motion";
 import { GameCategoryContext } from "../../contex/GameCategoryContext";
 import BackButton from "../BackButton";
-import buttonClick from "../../sounds/buttonClick.mp3";
-import UIfx from "uifx";
 
 import { useHistory } from "react-router-dom";
 
@@ -12,13 +10,17 @@ import GameTitle from "./GameTitle";
 import Variants from "./Variants";
 import { ParStyle } from "../../styles/Layout";
 
-const clickSound = new UIfx(buttonClick, {
-  volume: 1,
-  throttleMs: 100,
-});
+import { pageVariants } from "../PageVariants";
+import { pageTransition } from "../PageTransition";
 
 export default function GameMenu(props) {
   let history = useHistory();
+
+  const handleGoBack = () => {
+    setTimeout(() => {
+      history.push("/");
+    }, 200);
+  };
 
   const { gameCategory } = useContext(GameCategoryContext);
 
@@ -45,34 +47,6 @@ export default function GameMenu(props) {
       history.push("/");
     }
   }, [gameCategory, history]);
-
-  const handleGoBack = () => {
-    clickSound.play();
-    setTimeout(() => {
-      history.push("/");
-    }, 100);
-  };
-
-  const pageVariants = {
-    initial: {
-      opacity: 0,
-      x: "-100vw",
-    },
-    in: {
-      opacity: 1,
-      x: 0,
-    },
-    out: {
-      opacity: 0,
-      x: "100vw",
-    },
-  };
-
-  const pageTransition = {
-    type: "tween",
-    ease: "anticipate",
-    duration: 2,
-  };
 
   if (gameCategory) {
     return (

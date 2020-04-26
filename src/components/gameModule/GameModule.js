@@ -13,7 +13,6 @@ import { GameVariantContext } from "../../contex/GameVariantContext";
 import { MuteSoundContext } from "../../contex/MuteSoundContext";
 
 import UIfx from "uifx";
-import buttonClick from "../../sounds/buttonClick.mp3";
 
 import FailureRing from "../../sounds/failure.mp3";
 import SuccessRing from "../../sounds/success.mp3";
@@ -25,10 +24,8 @@ import DeviceOrientation, { Orientation } from "react-screen-orientation";
 import { connect } from "react-redux";
 import { setPoints, setQuestionsResult } from "../../actions";
 
-const clickSound = new UIfx(buttonClick, {
-  volume: 1,
-  throttleMs: 100,
-});
+import { pageVariants } from "../PageVariants";
+import { pageTransition } from "../PageTransition";
 
 const successSound = new UIfx(SuccessRing, {
   volume: 1,
@@ -82,11 +79,9 @@ function GameModule(props) {
 
   const { muteSound } = useContext(MuteSoundContext);
 
-  const history = useHistory();
+  let history = useHistory();
 
-  //routes back to gamemenu
   const handleGoBack = () => {
-    clickSound.play();
     setTimeout(() => {
       history.push("/gamemenu");
     }, 200);
@@ -364,27 +359,6 @@ function GameModule(props) {
     }
   }, [numberOfGamesCompleted, numberOfGames]);
 
-  const pageVariants = {
-    initial: {
-      opacity: 0,
-      x: "-100vw",
-    },
-    in: {
-      opacity: 1,
-      x: 0,
-    },
-    out: {
-      opacity: 0,
-      x: "100vw",
-    },
-  };
-
-  const pageTransition = {
-    type: "tween",
-    ease: "anticipate",
-    duration: 2,
-  };
-
   const renderGameModule = () => {
     return (
       <motion.div
@@ -398,10 +372,10 @@ function GameModule(props) {
         onClick={handleClickOnSkip}
       >
         <BackButton
-          handleGoBack={handleGoBack}
           turnOffClickOnSkip={turnOffClickOnSkip}
           turnOnClickOnSkip={turnOnClickOnSkip}
           showCounterTimer={showCounterTimer}
+          handleGoBack={handleGoBack}
         />
 
         <CountDown

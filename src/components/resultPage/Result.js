@@ -11,6 +11,9 @@ import { Grid } from "@material-ui/core/";
 import buttonClick from "../../sounds/buttonClick.mp3";
 import UIfx from "uifx";
 
+import { pageVariants } from "../PageVariants";
+import { pageTransition } from "../PageTransition";
+
 const clickSound = new UIfx(buttonClick, {
   volume: 1,
   throttleMs: 100,
@@ -97,8 +100,6 @@ function Result(props) {
   }, [refreshGame, history]);
 
   const handleGoBack = () => {
-    clickSound.play();
-
     setTimeout(() => {
       history.push("/gamemenu");
     }, 200);
@@ -109,24 +110,6 @@ function Result(props) {
       history.push("/");
     }
   }, [points, questionsResult, history]);
-
-  const pageVariants = {
-    initial: {
-      opacity: 0,
-      x: "-100vw",
-    },
-    in: {
-      opacity: 1,
-      x: 0,
-    },
-    out: { opacity: 0, x: "100vw" },
-  };
-
-  const pageTransition = {
-    type: "tween",
-    ease: "anticipate",
-    duration: 2,
-  };
 
   return (
     <motion.div

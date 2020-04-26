@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeUp, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
-
+import { useHistory } from "react-router-dom";
 import { HeaderStyle } from "../../styles/Layout";
 import { MuteSoundContext } from "../../contex/MuteSoundContext";
+import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Button";
 
 import buttonClick from "../../sounds/buttonClick.mp3";
 import UIfx from "uifx";
@@ -15,6 +17,14 @@ const clickSound = new UIfx(buttonClick, {
 
 function Header() {
   const { muteSound, setMuteSound } = useContext(MuteSoundContext);
+  let history = useHistory();
+
+  const handleLogin = () => {
+    clickSound.play();
+    setTimeout(() => {
+      history.push("/login");
+    }, 200);
+  };
 
   const handleMuteSound = () => {
     if (!muteSound) {
@@ -22,7 +32,27 @@ function Header() {
     }
     setMuteSound(!muteSound);
   };
+  const buttonStyle = {
+    float: "right",
+    backgroundColor: "#1b85ff",
+    borderColor: " #1b63ff",
+    borderStyle: "ridge",
+    borderRadius: "15px",
+    borderWidth: "4px",
+    color: "white",
+  };
 
+  const volumeButtonStyle = {
+    float: "top-left",
+    marginLeft: "2%",
+    marginTop: "33px",
+    backgroundColor: "#1b85ff",
+    borderColor: " #1b63ff",
+    borderStyle: "ridge",
+    borderRadius: "15px",
+    borderWidth: "4px",
+    padding: "3px",
+  };
   return (
     <HeaderStyle>
       {!muteSound ? (
@@ -32,7 +62,7 @@ function Header() {
           size="2x"
           color="white"
           style={{
-            float: "left",
+            float: "bottom-left",
             marginLeft: "10px",
             marginTop: "10px",
             backgroundColor: "#1b85ff",
@@ -49,19 +79,18 @@ function Header() {
           icon={faVolumeUp}
           size="2x"
           color="white"
-          style={{
-            float: "left",
-            marginLeft: "2%",
-            marginTop: "33px",
-            backgroundColor: "#1b85ff",
-            borderColor: " #1b63ff",
-            borderStyle: "ridge",
-            borderRadius: "15px",
-            borderWidth: "4px",
-            padding: "3px",
-          }}
+          style={volumeButtonStyle}
         />
       )}
+
+      <Button
+        size="small"
+        style={buttonStyle}
+        color="primary"
+        onClick={handleLogin}
+      >
+        Custom Categories
+      </Button>
     </HeaderStyle>
   );
 }

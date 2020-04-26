@@ -15,7 +15,20 @@ body {
   margin: 0;
   height: auto;
   background: linear-gradient(180deg, #013064, #1255a0);
+  width: 100%;
+}
 
+.Login {
+  position: absolute;
+  margin: 0;
+  height: auto;
+  width: 100%;
+}
+
+.Register {
+  position: absolute;
+  margin: 0;
+  height: auto;
   width: 100%;
 }
 
@@ -53,8 +66,8 @@ body {
 .BackButtonContainer {
   width: 70px;
   height: 70px;
-  padding-top: 5px;
-  padding-left: 5px;
+  padding-top: 15px;
+  padding-left: 15px;
 
   position: absolute;
   z-index: 5;

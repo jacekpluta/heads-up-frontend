@@ -3,12 +3,20 @@ import { motion } from "framer-motion";
 import Icon from "@mdi/react";
 import { mdiArrowLeftCircle } from "@mdi/js";
 
-function BackButton(props) {
+import UIfx from "uifx";
+import buttonClick from "../sounds/buttonClick.mp3";
+
+const clickSound = new UIfx(buttonClick, {
+  volume: 1,
+  throttleMs: 100,
+});
+
+const BackButton = (props) => {
   const {
     turnOffClickOnSkip,
     turnOnClickOnSkip,
-    handleGoBack,
     showCounterTimer,
+    handleGoBack,
   } = props;
 
   return (
@@ -17,11 +25,14 @@ function BackButton(props) {
       onHoverEnd={showCounterTimer ? () => turnOnClickOnSkip() : ""}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.8, transition: { duration: 1 } }}
-      onClick={() => handleGoBack()}
+      onClick={() => {
+        handleGoBack();
+        clickSound.play();
+      }}
       className="BackButtonContainer"
     >
       <Icon color="white" path={mdiArrowLeftCircle} />
     </motion.div>
   );
-}
+};
 export default BackButton;
