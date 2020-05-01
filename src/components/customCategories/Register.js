@@ -62,7 +62,7 @@ const Register = (props) => {
         history.push("/customCategories");
       }, 200);
     }
-  }, [user]);
+  }, [user, history]);
 
   const handleGoBack = () => {
     setTimeout(() => {
@@ -76,7 +76,7 @@ const Register = (props) => {
         history.push("/login");
       }, 800);
     }
-  }, [success]);
+  }, [success, history]);
 
   const handleRegister = (event) => {
     event.preventDefault();

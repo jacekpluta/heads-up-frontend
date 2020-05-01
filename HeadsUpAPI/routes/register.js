@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User");
+const User = require("../models/UserModel");
 const validator = require("email-validator");
 const bcrypt = require("bcryptjs");
 
@@ -49,9 +49,13 @@ router.post("/", async (req, res) => {
       bcrypt.hash(user.password, salt, (err, hash) => {
         if (err) throw err;
 
-        user.password = hash;
+        const user = new User({
+          email: email,
+          password: hash,
+          passwordRepeat: passwordRepeat,
+        });
 
-        savedUser = user
+        user
           .save()
           .then((user) => {
             res.json(user);

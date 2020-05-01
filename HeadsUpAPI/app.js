@@ -10,6 +10,7 @@ const passport = require("passport");
 
 const session = require("express-session");
 const app = express();
+var router = express.Router();
 
 //Passport config
 require("./config/passport")(passport);
@@ -26,11 +27,12 @@ require("dotenv/config");
 
 // import routes
 const indexRouter = require("./routes/index");
-const registerRouter = require("./routes/register");
-const loginRouter = require("./routes/login");
-const userRouter = require("./routes/user");
+const registerRouter = require("./routes/Register");
+const loginRouter = require("./routes/Login");
+const userRouter = require("./routes/User");
 const incorrectRouter = require("./routes/incorrect");
-const logoutRouter = require("./routes/logout");
+const logoutRouter = require("./routes/Logout");
+var herosRoutes = require("./routes/CategoriesRoutes");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -45,11 +47,17 @@ app.use(cors());
 
 //router middleware
 app.use("/", indexRouter);
-app.use("/register", registerRouter);
-app.use("/login", loginRouter);
-app.use("/logout", logoutRouter);
-app.use("/incorrect", incorrectRouter);
-app.use("/user", userRouter);
+app.use("/Register", registerRouter);
+app.use("/Login", loginRouter);
+app.use("/Logout", logoutRouter);
+app.use("/Incorrect", incorrectRouter);
+app.use("/User", userRouter);
+
+// use express router
+app.use("/api", router);
+
+//call heros routing
+herosRoutes(router);
 
 //parse request of content/type - application/json
 app.use(bodyParser.json());

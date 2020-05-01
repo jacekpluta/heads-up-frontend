@@ -17,6 +17,7 @@ import AnimeTile from "../pic/animeTile.jpg";
 import animalList from "../lists/AnimalsList";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { connect } from "react-redux";
 
 import * as GamesApi from "../api/GamesApi";
 import * as AnimeApi from "../api/AnimeApi";
@@ -44,7 +45,7 @@ const pageTransition = {
   duration: 2,
 };
 
-function App() {
+function App(props) {
   const [filmList, setFilmList] = useState([]);
   const [gamesList, setGamesList] = useState([]);
   const [animeList, setAnimeList] = useState([]);
@@ -166,9 +167,9 @@ function App() {
       AnimeApi.animeApiTop020(),
       AnimeApi.animeApiTop2040(),
       AnimeApi.animeApiTop4060(),
-      AnimeApi.animeApiTopCharacters020(),
-      AnimeApi.animeApiTopCharacters2040(),
-      AnimeApi.animeApiTopCharacters4060(),
+      // AnimeApi.animeApiTopCharacters020(),
+      // AnimeApi.animeApiTopCharacters2040(),
+      // AnimeApi.animeApiTopCharacters4060(),
     ])
       .then((responses) => {
         responses.forEach((response) => {
@@ -325,4 +326,4 @@ function App() {
     );
 }
 
-export default App;
+export default connect(null)(App);

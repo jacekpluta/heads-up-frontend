@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 import BackButton from "../BackButton";
 import { motion } from "framer-motion";
 import Button from "@material-ui/core/Button";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
+
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Alert from "@material-ui/lab/Alert";
+import { useCookies } from "react-cookie";
 
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -47,6 +53,11 @@ const useStyles = makeStyles((theme) => ({
 const CustomCategories = (props) => {
   const { setUser, user } = props;
 
+  const [categoryName, setCategoryName] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [cookies, setCookies] = useCookies(["name"]);
+
   let history = useHistory();
 
   useEffect(() => {
@@ -55,7 +66,7 @@ const CustomCategories = (props) => {
         history.push("/login");
       }, 200);
     }
-  }, [user]);
+  }, [user, history]);
 
   const handleGoBack = () => {
     setTimeout(() => {
@@ -69,9 +80,45 @@ const CustomCategories = (props) => {
         setTimeout(() => {
           history.push("/login");
         }, 200);
+
         setUser(null);
+        setCookies("user", null, { path: "/" });
       }
     });
+  };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:9000/customcategories", {
+        //   userEmail: user.email,
+      })
+      .then((category) => {
+        console.log(category);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  const handleAddCategory = () => {
+    axios
+      .post("http://localhost:9000/customcategories", {
+        id: uuidv4(),
+        userEmail: user.email,
+        name: categoryName,
+      })
+      .then((category) => {
+        if (category.data.error) {
+          setError(category.data.error[0]);
+          setSuccess("");
+        } else {
+          setError("");
+          setSuccess("Category added");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const classes = useStyles();
@@ -104,6 +151,36 @@ const CustomCategories = (props) => {
             Custom categories
           </Typography>
         </div>
+
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              id="categoryName"
+              label="Category Name"
+              name="categoryName"
+              type="text"
+              value={categoryName}
+              onChange={(e) => setCategoryName(e.target.value)}
+            />
+          </Grid>
+        </Grid>
+
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+          onClick={handleAddCategory}
+        >
+          Add category
+        </Button>
+
+        {error !== "" ? <Alert severity="error"> {error} </Alert> : ""}
+        {success !== "" ? <Alert severity="success"> {success} </Alert> : ""}
       </Container>
     </motion.div>
   );

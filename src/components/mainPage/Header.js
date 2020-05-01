@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 import { HeaderStyle } from "../../styles/Layout";
 import { MuteSoundContext } from "../../contex/MuteSoundContext";
 import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Button";
 
 import buttonClick from "../../sounds/buttonClick.mp3";
 import UIfx from "uifx";

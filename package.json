@@ -52,6 +52,7 @@
     "semantic-ui-react": "^0.88.1",
     "styled-components": "^4.4.1",
     "uifx": "^2.0.6",
+    "uuid": "^7.0.3",
     "webpack-dev-server": "^3.10.3"
   },
   "scripts": {

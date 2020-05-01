@@ -26,6 +26,7 @@ const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  let history = useHistory();
 
   const { user, setUser } = props;
 
@@ -35,9 +36,7 @@ const Login = (props) => {
         history.push("/customCategories");
       }, 200);
     }
-  }, [user]);
-
-  let history = useHistory();
+  }, [user, history]);
 
   const handleGoBack = () => {
     setTimeout(() => {

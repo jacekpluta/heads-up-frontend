@@ -6,7 +6,6 @@ import { MuteSoundContext } from "./contex/MuteSoundContext";
 import { AnimatePresence } from "framer-motion";
 
 import { CookiesProvider } from "react-cookie";
-import axios from "axios";
 
 import * as serviceWorker from "./serviceWorker";
 import App from "./components/App";
@@ -28,17 +27,30 @@ import CustomCategories from "./components/customCategories/CustomCategories";
 import { createStore } from "redux";
 import { Provider, connect } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import { useCookies } from "react-cookie";
+import { setUser } from "./actions";
 
 import rootReducer from "./reducers/index";
 
 const store = createStore(rootReducer, composeWithDevTools());
 
 const Root = (props) => {
-  const { points, questionsResult, user } = props;
+  const { points, questionsResult, user, setUser } = props;
 
   const [gameCategory, setGameCategory] = useState(null);
   const [gameVariant, setGameVariant] = useState(null);
   const [muteSound, setMuteSound] = useState(false);
+
+  const [cookies, setCookies] = useCookies(["name"]);
+
+  useEffect(() => {
+    if (user) {
+      setCookies("user", user, { path: "/" });
+    }
+    // else {
+    //   setCookies("user", null, { path: "/" });
+    // }
+  }, [user]);
 
   // useEffect(() => {
   //   axios
@@ -50,22 +62,11 @@ const Root = (props) => {
   //       console.log(err);
   //     });
   // }, []);
-
-  // useEffect(() => {
-  //   if (user) {
-  //     axios
-  //       .post("http://localhost:9000/user", {
-  //         email: user.email,
-  //         password: user.password,
-  //       })
-  //       .then((data) => {
-  //         console.log(data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    if (cookies && cookies.user) {
+      setUser(cookies.user);
+    }
+  }, [cookies, cookies.user]);
 
   const muteSoundValue = useMemo(() => ({ muteSound, setMuteSound }), [
     muteSound,
@@ -116,7 +117,10 @@ const Root = (props) => {
                   <CustomCategories {...props} user={user}></CustomCategories>
                 )}
               ></Route>
-              <Route path="/" component={App}></Route>
+              <Route
+                path="/"
+                render={(props) => <App {...props} user={user}></App>}
+              ></Route>
             </Switch>
           </AnimatePresence>
         </MuteSoundContext.Provider>
@@ -131,7 +135,7 @@ const mapStateToProps = (state) => ({
   questionsResult: state.questionsResult.questionsResult,
 });
 
-const RootWithAuth = withRouter(connect(mapStateToProps)(Root));
+const RootWithAuth = withRouter(connect(mapStateToProps, { setUser })(Root));
 
 ReactDOM.render(
   <CookiesProvider>
