@@ -54,7 +54,7 @@ app.use("/Incorrect", incorrectRouter);
 app.use("/User", userRouter);
 
 // use express router
-app.use("/api", router);
+app.use("/api/category", router);
 
 //call heros routing
 herosRoutes(router);

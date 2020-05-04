@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
+import CategoriesList from "./CategoriesList";
 
 import BackButton from "../BackButton";
 import { motion } from "framer-motion";
@@ -9,9 +9,12 @@ import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 import TextField from "@material-ui/core/TextField";
+import AddCategoryForm from "./AddCategoryForm";
 import Grid from "@material-ui/core/Grid";
 import Alert from "@material-ui/lab/Alert";
 import { useCookies } from "react-cookie";
+
+import Modal from "@material-ui/core/Modal";
 
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -53,10 +56,16 @@ const useStyles = makeStyles((theme) => ({
 const CustomCategories = (props) => {
   const { setUser, user } = props;
 
+  const [myCategories, setMyCategories] = useState([]);
+
   const [categoryName, setCategoryName] = useState("");
+  const [categoryDescription, setCategoryDescription] = useState("");
+
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [cookies, setCookies] = useCookies(["name"]);
+
+  const [modalOpen, setModalOpen] = useState(false);
 
   let history = useHistory();
 
@@ -88,37 +97,78 @@ const CustomCategories = (props) => {
   };
 
   useEffect(() => {
+    if (user) {
+      axios
+        .get(`http://localhost:9000/api/category/get/${user.email}`)
+        .then((category) => {
+          setMyCategories(category.data.categories);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [user]);
+
+  const handleEditCategory = (categoryId) => {};
+
+  const handleDeleteCategory = (categoryId) => {
     axios
-      .get("http://localhost:9000/customcategories", {
-        //   userEmail: user.email,
-      })
-      .then((category) => {
-        console.log(category);
+      .delete(`http://localhost:9000/api/category/remove/${categoryId}`)
+      .then(() => {
+        const newCategories = myCategories.filter((category) => {
+          if (category._id !== categoryId) return category;
+        });
+        setMyCategories(newCategories);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  };
 
-  const handleAddCategory = () => {
+  const handleInputChange = (event) => {
+    event.preventDefault();
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    if (name === "categoryName") {
+      setCategoryName(value);
+    }
+    if (name === "categoryDescription") {
+      setCategoryDescription(value);
+    }
+  };
+
+  const handleAddCategory = (event) => {
+    event.preventDefault();
+
     axios
-      .post("http://localhost:9000/customcategories", {
-        id: uuidv4(),
-        userEmail: user.email,
+      .post("http://localhost:9000/api/category/create", {
+        email: user.email,
         name: categoryName,
+        description: categoryDescription,
       })
       .then((category) => {
         if (category.data.error) {
           setError(category.data.error[0]);
           setSuccess("");
         } else {
+          setMyCategories((myCategories) => [...myCategories, category]);
           setError("");
           setSuccess("Category added");
         }
       })
+      .then(() => {
+        setCategoryName("");
+        setCategoryDescription("");
+      })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
   };
 
   const classes = useStyles();
@@ -146,14 +196,23 @@ const CustomCategories = (props) => {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-          {/* <Avatar className={classes.avatar}>{<LockOutlinedIcon />}</Avatar> */}
           <Typography component="h1" variant="h5">
-            Custom categories
+            Twoje kategorie
           </Typography>
         </div>
-
+        <CategoriesList
+          myCategories={myCategories}
+          handleEditCategory={handleEditCategory}
+          handleDeleteCategory={handleDeleteCategory}
+        ></CategoriesList>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <AddCategoryForm
+            handleInputChange={handleInputChange}
+            handleAddCategory={handleAddCategory}
+            categoryName={categoryName}
+            categoryDescription={categoryDescription}
+          ></AddCategoryForm>
+          {/* <Grid item xs={12}>
             <TextField
               variant="outlined"
               required
@@ -166,9 +225,52 @@ const CustomCategories = (props) => {
               onChange={(e) => setCategoryName(e.target.value)}
             />
           </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              variant="outlined"
+              required
+              fullWidth
+              id="categoryDescription"
+              label="Category Description"
+              name="categoryDescription"
+              type="text"
+              value={categoryDescription}
+              onChange={(e) => setCategoryDescription(e.target.value)}
+            />
+  </Grid> */}
         </Grid>
 
-        <Button
+        <Modal
+          open={modalOpen}
+          onClose={handleClose}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <h2>Edit category</h2>
+          <Button
+            type="submit"
+            variant="contained"
+            size="small"
+            style={buttonStyle}
+            color="primary"
+            onClick={handleEditCategory}
+          >
+            Change details
+          </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            size="small"
+            style={buttonStyle}
+            color="primary"
+            onClick={handleClose}
+          >
+            Close
+          </Button>
+        </Modal>
+
+        {/* <Button
           type="submit"
           fullWidth
           variant="contained"
@@ -177,7 +279,7 @@ const CustomCategories = (props) => {
           onClick={handleAddCategory}
         >
           Add category
-        </Button>
+        </Button> */}
 
         {error !== "" ? <Alert severity="error"> {error} </Alert> : ""}
         {success !== "" ? <Alert severity="success"> {success} </Alert> : ""}

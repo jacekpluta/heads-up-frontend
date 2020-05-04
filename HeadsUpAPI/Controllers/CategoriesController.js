@@ -1,6 +1,7 @@
 const categories = require("../models/CategoryDAO");
+const validator = require("email-validator");
 
-exports.createCategory = async function (req, res, next) {
+exports.createCategory = function (req, res, next) {
   const { id, email, name, description } = req.body;
   const category = {
     id,
@@ -9,11 +10,23 @@ exports.createCategory = async function (req, res, next) {
     description,
   };
 
+  let errors = [];
+
+  if ((!id, !email, !name)) {
+    errors.push("Please fill in all fields");
+  }
+
+  if (!validator.validate(email)) {
+    errors.push("Enter correct email address");
+  }
+
   categories.create(category, function (err, category) {
     if (err) {
       res.json({
         error: err,
       });
+    } else if (errors.lenght > 0) {
+      res.json({ error: errors });
     } else {
       res.json({
         message: "Hero created successfully",
@@ -37,7 +50,7 @@ exports.getCategories = function (req, res, next) {
 };
 
 exports.getCategory = function (req, res, next) {
-  categories.get({ name: req.params.name }, function (err, categories) {
+  categories.get({ email: req.params.email }, function (err, categories) {
     if (err) {
       res.json({
         error: err,

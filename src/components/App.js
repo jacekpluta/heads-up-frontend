@@ -164,9 +164,9 @@ function App(props) {
   //FETCH ANIME QUESTIONS FROM ANIME API
   async function fetchMyAPIAnime() {
     Promise.all([
-      AnimeApi.animeApiTop020(),
-      AnimeApi.animeApiTop2040(),
-      AnimeApi.animeApiTop4060(),
+      // AnimeApi.animeApiTop020(),
+      // AnimeApi.animeApiTop2040(),
+      // AnimeApi.animeApiTop4060(),
       // AnimeApi.animeApiTopCharacters020(),
       // AnimeApi.animeApiTopCharacters2040(),
       // AnimeApi.animeApiTopCharacters4060(),

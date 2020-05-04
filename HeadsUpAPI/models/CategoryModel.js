@@ -2,11 +2,6 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 var categorySchema = new Schema(
   {
-    id: {
-      type: String,
-      unique: false,
-      required: true,
-    },
     email: {
       type: String,
       unique: false,
@@ -20,7 +15,7 @@ var categorySchema = new Schema(
     description: {
       type: String,
       unique: false,
-      required: true,
+      required: false,
     },
   },
   {

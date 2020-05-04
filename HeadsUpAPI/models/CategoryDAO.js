@@ -1,10 +1,10 @@
-var mongoose = require("mongoose");
-var categorySchema = require("./CategoryModel");
+const mongoose = require("mongoose");
+const categorySchema = require("./CategoryModel");
 
 categorySchema.statics = {
   create: function (data, cb) {
-    var hero = new this(data);
-    hero.save(cb);
+    const category = new this(data);
+    category.save(cb);
   },
 
   get: function (query, cb) {

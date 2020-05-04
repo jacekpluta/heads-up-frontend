@@ -11,6 +11,7 @@ router.post("/", async (req, res) => {
   if ((!email, !password, !passwordRepeat)) {
     errors.push("Please fill in all fields  ");
   }
+
   if (password !== passwordRepeat) {
     errors.push("Passwords do not match");
   }
