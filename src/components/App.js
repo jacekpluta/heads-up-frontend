@@ -257,13 +257,22 @@ function App(props) {
   //set coockies if they are not set after all data was fetched
   useEffect(() => {
     if (allFechted) {
-      if (cookies.filmList.length === 0 || !cookies.filmList) {
+      if (
+        (cookies && cookies.filmList && cookies.filmList.length === 0) ||
+        (cookies && cookies.filmList && !cookies.filmList)
+      ) {
         setCookies("filmList", filmList, { path: "/" });
       }
-      if (cookies.animeList.length === 0 || !cookies.animeList) {
+      if (
+        (cookies && cookies.animeList && cookies.animeList.length === 0) ||
+        (cookies && cookies.animeList && !cookies.animeList)
+      ) {
         setCookies("animeList", animeList, { path: "/" });
       }
-      if (cookies.gamesList.length === 0 || !cookies.gamesList) {
+      if (
+        (cookies && cookies.gamesList && cookies.gamesList.length === 0) ||
+        (cookies && cookies.gamesList && !cookies.gamesList)
+      ) {
         setCookies("gamesList", gamesList, { path: "/" });
       }
     }
