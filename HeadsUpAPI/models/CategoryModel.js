@@ -17,6 +17,11 @@ var categorySchema = new Schema(
       unique: false,
       required: false,
     },
+    questions: {
+      type: Array,
+      unique: false,
+      required: false,
+    },
   },
   {
     timestamps: true,

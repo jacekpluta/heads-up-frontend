@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 //import GlowingEffect from "./GlowingEffect";
 import GameTitle from "./GameTitle";
 import Variants from "./Variants";
-import { ParStyle } from "../../styles/Layout";
+import { PStyle } from "../../styles/Layout";
 
 import { pageVariants } from "../PageVariants";
 import { pageTransition } from "../PageTransition";
@@ -62,9 +62,9 @@ export default function GameMenu(props) {
           <BackButton handleGoBack={handleGoBack} />
           {/* <GlowingEffect></GlowingEffect> */}
           <GameTitle gameCategoryImage={gameCategory.background} />
-          <ParStyle style={{ marginTop: "45px" }}>
+          <PStyle style={{ marginTop: "15px" }}>
             {gameCategory.description}
-          </ParStyle>
+          </PStyle>
         </div>
 
         <Variants />

@@ -196,13 +196,20 @@ function GameModule(props) {
     },
     isRunningTimer ? delayTimer : null
   );
-
+  console.log(gameCategory);
   //Returns random question
   const getRandomQuestion = (rand) => {
-    return (rand =
-      gameCategory.questions[
-        Math.floor(Math.random() * gameCategory.questions.length)
-      ]);
+    if (gameCategory && gameCategory.questions[0].name) {
+      return (rand =
+        gameCategory.questions[
+          Math.floor(Math.random() * gameCategory.questions.length)
+        ].name);
+    } else {
+      return (rand =
+        gameCategory.questions[
+          Math.floor(Math.random() * gameCategory.questions.length)
+        ]);
+    }
   };
 
   useEffect(() => {

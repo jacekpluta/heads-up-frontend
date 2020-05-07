@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import CategoriesList from "./CategoriesList";
 
@@ -6,24 +6,22 @@ import BackButton from "../BackButton";
 import { motion } from "framer-motion";
 import Button from "@material-ui/core/Button";
 
-import CssBaseline from "@material-ui/core/CssBaseline";
+import AddCategoryModal from "./AddCategoryModal";
+import EditCategoryModal from "./EditCategoryModal";
 
-import TextField from "@material-ui/core/TextField";
-import AddCategoryForm from "./AddCategoryForm";
-import Grid from "@material-ui/core/Grid";
 import Alert from "@material-ui/lab/Alert";
 import { useCookies } from "react-cookie";
 
-import Modal from "@material-ui/core/Modal";
-
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+
 import { pageVariantsLogin } from "../PageVariants";
 import { pageTransition } from "../PageTransition";
 import { setUser } from "../../actions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+
+import { GameCategoryContext } from "../../contex/GameCategoryContext";
 
 const buttonStyle = {
   float: "right",
@@ -37,24 +35,36 @@ const buttonStyle = {
   marginRight: "25px",
 };
 
+const addCategoryButtonStyle = {
+  position: "absolute",
+  left: 0,
+  marginLeft: "5px",
+};
+
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(9),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "white",
-    padding: "25px",
-    borderRadius: "50px",
+    padding: "5px",
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  paperModal: {
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
   },
 }));
 
 const CustomCategories = (props) => {
-  const { setUser, user } = props;
+  const { setUser, user, onPickedCategory, showAllCategories } = props;
 
   const [myCategories, setMyCategories] = useState([]);
 
@@ -64,10 +74,24 @@ const CustomCategories = (props) => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [cookies, setCookies] = useCookies(["name"]);
+  const [currentCategory, setCurrentCategory] = useState(null);
 
-  const [modalOpen, setModalOpen] = useState(false);
+  const classes = useStyles();
+
+  const [modalEditOpen, setEditModalOpen] = useState(false);
+  const [modalAddOpen, setAddModalOpen] = useState(false);
+
+  const [gameCategoryPicked, setGameCategoryPicked] = useState(false);
+
+  const { setGameCategory } = useContext(GameCategoryContext);
 
   let history = useHistory();
+
+  useEffect(() => {
+    if (gameCategoryPicked) {
+      history.push("/gamemenu");
+    }
+  }, [gameCategoryPicked, history]);
 
   useEffect(() => {
     if (!user) {
@@ -96,6 +120,17 @@ const CustomCategories = (props) => {
     });
   };
 
+  const loadCategories = () => {
+    axios
+      .get(`http://localhost:9000/api/category/get/${user.email}`)
+      .then((category) => {
+        setMyCategories(category.data.categories);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     if (user) {
       axios
@@ -109,23 +144,63 @@ const CustomCategories = (props) => {
     }
   }, [user]);
 
-  const handleEditCategory = (categoryId) => {};
+  const handleEditModalOpen = (category) => {
+    setCurrentCategory(category);
+    setEditModalOpen(true);
+  };
 
-  const handleDeleteCategory = (categoryId) => {
+  const handleEditCategory = () => {
+    const categoryId = currentCategory._id;
+
     axios
-      .delete(`http://localhost:9000/api/category/remove/${categoryId}`)
+      .put(`http://localhost:9000/api/category/update/${categoryId}`, {
+        email: user.email,
+        name: currentCategory.name,
+        description: currentCategory.description,
+        questions: currentCategory.questions,
+      })
+      .then((category) => {
+        if (category.data.error) {
+          setError(category.data.error[0]);
+          setSuccess("");
+        } else {
+          setMyCategories((myCategories) => [...myCategories, category]);
+          setError("");
+          setSuccess("Category updated");
+        }
+      })
       .then(() => {
-        const newCategories = myCategories.filter((category) => {
-          if (category._id !== categoryId) return category;
-        });
-        setMyCategories(newCategories);
+        setCurrentCategory(null);
+        loadCategories();
+        setEditModalOpen(false);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const handleInputChange = (event) => {
+  const handleDeleteCategory = (categoryId) => {
+    axios
+      .delete(`http://localhost:9000/api/category/remove/${categoryId}`)
+      .then((category) => {
+        if (category.data.error) {
+          setError(category.data.error[0]);
+          setSuccess("");
+        } else {
+          const newCategories = myCategories.filter((category) => {
+            if (category._id !== categoryId) return category;
+          });
+          setMyCategories(newCategories);
+          setError("");
+          setSuccess("Category deleted");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleInputAddCategoryChange = (event) => {
     event.preventDefault();
     const target = event.target;
     const value = target.value;
@@ -139,6 +214,26 @@ const CustomCategories = (props) => {
     }
   };
 
+  const handleInputCurrentCategoryChange = (event) => {
+    event.preventDefault();
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    if (name === "categoryName") {
+      setCurrentCategory((prevState) => ({
+        ...prevState,
+        name: value,
+      }));
+    }
+    if (name === "categoryDescription") {
+      setCurrentCategory((prevState) => ({
+        ...prevState,
+        description: value,
+      }));
+    }
+  };
+
   const handleAddCategory = (event) => {
     event.preventDefault();
 
@@ -147,6 +242,7 @@ const CustomCategories = (props) => {
         email: user.email,
         name: categoryName,
         description: categoryDescription,
+        questions: [],
       })
       .then((category) => {
         if (category.data.error) {
@@ -161,17 +257,37 @@ const CustomCategories = (props) => {
       .then(() => {
         setCategoryName("");
         setCategoryDescription("");
+        loadCategories();
+        setAddModalOpen(false);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const handleClose = () => {
-    setModalOpen(false);
+  const handleCloseEditModal = () => {
+    setEditModalOpen(false);
   };
 
-  const classes = useStyles();
+  const handleCloseAddModal = () => {
+    setAddModalOpen(false);
+  };
+
+  const handleOpenCategory = (category) => {
+    setTimeout(() => {
+      history.push("/category");
+    }, 200);
+    onPickedCategory(category);
+  };
+
+  const handlePlayCategory = (category) => {
+    if (category.questions.length > 9) {
+      setGameCategory(category);
+      setGameCategoryPicked(true);
+    } else {
+      setError("You have to add atleast 10 questions before starting the game");
+    }
+  };
 
   return (
     <motion.div
@@ -185,7 +301,6 @@ const CustomCategories = (props) => {
       <BackButton handleGoBack={handleGoBack} />
       <Button
         type="submit"
-        variant="contained"
         size="small"
         style={buttonStyle}
         color="primary"
@@ -193,97 +308,53 @@ const CustomCategories = (props) => {
       >
         Sign Out
       </Button>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Typography component="h1" variant="h5">
-            Twoje kategorie
+      <div className={classes.paper}>
+        <div>
+          <Button
+            style={addCategoryButtonStyle}
+            type="submit"
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              setAddModalOpen(true);
+            }}
+          >
+            Add Category
+          </Button>
+          <Typography component="h1" variant="h6">
+            Your categories
           </Typography>
         </div>
         <CategoriesList
           myCategories={myCategories}
-          handleEditCategory={handleEditCategory}
+          handleEditModalOpen={handleEditModalOpen}
           handleDeleteCategory={handleDeleteCategory}
+          handleOpenCategory={handleOpenCategory}
+          handlePlayCategory={handlePlayCategory}
+          showAllCategories={showAllCategories}
         ></CategoriesList>
-        <Grid container spacing={2}>
-          <AddCategoryForm
-            handleInputChange={handleInputChange}
-            handleAddCategory={handleAddCategory}
-            categoryName={categoryName}
-            categoryDescription={categoryDescription}
-          ></AddCategoryForm>
-          {/* <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              id="categoryName"
-              label="Category Name"
-              name="categoryName"
-              type="text"
-              value={categoryName}
-              onChange={(e) => setCategoryName(e.target.value)}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              id="categoryDescription"
-              label="Category Description"
-              name="categoryDescription"
-              type="text"
-              value={categoryDescription}
-              onChange={(e) => setCategoryDescription(e.target.value)}
-            />
-  </Grid> */}
-        </Grid>
-
-        <Modal
-          open={modalOpen}
-          onClose={handleClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          <h2>Edit category</h2>
-          <Button
-            type="submit"
-            variant="contained"
-            size="small"
-            style={buttonStyle}
-            color="primary"
-            onClick={handleEditCategory}
-          >
-            Change details
-          </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            size="small"
-            style={buttonStyle}
-            color="primary"
-            onClick={handleClose}
-          >
-            Close
-          </Button>
-        </Modal>
-
-        {/* <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          onClick={handleAddCategory}
-        >
-          Add category
-        </Button> */}
-
+        <EditCategoryModal
+          handleEditCategory={handleEditCategory}
+          categoryName={categoryName}
+          categoryDescription={categoryDescription}
+          classes={classes}
+          modalEditOpen={modalEditOpen}
+          handleCloseEditModal={handleCloseEditModal}
+          currentCategory={currentCategory}
+          handleInputCurrentCategoryChange={handleInputCurrentCategoryChange}
+        ></EditCategoryModal>
+        <AddCategoryModal
+          handleInputAddCategoryChange={handleInputAddCategoryChange}
+          handleAddCategory={handleAddCategory}
+          categoryName={categoryName}
+          categoryDescription={categoryDescription}
+          classes={classes}
+          modalAddOpen={modalAddOpen}
+          handleCloseAddModal={handleCloseAddModal}
+        ></AddCategoryModal>
         {error !== "" ? <Alert severity="error"> {error} </Alert> : ""}
         {success !== "" ? <Alert severity="success"> {success} </Alert> : ""}
-      </Container>
+      </div>
     </motion.div>
   );
 };

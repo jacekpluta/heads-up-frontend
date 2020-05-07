@@ -25,6 +25,24 @@ export const ParStyle = styled.p`
   text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
 `;
 
+export const ParStyleTable = styled.p`
+  top: calc(50% + 50px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 4vw;
+  color: #00000;
+  position: absolute;
+`;
+
+export const PStyle = styled.p`
+  left: 50%;
+  text-align: center;
+  font-size: 5vw;
+  color: #fff;
+  text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+`;
+
 export const BlueBackgroundStyle = styled.div`
   position: fixed;
   width: 100%;

@@ -7,7 +7,7 @@ router.get("/", function (req, res, next) {
   errors.push("Password or email address is incorrect");
 
   if (errors.length > 0) {
-    res.status(401).send({ error: errors });
+    res.status(200).send({ error: errors });
   }
 });
 

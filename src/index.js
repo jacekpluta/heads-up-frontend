@@ -23,6 +23,8 @@ import Result from "./components/resultPage/Result";
 import Register from "./components/customCategories/Register";
 import Login from "./components/customCategories/Login";
 import CustomCategories from "./components/customCategories/CustomCategories";
+import Category from "./components/category/Category";
+import PlayersCategories from "./components/customCategories/PlayersCategories";
 
 import { createStore } from "redux";
 import { Provider, connect } from "react-redux";
@@ -40,6 +42,7 @@ const Root = (props) => {
   const [gameCategory, setGameCategory] = useState(null);
   const [gameVariant, setGameVariant] = useState(null);
   const [muteSound, setMuteSound] = useState(false);
+  const [pickedCategory, setPickedCategory] = useState(null);
 
   const [cookies, setCookies] = useCookies(["name"]);
 
@@ -47,26 +50,13 @@ const Root = (props) => {
     if (user) {
       setCookies("user", user, { path: "/" });
     }
-    // else {
-    //   setCookies("user", null, { path: "/" });
-    // }
-  }, [user]);
+  }, [user, setCookies]);
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:9000/mainpage")
-  //     .then((data) => {
-  //       console.log(data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
   useEffect(() => {
-    if (cookies && cookies.user) {
+    if (cookies && cookies.user !== "null") {
       setUser(cookies.user);
     }
-  }, [cookies, cookies.user]);
+  }, [cookies, cookies.user, setUser]);
 
   const muteSoundValue = useMemo(() => ({ muteSound, setMuteSound }), [
     muteSound,
@@ -83,6 +73,9 @@ const Root = (props) => {
     setGameVariant,
   ]);
 
+  const onPickedCategory = (category) => {
+    setPickedCategory(category);
+  };
   const location = useLocation();
 
   return (
@@ -114,9 +107,30 @@ const Root = (props) => {
               <Route
                 path="/customCategories"
                 render={(props) => (
-                  <CustomCategories {...props} user={user}></CustomCategories>
+                  <CustomCategories
+                    {...props}
+                    user={user}
+                    onPickedCategory={onPickedCategory}
+                  ></CustomCategories>
                 )}
               ></Route>
+              <Route
+                path="/playersCategories"
+                render={(props) => (
+                  <PlayersCategories {...props}></PlayersCategories>
+                )}
+              ></Route>
+              <Route
+                path="/category"
+                render={(props) => (
+                  <Category
+                    {...props}
+                    user={user}
+                    pickedCategory={pickedCategory}
+                  ></Category>
+                )}
+              ></Route>
+
               <Route
                 path="/"
                 render={(props) => <App {...props} user={user}></App>}

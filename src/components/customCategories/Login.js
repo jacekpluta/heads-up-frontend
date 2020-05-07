@@ -36,7 +36,7 @@ const Login = (props) => {
         history.push("/customCategories");
       }, 200);
     }
-  }, [user, history]);
+  }, [user]);
 
   const handleGoBack = () => {
     setTimeout(() => {
@@ -54,10 +54,10 @@ const Login = (props) => {
       })
       .then((data) => {
         if (
-          data.status === 401 &&
-          data.data.error === "Password or email address is incorrect"
+          data.status === 200 &&
+          data.data.error &&
+          data.data.error[0] === "Password or email address is incorrect"
         ) {
-          console.log(data);
           setUser(null);
           setError(data.data.error[0]);
         } else if (
@@ -69,6 +69,8 @@ const Login = (props) => {
             password: password,
           });
           setError("");
+        } else {
+          setUser(null);
         }
       })
       .catch((err) => {

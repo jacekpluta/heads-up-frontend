@@ -31,14 +31,17 @@ function Header() {
     }
     setMuteSound(!muteSound);
   };
+
+  const handlePlayersCategories = () => {
+    clickSound.play();
+    setTimeout(() => {
+      history.push("/playersCategories");
+    }, 200);
+  };
+
   const buttonStyle = {
     float: "right",
-    backgroundColor: "#1b85ff",
-    borderColor: " #1b63ff",
-    borderStyle: "ridge",
-    borderRadius: "15px",
-    borderWidth: "4px",
-    color: "white",
+    marginLeft: "5px",
   };
 
   const volumeButtonStyle = {
@@ -81,14 +84,24 @@ function Header() {
           style={volumeButtonStyle}
         />
       )}
+      <Button
+        size="small"
+        variant="contained"
+        style={buttonStyle}
+        color="primary"
+        onClick={handlePlayersCategories}
+      >
+        All Players Categories
+      </Button>
 
       <Button
         size="small"
         style={buttonStyle}
-        color="primary"
+        variant="contained"
+        color="secondary"
         onClick={handleLogin}
       >
-        Custom Categories
+        Your Categories
       </Button>
     </HeaderStyle>
   );

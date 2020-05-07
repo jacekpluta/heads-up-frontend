@@ -2,12 +2,13 @@ const categories = require("../models/CategoryDAO");
 const validator = require("email-validator");
 
 exports.createCategory = function (req, res, next) {
-  const { id, email, name, description } = req.body;
+  const { id, email, name, description, questions } = req.body;
   const category = {
     id,
     email,
     name,
     description,
+    questions,
   };
 
   let errors = [];
@@ -63,13 +64,28 @@ exports.getCategory = function (req, res, next) {
   });
 };
 
+exports.getCategoryById = function (req, res, next) {
+  categories.get({ _id: req.params.id }, function (err, categories) {
+    if (err) {
+      res.json({
+        error: err,
+      });
+    } else {
+      res.json({
+        categories: categories,
+      });
+    }
+  });
+};
+
 exports.updateCategory = function (req, res, next) {
-  const { id, email, name, description } = req.body;
+  const { id, email, name, description, questions } = req.body;
   const category = {
     id,
     email,
     name,
     description,
+    questions,
   };
 
   categories.update({ _id: req.params.id }, category, function (err, category) {
