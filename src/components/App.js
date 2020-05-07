@@ -19,10 +19,16 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { connect } from "react-redux";
 
-import * as GamesApi from "../api/GamesApi";
-import * as AnimeApi from "../api/AnimeApi";
+import * as GamesApi from "../webApi/GamesApi";
+import * as AnimeApi from "../webApi/AnimeApi";
 
 import { useCookies } from "react-cookie";
+
+import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
+
+import buttonClick from "../sounds/buttonClick.mp3";
+import UIfx from "uifx";
 
 const pageVariants = {
   initial: {
@@ -45,6 +51,35 @@ const pageTransition = {
   duration: 1,
 };
 
+const clickSound = new UIfx(buttonClick, {
+  volume: 1,
+  throttleMs: 100,
+});
+
+const buttonStyleMyCat = {
+  position: "absolute",
+  right: 0,
+  maxWidth: "50%",
+  maxHeight: "40px",
+  minWidth: "50%",
+  minHeight: "40px",
+  borderColor: "#3e50b4",
+  borderStyle: "ridge",
+  borderWidth: "4px",
+};
+
+const buttonStyleAllCat = {
+  position: "absolute",
+  left: 0,
+  maxWidth: "50%",
+  maxHeight: "40px",
+  minWidth: "50%",
+  minHeight: "40px",
+  borderColor: "#f40056",
+  borderStyle: "ridge",
+  borderWidth: "4px",
+};
+
 function App(props) {
   const [filmList, setFilmList] = useState([]);
   const [gamesList, setGamesList] = useState([]);
@@ -60,6 +95,8 @@ function App(props) {
   const [allFechted, setAllFechted] = useState(false);
 
   const [error, setError] = useState("");
+
+  let history = useHistory();
 
   const gameCategoriesList = [
     {
@@ -108,6 +145,20 @@ function App(props) {
       description: "Czy znasz wszystkie?",
     },
   ];
+
+  const handleLogin = () => {
+    clickSound.play();
+    setTimeout(() => {
+      history.push("/login");
+    }, 200);
+  };
+
+  const handlePlayersCategories = () => {
+    clickSound.play();
+    setTimeout(() => {
+      history.push("/playersCategories");
+    }, 200);
+  };
 
   //FETCH MOVIES TITLES FROM ANIME API
   async function fetchMyAPIFilms() {
@@ -164,11 +215,11 @@ function App(props) {
   //FETCH ANIME QUESTIONS FROM ANIME API
   async function fetchMyAPIAnime() {
     Promise.all([
-      // AnimeApi.animeApiTop020(),
-      // AnimeApi.animeApiTop2040(),
+      AnimeApi.animeApiTop020(),
+      AnimeApi.animeApiTop2040(),
       // AnimeApi.animeApiTop4060(),
-      // AnimeApi.animeApiTopCharacters020(),
-      // AnimeApi.animeApiTopCharacters2040(),
+      AnimeApi.animeApiTopCharacters020(),
+      AnimeApi.animeApiTopCharacters2040(),
       // AnimeApi.animeApiTopCharacters4060(),
     ])
       .then((responses) => {
@@ -206,13 +257,13 @@ function App(props) {
   //set coockies if they are not set after all data was fetched
   useEffect(() => {
     if (allFechted) {
-      if (!cookies.filmList) {
+      if (cookies.filmList.length === 0 || !cookies.filmList) {
         setCookies("filmList", filmList, { path: "/" });
       }
-      if (!cookies.animeList) {
+      if (cookies.animeList.length === 0 || !cookies.animeList) {
         setCookies("animeList", animeList, { path: "/" });
       }
-      if (!cookies.gamesList) {
+      if (cookies.gamesList.length === 0 || !cookies.gamesList) {
         setCookies("gamesList", gamesList, { path: "/" });
       }
     }
@@ -239,18 +290,29 @@ function App(props) {
     }
   }, []);
 
-  // useEffect(() => {
-  //   const page = document.documentElement;
-  //   if (page.requestFullscreen) {
-  //     page.requestFullscreen();
-  //   } else if (page.mozRequestFullScreen) {
-  //     page.mozRequestFullScreen();
-  //   } else if (page.webkitRequestFullscreen) {
-  //     page.webkitRequestFullscreen();
-  //   } else if (page.msRequestFullscreen) {
-  //     page.msRequestFullscreen();
-  //   }
-  // }, []);
+  useEffect(() => {
+    const page = document.documentElement;
+
+    if (page.requestFullscreen) {
+      page.requestFullscreen().catch((err) => {
+        setError("Fullscreen request failed");
+      });
+    } else if (page.mozRequestFullScreen) {
+      page.mozRequestFullScreen().catch((err) => {
+        setError("Fullscreen request failed");
+      });
+    } else if (page.webkitRequestFullscreen) {
+      page.webkitRequestFullscreen().catch((err) => {
+        setError("Fullscreen request failed");
+      });
+    } else if (page.msRequestFullscreen) {
+      page.msRequestFullscreen().catch((err) => {
+        setError("Fullscreen request failed");
+      });
+    } else {
+      document.exitFullscreen();
+    }
+  }, []);
 
   //checks if the data has been fetched, if not then reload page
   useEffect(() => {
@@ -280,9 +342,20 @@ function App(props) {
         <ParStyle style={{ fontSize: "5vw", top: "40%" }}>
           {error ? "Please refresh the game" : "Loading the game"}
         </ParStyle>
-        <ParStyle>
+        <div
+          style={{
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            textAlign: "center",
+            fontSize: "5vw",
+            color: "#fff",
+            position: "absolute",
+            textShadow: "3px 3px 0px rgba(0, 0, 0, 0.2)",
+          }}
+        >
           {!error ? <CircularProgress thickness={5} color="secondary" /> : ""}
-        </ParStyle>
+        </div>
       </Grid>
     );
   };
@@ -304,6 +377,26 @@ function App(props) {
         exit="out"
       >
         <Header />
+        <Button
+          size="small"
+          variant="contained"
+          style={buttonStyleMyCat}
+          color="primary"
+          onClick={handlePlayersCategories}
+        >
+          All Categories
+        </Button>
+
+        <Button
+          size="small"
+          style={buttonStyleAllCat}
+          variant="contained"
+          color="secondary"
+          onClick={handleLogin}
+        >
+          Your Categories
+        </Button>
+
         <Main
           allFechted={allFechted}
           gameCategoriesList={gameCategoriesList}

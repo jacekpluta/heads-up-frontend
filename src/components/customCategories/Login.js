@@ -140,7 +140,13 @@ const Login = (props) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            {error !== "" ? <Alert severity="error"> {error} </Alert> : ""}
+            {error !== "" ? (
+              <Alert variant="filled" severity="error">
+                {error}
+              </Alert>
+            ) : (
+              ""
+            )}
 
             <Button
               type="submit"

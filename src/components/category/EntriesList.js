@@ -5,6 +5,7 @@ import axios from "axios";
 import Alert from "@material-ui/lab/Alert";
 import { forwardRef } from "react";
 
+import Typography from "@material-ui/core/Typography";
 import AddBox from "@material-ui/icons/AddBox";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import Check from "@material-ui/icons/Check";
@@ -20,12 +21,26 @@ import Remove from "@material-ui/icons/Remove";
 import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(10),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "white",
+    paddingRight: "10px",
+  },
+}));
 
 const EntriesList = (props) => {
   const { pickedCategory } = props;
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [categoryEntries, setCategoryEntries] = useState([]);
+
+  const classes = useStyles();
 
   const [state] = useState({
     columns: [{ title: "Pytanie", field: "name" }],
@@ -68,13 +83,15 @@ const EntriesList = (props) => {
   };
 
   return (
-    <div>
+    <div className={classes.paper}>
+      <Typography component="h1" variant="h6">
+        {pickedCategory ? pickedCategory.name : ""}
+      </Typography>
       <MaterialTable
         icons={tableIcons}
-        title={pickedCategory ? pickedCategory.name : ""}
+        title={""}
         columns={state.columns}
         data={categoryEntries ? categoryEntries : state.data}
-        style={{ marginTop: "80px" }}
         editable={{
           onRowAdd: (newData) =>
             new Promise((resolve) => {

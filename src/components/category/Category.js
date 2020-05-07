@@ -46,7 +46,7 @@ const CustomCategories = (props) => {
 
   const handleGoBack = () => {
     setTimeout(() => {
-      history.push("gories");
+      history.push("/customCategories");
     }, 200);
   };
 
@@ -82,16 +82,7 @@ const CustomCategories = (props) => {
       >
         Wyloguj
       </Button>
-      {/* <div>
-        <Typography
-          className={classes.paper}
-          component="h1"
-          variant="h6"
-          float="right"
-        >
-          {pickedCategory ? pickedCategory.name : ""}
-        </Typography>
-      </div> */}
+
       <EntriesList pickedCategory={pickedCategory} user={user} />
     </motion.div>
   );

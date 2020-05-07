@@ -168,9 +168,17 @@ const Register = (props) => {
                 />
               </Grid>
             </Grid>
-            {error !== "" ? <Alert severity="error"> {error} </Alert> : ""}
+            {error !== "" ? (
+              <Alert variant="filled" severity="error">
+                {error}
+              </Alert>
+            ) : (
+              ""
+            )}
             {success !== "" ? (
-              <Alert severity="success"> {success} </Alert>
+              <Alert variant="filled" severity="success">
+                {success}
+              </Alert>
             ) : (
               ""
             )}

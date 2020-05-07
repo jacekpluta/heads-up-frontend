@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
 
 import PropTypes from "prop-types";
@@ -17,8 +17,10 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import TableHead from "@material-ui/core/TableHead";
-import { ParStyleTable } from "../../styles/Layout";
+
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+
+import windowSize from "react-window-size";
 
 import green from "@material-ui/core/colors/green";
 import orange from "@material-ui/core/colors/orange";
@@ -30,13 +32,29 @@ const outerTheme = createMuiTheme({
 const innerTheme = createMuiTheme({
   palette: {
     primary: {
-      main: green[500],
+      main: green[800],
     },
     secondary: {
-      main: orange[500],
+      main: orange[800],
     },
   },
 });
+
+const tableStyle = {
+  top: "calc(50% + 50px)",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  textAlign: "center",
+  fontSize: "4vw",
+  color: "#00000",
+  position: "absolute",
+};
+const buttonStyle = {
+  maxWidth: "100px",
+  maxHeight: "30px",
+  minWidth: "100px",
+  minHeight: "30px",
+};
 
 const CategoriesList = (props) => {
   const {
@@ -46,11 +64,21 @@ const CategoriesList = (props) => {
     handleOpenCategory,
     handlePlayCategory,
     showAllCategories,
+    windowWidth,
+    searchResults,
   } = props;
 
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(4);
+
+  useEffect(() => {
+    if (windowWidth <= 768 && !showAllCategories) {
+      setRowsPerPage(2);
+    } else {
+      setRowsPerPage(4);
+    }
+  }, [windowWidth]);
 
   const emptyRows =
     rowsPerPage -
@@ -109,6 +137,29 @@ const CategoriesList = (props) => {
     },
   ];
 
+  const columnsShort = [
+    {
+      id: "name",
+      label: "Name",
+      minWidth: 50,
+      maxWidth: 50,
+      align: "center",
+    },
+    {
+      id: "description",
+      label: "Description",
+      minWidth: 50,
+      maxWidth: 110,
+      align: "center",
+    },
+    {
+      id: "actions",
+      label: "Action",
+      minWidth: 50,
+      align: "center",
+    },
+  ];
+
   const columnsAllCategories = [
     {
       id: "name",
@@ -131,11 +182,11 @@ const CategoriesList = (props) => {
     },
   ];
 
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
+  // const handleRequestSort = (event, property) => {
+  //   const isAsc = orderBy === property && order === "asc";
+  //   setOrder(isAsc ? "desc" : "asc");
+  //   setOrderBy(property);
+  // };
 
   function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -154,150 +205,247 @@ const CategoriesList = (props) => {
   }
 
   function stableSort(array, comparator) {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0) return order;
-      return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
+    if (searchResults) {
+      if (searchResults.length === 0) {
+        const stabilizedThis = array.map((el, index) => [el, index]);
+        stabilizedThis.sort((a, b) => {
+          const order = comparator(a[0], b[0]);
+          if (order !== 0) return order;
+          return a[1] - b[1];
+        });
+        return stabilizedThis.map((el) => el[0]);
+      } else if (searchResults.length > 0) {
+        const stabilizedThis = searchResults.map((el, index) => [el, index]);
+        stabilizedThis.sort((a, b) => {
+          const order = comparator(a[0], b[0]);
+          if (order !== 0) return order;
+          return a[1] - b[1];
+        });
+        return stabilizedThis.map((el) => el[0]);
+      }
+    } else {
+      return array;
+    }
   }
 
+  const setEmptyRows = () => {
+    if (emptyRows > 0)
+      return (
+        <TableRow style={{ height: 53 * emptyRows }}>
+          <TableCell colSpan={6} />
+        </TableRow>
+      );
+  };
+
+  const setAllCategoriesHeader = () => {
+    if (showAllCategories) {
+      return columnsAllCategories.map((column) => (
+        <TableCell
+          key={column.id}
+          align={column.align}
+          style={{
+            minWidth: column.minWidth,
+            maxWidth: column.maxWidth,
+          }}
+        >
+          {column.label}
+        </TableCell>
+      ));
+    }
+  };
+
+  const setCustomCategoriesHeader = () => {
+    if (!showAllCategories && windowWidth > 768) {
+      return columns.map((column) => (
+        <TableCell
+          key={column.id}
+          align={column.align}
+          style={{
+            minWidth: column.minWidth,
+            maxWidth: column.maxWidth,
+          }}
+        >
+          {column.label}
+        </TableCell>
+      ));
+    } else if (!showAllCategories && windowWidth <= 768) {
+      return columnsShort.map((column) => (
+        <TableCell
+          key={column.id}
+          align={column.align}
+          style={{
+            minWidth: column.minWidth,
+            maxWidth: column.maxWidth,
+          }}
+        >
+          {column.label}
+        </TableCell>
+      ));
+    }
+  };
+
+  const setAllCategoriesBody = () => {
+    if (showAllCategories) {
+      return stableSort(myCategories, getComparator(order, orderBy))
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        .map((category) => (
+          <TableRow key={category._id}>
+            <ThemeProvider theme={outerTheme}>
+              <TableCell component="th" scope="row" align="center">
+                {category.name}
+              </TableCell>
+
+              <TableCell align="center">{category.email}</TableCell>
+              <ThemeProvider theme={innerTheme}>
+                <TableCell align="center">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handlePlayCategory(category)}
+                  >
+                    PLAY
+                  </Button>
+                </TableCell>
+              </ThemeProvider>
+            </ThemeProvider>
+          </TableRow>
+        ));
+    }
+  };
+
+  const setCustomCategoriesBody = () => {
+    if (!showAllCategories && windowWidth >= 768) {
+      return stableSort(myCategories, getComparator(order, orderBy))
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        .map((category) => (
+          <TableRow key={category._id}>
+            <ThemeProvider theme={outerTheme}>
+              <TableCell component="th" scope="row" align="center">
+                {category.name}
+              </TableCell>
+              <TableCell align="center">
+                {category.description ? category.description : "---"}
+              </TableCell>
+              <ThemeProvider theme={innerTheme}>
+                <TableCell style={{ width: 50 }} align="center">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handlePlayCategory(category)}
+                  >
+                    PLAY
+                  </Button>
+                </TableCell>
+                <TableCell style={{ width: 50 }} align="center">
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => handleOpenCategory(category)}
+                  >
+                    QUESTIONS
+                  </Button>
+                </TableCell>
+              </ThemeProvider>
+              <TableCell style={{ width: 50 }} align="center">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleEditModalOpen(category)}
+                >
+                  EDIT
+                </Button>
+              </TableCell>
+              <TableCell style={{ width: 50 }} align="center">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => handleDeleteCategory(category._id)}
+                >
+                  DELETE
+                </Button>
+              </TableCell>
+            </ThemeProvider>
+          </TableRow>
+        ));
+    } else if (!showAllCategories && windowWidth < 768) {
+      return stableSort(myCategories, getComparator(order, orderBy))
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        .map((category) => (
+          <TableRow key={category._id}>
+            <ThemeProvider theme={outerTheme}>
+              <TableCell component="th" scope="row" align="center">
+                {category.name}
+              </TableCell>
+              <TableCell align="center">
+                {category.description ? category.description : "---"}
+              </TableCell>
+
+              <TableCell style={{ width: 50 }} align="center">
+                <ThemeProvider theme={innerTheme}>
+                  <Button
+                    style={buttonStyle}
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handlePlayCategory(category)}
+                  >
+                    PLAY
+                  </Button>
+                  <Button
+                    style={buttonStyle}
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => handleOpenCategory(category)}
+                  >
+                    QUESTIONS
+                  </Button>
+                </ThemeProvider>
+                <Button
+                  style={buttonStyle}
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleEditModalOpen(category)}
+                >
+                  EDIT
+                </Button>
+                <Button
+                  style={buttonStyle}
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => handleDeleteCategory(category._id)}
+                >
+                  DELETE
+                </Button>
+              </TableCell>
+            </ThemeProvider>
+          </TableRow>
+        ));
+    }
+  };
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
             {showAllCategories
-              ? columnsAllCategories.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{
-                      minWidth: column.minWidth,
-                      maxWidth: column.maxWidth,
-                    }}
-                  >
-                    {column.label}
-                  </TableCell>
-                ))
-              : columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{
-                      minWidth: column.minWidth,
-                      maxWidth: column.maxWidth,
-                    }}
-                  >
-                    {column.label}
-                  </TableCell>
-                ))}
+              ? setAllCategoriesHeader()
+              : setCustomCategoriesHeader()}
           </TableRow>
         </TableHead>
 
         {myCategories.length > 0 && !showAllCategories ? (
           <TableBody>
-            {stableSort(myCategories, getComparator(order, orderBy))
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((category) => (
-                <TableRow key={category._id}>
-                  <ThemeProvider theme={outerTheme}>
-                    <TableCell component="th" scope="row" align="center">
-                      {category.name}
-                    </TableCell>
-                    <TableCell align="center">
-                      {category.description ? category.description : "---"}
-                    </TableCell>
-                    <ThemeProvider theme={innerTheme}>
-                      <TableCell style={{ width: 50 }} align="center">
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={() => handlePlayCategory(category)}
-                        >
-                          PLAY
-                        </Button>
-                      </TableCell>
-                      <TableCell style={{ width: 50 }} align="center">
-                        <Button
-                          variant="contained"
-                          color="secondary"
-                          onClick={() => handleOpenCategory(category)}
-                        >
-                          QUESTIONS
-                        </Button>
-                      </TableCell>
-                    </ThemeProvider>
-                    <TableCell style={{ width: 50 }} align="center">
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => handleEditModalOpen(category)}
-                      >
-                        EDIT
-                      </Button>
-                    </TableCell>
-                    <TableCell style={{ width: 50 }} align="center">
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => handleDeleteCategory(category._id)}
-                      >
-                        DELETE
-                      </Button>
-                    </TableCell>
-                  </ThemeProvider>
-                </TableRow>
-              ))}
-
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
+            {setCustomCategoriesBody()}
+            {setEmptyRows()}
           </TableBody>
         ) : showAllCategories ? (
           <TableBody>
-            {stableSort(myCategories, getComparator(order, orderBy))
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((category) => (
-                <TableRow key={category._id}>
-                  <ThemeProvider theme={outerTheme}>
-                    <TableCell component="th" scope="row" align="center">
-                      {category.name}
-                    </TableCell>
-
-                    <TableCell align="center">{category.email}</TableCell>
-                    <ThemeProvider theme={innerTheme}>
-                      <TableCell align="center">
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={() => handlePlayCategory(category)}
-                        >
-                          PLAY
-                        </Button>
-                      </TableCell>
-                    </ThemeProvider>
-                  </ThemeProvider>
-                </TableRow>
-              ))}
-
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
+            {setAllCategoriesBody()}
+            {setEmptyRows()}
           </TableBody>
         ) : (
-          <TableBody>
-            <ParStyleTable>NO CATEGORIES</ParStyleTable>
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
+          <TableBody style={tableStyle}>
+            NO CATEGORIES
+            {setEmptyRows()}
           </TableBody>
         )}
 
@@ -323,7 +471,7 @@ const CategoriesList = (props) => {
   );
 };
 
-export default CategoriesList;
+export default windowSize(CategoriesList);
 
 const useStyles1 = makeStyles((theme) => ({
   root: {

@@ -22,7 +22,7 @@ import { GameCategoryContext } from "../../contex/GameCategoryContext";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(9),
+    marginTop: theme.spacing(10),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -32,12 +32,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CustomCategories = (props) => {
-  const [myCategories, setMyCategories] = useState([]);
+  const [allCategories, setAllCategories] = useState([]);
   const [showAllCategories, setShowAllCategories] = useState(true);
 
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   const [gameCategoryPicked, setGameCategoryPicked] = useState(false);
 
@@ -61,20 +62,38 @@ const CustomCategories = (props) => {
 
   const handleInputSearchChange = (event) => {
     event.preventDefault();
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-
-    if (name === "searchTerm") {
-      setSearchTerm(value);
+    if (event.target.value) {
+      setSearchTerm(event.target.value);
+    } else {
+      setSearchTerm("");
     }
   };
-  console.log(searchTerm);
+
+  useEffect(() => {
+    if (searchTerm) {
+      const allPublicCategories = [...allCategories];
+
+      const regex = new RegExp(searchTerm, "gi");
+      const results = allPublicCategories.reduce((acc, category) => {
+        if (
+          (category.name && category.name.match(regex)) ||
+          (category.email && category.email.match(regex))
+        ) {
+          acc.push(category);
+        }
+        return acc;
+      }, []);
+      setSearchResults(results);
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchTerm]);
+
   const loadCategories = () => {
     axios
       .get(`http://localhost:9000/api/category/get/`)
       .then((category) => {
-        setMyCategories(category.data.categories);
+        setAllCategories(category.data.categories);
       })
       .catch((err) => {
         console.log(err);
@@ -85,7 +104,7 @@ const CustomCategories = (props) => {
     axios
       .get(`http://localhost:9000/api/category/get/`)
       .then((category) => {
-        setMyCategories(category.data.categories);
+        setAllCategories(category.data.categories);
       })
       .catch((err) => {
         console.log(err);
@@ -126,20 +145,26 @@ const CustomCategories = (props) => {
           fullWidth
           id="searchTerm"
           name="searchTerm"
-          label="Search..."
+          label="Search name or a user"
           type="text"
           value={searchTerm}
           onChange={handleInputSearchChange}
         />
 
         <CategoriesList
-          myCategories={myCategories}
+          searchResults={searchResults}
+          myCategories={allCategories}
           handlePlayCategory={handlePlayCategory}
           showAllCategories={showAllCategories}
         ></CategoriesList>
       </div>
-      {error !== "" ? <Alert severity="error"> {error} </Alert> : ""}
-      {success !== "" ? <Alert severity="success"> {success} </Alert> : ""}
+      {error !== "" ? (
+        <Alert variant="filled" severity="error">
+          {error}
+        </Alert>
+      ) : (
+        ""
+      )}
     </motion.div>
   );
 };

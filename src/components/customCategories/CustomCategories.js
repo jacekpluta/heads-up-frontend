@@ -23,7 +23,7 @@ import { useHistory } from "react-router-dom";
 
 import { GameCategoryContext } from "../../contex/GameCategoryContext";
 
-const buttonStyle = {
+const buttonSignoutStyle = {
   float: "right",
   backgroundColor: "#1b85ff",
   borderColor: " #1b63ff",
@@ -31,8 +31,8 @@ const buttonStyle = {
   borderRadius: "15px",
   borderWidth: "4px",
   color: "white",
-  marginTop: "25px",
-  marginRight: "25px",
+  marginTop: "23px",
+  marginRight: "20px",
 };
 
 const addCategoryButtonStyle = {
@@ -43,7 +43,7 @@ const addCategoryButtonStyle = {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(9),
+    marginTop: theme.spacing(10),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -82,6 +82,9 @@ const CustomCategories = (props) => {
   const [modalAddOpen, setAddModalOpen] = useState(false);
 
   const [gameCategoryPicked, setGameCategoryPicked] = useState(false);
+
+  const isClient = typeof window === "object";
+  const [windowSize, setWindowSize] = useState(getSize);
 
   const { setGameCategory } = useContext(GameCategoryContext);
 
@@ -234,6 +237,26 @@ const CustomCategories = (props) => {
     }
   };
 
+  useEffect(() => {
+    if (!isClient) {
+      return false;
+    }
+
+    const handleResize = () => {
+      setWindowSize(getSize());
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  function getSize() {
+    return {
+      width: isClient ? window.innerWidth : undefined,
+      height: isClient ? window.innerHeight : undefined,
+    };
+  }
+
   const handleAddCategory = (event) => {
     event.preventDefault();
 
@@ -302,7 +325,7 @@ const CustomCategories = (props) => {
       <Button
         type="submit"
         size="small"
-        style={buttonStyle}
+        style={buttonSignoutStyle}
         color="primary"
         onClick={handleLogout}
       >
@@ -319,7 +342,7 @@ const CustomCategories = (props) => {
               setAddModalOpen(true);
             }}
           >
-            Add Category
+            {windowSize.width >= 500 ? "Add Category" : "Add"}
           </Button>
           <Typography component="h1" variant="h6">
             Your categories
@@ -332,6 +355,7 @@ const CustomCategories = (props) => {
           handleOpenCategory={handleOpenCategory}
           handlePlayCategory={handlePlayCategory}
           showAllCategories={showAllCategories}
+          windowSize={windowSize}
         ></CategoriesList>
         <EditCategoryModal
           handleEditCategory={handleEditCategory}
@@ -352,8 +376,21 @@ const CustomCategories = (props) => {
           modalAddOpen={modalAddOpen}
           handleCloseAddModal={handleCloseAddModal}
         ></AddCategoryModal>
-        {error !== "" ? <Alert severity="error"> {error} </Alert> : ""}
-        {success !== "" ? <Alert severity="success"> {success} </Alert> : ""}
+
+        {error !== "" ? (
+          <Alert variant="filled" severity="error">
+            {error}
+          </Alert>
+        ) : (
+          ""
+        )}
+        {success !== "" ? (
+          <Alert variant="filled" severity="success">
+            {success}
+          </Alert>
+        ) : (
+          ""
+        )}
       </div>
     </motion.div>
   );

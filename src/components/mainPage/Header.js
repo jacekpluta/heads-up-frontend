@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeUp, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
-import { useHistory } from "react-router-dom";
+
 import { HeaderStyle } from "../../styles/Layout";
 import { MuteSoundContext } from "../../contex/MuteSoundContext";
-import Button from "@material-ui/core/Button";
 
 import buttonClick from "../../sounds/buttonClick.mp3";
 import UIfx from "uifx";
@@ -16,32 +15,12 @@ const clickSound = new UIfx(buttonClick, {
 
 function Header() {
   const { muteSound, setMuteSound } = useContext(MuteSoundContext);
-  let history = useHistory();
-
-  const handleLogin = () => {
-    clickSound.play();
-    setTimeout(() => {
-      history.push("/login");
-    }, 200);
-  };
 
   const handleMuteSound = () => {
     if (!muteSound) {
       clickSound.play();
     }
     setMuteSound(!muteSound);
-  };
-
-  const handlePlayersCategories = () => {
-    clickSound.play();
-    setTimeout(() => {
-      history.push("/playersCategories");
-    }, 200);
-  };
-
-  const buttonStyle = {
-    float: "right",
-    marginLeft: "5px",
   };
 
   const volumeButtonStyle = {
@@ -84,25 +63,6 @@ function Header() {
           style={volumeButtonStyle}
         />
       )}
-      <Button
-        size="small"
-        variant="contained"
-        style={buttonStyle}
-        color="primary"
-        onClick={handlePlayersCategories}
-      >
-        All Players Categories
-      </Button>
-
-      <Button
-        size="small"
-        style={buttonStyle}
-        variant="contained"
-        color="secondary"
-        onClick={handleLogin}
-      >
-        Your Categories
-      </Button>
     </HeaderStyle>
   );
 }
