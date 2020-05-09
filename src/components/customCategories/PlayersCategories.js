@@ -91,7 +91,7 @@ const CustomCategories = (props) => {
 
   const loadCategories = () => {
     axios
-      .get(`http://localhost:9000/api/category/get/`)
+      .get(`https://myheadsupapp.herokuapp.com/api/category/get/`)
       .then((category) => {
         setAllCategories(category.data.categories);
       })
@@ -102,7 +102,7 @@ const CustomCategories = (props) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:9000/api/category/get/`)
+      .get(`https://myheadsupapp.herokuapp.com/api/category/get/`)
       .then((category) => {
         setAllCategories(category.data.categories);
       })

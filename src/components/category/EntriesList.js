@@ -50,7 +50,9 @@ const EntriesList = (props) => {
   useEffect(() => {
     if (pickedCategory) {
       axios
-        .get(`http://localhost:9000/api/category/getById/${pickedCategory._id}`)
+        .get(
+          `https://myheadsupapp.herokuapp.com/api/category/getById/${pickedCategory._id}`
+        )
         .then((category) => {
           setCategoryEntries(category.data.categories[0].questions);
         })
@@ -62,12 +64,15 @@ const EntriesList = (props) => {
 
   const handleUpdateEntries = (questions) => {
     axios
-      .put(`http://localhost:9000/api/category/update/${pickedCategory._id}`, {
-        email: pickedCategory.email,
-        name: pickedCategory.name,
-        description: pickedCategory.description,
-        questions: questions,
-      })
+      .put(
+        `https://myheadsupapp.herokuapp.com/api/category/update/${pickedCategory._id}`,
+        {
+          email: pickedCategory.email,
+          name: pickedCategory.name,
+          description: pickedCategory.description,
+          questions: questions,
+        }
+      )
       .then((category) => {
         if (category.data.error) {
           setError(category.data.error[0]);

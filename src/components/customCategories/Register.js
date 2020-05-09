@@ -82,7 +82,7 @@ const Register = (props) => {
     event.preventDefault();
 
     axios
-      .post("http://localhost:9000/register", {
+      .post("https://myheadsupapp.herokuapp.com/register", {
         email: email,
         password: password,
         passwordRepeat: passwordRepeat,

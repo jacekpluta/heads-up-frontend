@@ -111,7 +111,7 @@ const CustomCategories = (props) => {
   };
 
   const handleLogout = () => {
-    axios.get("http://localhost:9000/logout").then((data) => {
+    axios.get("https://myheadsupapp.herokuapp.com/logout").then((data) => {
       if (data.status === 200 && data.data.message === "Logged out") {
         setTimeout(() => {
           history.push("/login");
@@ -125,7 +125,7 @@ const CustomCategories = (props) => {
 
   const loadCategories = () => {
     axios
-      .get(`http://localhost:9000/api/category/get/${user.email}`)
+      .get(`https://myheadsupapp.herokuapp.com/api/category/get/${user.email}`)
       .then((category) => {
         setMyCategories(category.data.categories);
       })
@@ -137,7 +137,9 @@ const CustomCategories = (props) => {
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:9000/api/category/get/${user.email}`)
+        .get(
+          `https://myheadsupapp.herokuapp.com/api/category/get/${user.email}`
+        )
         .then((category) => {
           setMyCategories(category.data.categories);
         })
@@ -156,12 +158,15 @@ const CustomCategories = (props) => {
     const categoryId = currentCategory._id;
 
     axios
-      .put(`http://localhost:9000/api/category/update/${categoryId}`, {
-        email: user.email,
-        name: currentCategory.name,
-        description: currentCategory.description,
-        questions: currentCategory.questions,
-      })
+      .put(
+        `https://myheadsupapp.herokuapp.com/api/category/update/${categoryId}`,
+        {
+          email: user.email,
+          name: currentCategory.name,
+          description: currentCategory.description,
+          questions: currentCategory.questions,
+        }
+      )
       .then((category) => {
         if (category.data.error) {
           setError(category.data.error[0]);
@@ -184,7 +189,9 @@ const CustomCategories = (props) => {
 
   const handleDeleteCategory = (categoryId) => {
     axios
-      .delete(`http://localhost:9000/api/category/remove/${categoryId}`)
+      .delete(
+        `https://myheadsupapp.herokuapp.com/api/category/remove/${categoryId}`
+      )
       .then((category) => {
         if (category.data.error) {
           setError(category.data.error[0]);
@@ -261,7 +268,7 @@ const CustomCategories = (props) => {
     event.preventDefault();
 
     axios
-      .post("http://localhost:9000/api/category/create", {
+      .post("https://myheadsupapp.herokuapp.com/api/category/create", {
         email: user.email,
         name: categoryName,
         description: categoryDescription,
