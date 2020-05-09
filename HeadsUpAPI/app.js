@@ -27,12 +27,12 @@ require("dotenv/config");
 
 // import routes
 const indexRouter = require("./routes/index");
-const registerRouter = require("./routes/Register");
-const loginRouter = require("./routes/Login");
-const userRouter = require("./routes/User");
+const registerRouter = require("./routes/register");
+const loginRouter = require("./routes/login");
+const userRouter = require("./routes/user");
 const incorrectRouter = require("./routes/incorrect");
-const logoutRouter = require("./routes/Logout");
-var herosRoutes = require("./routes/CategoriesRoutes");
+const logoutRouter = require("./routes/logout");
+var herosRoutes = require("./routes/categoriesRoutes");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
