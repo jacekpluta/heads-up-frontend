@@ -51,7 +51,7 @@ const CustomCategories = (props) => {
   };
 
   const handleLogout = () => {
-    axios.get("http://localhost:9000/logout").then((data) => {
+    axios.get("https://myheadsupapp.herokuapp.com/logout").then((data) => {
       if (data.status === 200 && data.data.message === "Logged out") {
         setTimeout(() => {
           history.push("/login");
