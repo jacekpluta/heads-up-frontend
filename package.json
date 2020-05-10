@@ -53,6 +53,7 @@
     "react-window-size": "^1.2.2",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
+    "semantic-ui-icon": "^2.3.3",
     "semantic-ui-react": "^0.88.1",
     "styled-components": "^4.4.1",
     "uifx": "^2.0.6",

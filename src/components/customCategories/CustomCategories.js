@@ -23,6 +23,14 @@ import { useHistory } from "react-router-dom";
 
 import { GameCategoryContext } from "../../contex/GameCategoryContext";
 
+import buttonClick from "../../sounds/buttonClick.mp3";
+import UIfx from "uifx";
+
+const clickSound = new UIfx(buttonClick, {
+  volume: 1,
+  throttleMs: 100,
+});
+
 const buttonSignoutStyle = {
   float: "right",
   backgroundColor: "#1b85ff",
@@ -106,12 +114,16 @@ const CustomCategories = (props) => {
   }, [user, history]);
 
   const handleGoBack = () => {
+    clickSound.play();
+
     setTimeout(() => {
       history.push("/");
     }, 200);
   };
 
   const handleLogout = () => {
+    clickSound.play();
+
     axios.get("https://headsupbackend.herokuapp.com/logout").then((data) => {
       if (data.status === 200 && data.data.message === "Logged out") {
         setTimeout(() => {
@@ -125,6 +137,8 @@ const CustomCategories = (props) => {
   };
 
   const loadCategories = () => {
+    clickSound.play();
+
     axios
       .get(
         `https://headsupbackend.herokuapp.com/api/category/get/${user.email}`
@@ -157,6 +171,8 @@ const CustomCategories = (props) => {
   }, [user]);
 
   const handleEditModalOpen = (category) => {
+    clickSound.play();
+
     setCurrentCategory(category);
     setEditModalOpen(true);
   };
@@ -195,6 +211,8 @@ const CustomCategories = (props) => {
   };
 
   const handleDeleteCategory = (categoryId) => {
+    clickSound.play();
+
     axios
       .delete(
         `https://headsupbackend.herokuapp.com/api/category/remove/${categoryId}`
@@ -304,13 +322,17 @@ const CustomCategories = (props) => {
 
   const handleCloseEditModal = () => {
     setEditModalOpen(false);
+    clickSound.play();
   };
 
   const handleCloseAddModal = () => {
     setAddModalOpen(false);
+    clickSound.play();
   };
 
   const handleOpenCategory = (category) => {
+    clickSound.play();
+
     setTimeout(() => {
       history.push("/category");
     }, 200);
@@ -318,11 +340,13 @@ const CustomCategories = (props) => {
   };
 
   const handlePlayCategory = (category) => {
+    clickSound.play();
+
     if (category.questions.length > 9) {
       setGameCategory(category);
       setGameCategoryPicked(true);
     } else {
-      setError("You have to add atleast 10 questions before starting the game");
+      setError("Category needs atleast 10 questions before starting the game");
     }
   };
 
@@ -353,6 +377,7 @@ const CustomCategories = (props) => {
             variant="contained"
             color="primary"
             onClick={() => {
+              clickSound.play();
               setAddModalOpen(true);
             }}
           >

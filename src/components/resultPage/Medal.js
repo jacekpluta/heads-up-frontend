@@ -36,9 +36,9 @@ export default function Medal(props) {
   const [allPoints] = useState(countPoints());
 
   const medalStyle = () => {
-    if (allPoints < 4) {
+    if (allPoints < 3) {
       return medalBronzeStyle;
-    } else if (allPoints < 7) {
+    } else if (allPoints < 6) {
       return medalSilverStyle;
     } else {
       return medalGoldStyle;
@@ -46,9 +46,9 @@ export default function Medal(props) {
   };
 
   const pointsStyle = () => {
-    if (allPoints < 4) {
+    if (allPoints < 3) {
       return pointsBronzeStyle;
-    } else if (allPoints < 7) {
+    } else if (allPoints < 6) {
       return pointsSilverStyle;
     } else {
       return pointsGoldStyle;

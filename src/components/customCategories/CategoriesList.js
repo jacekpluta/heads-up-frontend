@@ -21,6 +21,8 @@ import windowSize from "react-window-size";
 import green from "@material-ui/core/colors/green";
 import orange from "@material-ui/core/colors/orange";
 
+import { Popup, Button as SemanticButton } from "semantic-ui-react";
+
 const outerTheme = createMuiTheme({
   palette: {},
 });
@@ -60,6 +62,14 @@ const buttonStyle = {
   minWidth: "100px",
   minHeight: "30px",
   marginBottom: "2px",
+};
+
+const buttonMiniStyle = {
+  maxWidth: "20px",
+  maxHeight: "30px",
+  minWidth: "20px",
+  minHeight: "30px",
+  paddingBottom: "25px",
 };
 
 const CategoriesList = (props) => {
@@ -299,7 +309,26 @@ const CategoriesList = (props) => {
           <TableRow key={category._id}>
             <ThemeProvider theme={outerTheme}>
               <TableCell component="th" scope="row" align="center">
-                {category.name}
+                {category.name}{" "}
+                {category.questions.length < 10 ? (
+                  <Popup
+                    content="Category needs atleast 10 questions before starting the game"
+                    position="right center"
+                    offset="0, 10px"
+                    style={{ color: "red", border: "solid", padding: "5px" }}
+                    trigger={
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        style={buttonMiniStyle}
+                      >
+                        !
+                      </Button>
+                    }
+                  />
+                ) : (
+                  ""
+                )}
               </TableCell>
 
               <TableCell align="center">{category.email}</TableCell>
@@ -328,7 +357,26 @@ const CategoriesList = (props) => {
           <TableRow key={category._id}>
             <ThemeProvider theme={outerTheme}>
               <TableCell component="th" scope="row" align="center">
-                {category.name}
+                {category.name}{" "}
+                {category.questions.length < 10 ? (
+                  <Popup
+                    content="Category needs atleast 10 questions before starting the game"
+                    position="right center"
+                    offset="0, 10px"
+                    style={{ color: "red", border: "solid", padding: "5px" }}
+                    trigger={
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        style={buttonMiniStyle}
+                      >
+                        !
+                      </Button>
+                    }
+                  />
+                ) : (
+                  ""
+                )}
               </TableCell>
               <TableCell align="center">
                 {category.description ? category.description : "---"}
@@ -381,7 +429,26 @@ const CategoriesList = (props) => {
           <TableRow key={category._id}>
             <ThemeProvider theme={outerTheme}>
               <TableCell component="th" scope="row" align="center">
-                {category.name}
+                {category.name}{" "}
+                {category.questions.length < 10 ? (
+                  <Popup
+                    content="Category needs atleast 10 questions before starting the game"
+                    position="right center"
+                    offset="0, 10px"
+                    style={{ color: "red", border: "solid", padding: "5px" }}
+                    trigger={
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        style={buttonMiniStyle}
+                      >
+                        !
+                      </Button>
+                    }
+                  />
+                ) : (
+                  ""
+                )}
               </TableCell>
               <TableCell align="center">
                 {category.description ? category.description : "---"}

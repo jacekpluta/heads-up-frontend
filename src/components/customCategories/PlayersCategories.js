@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import { CircularProgress } from "@material-ui/core/";
 
 import { pageVariantsLogin } from "../PageVariants";
 import { pageTransition } from "../PageTransition";
@@ -19,6 +20,14 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { GameCategoryContext } from "../../contex/GameCategoryContext";
+
+import buttonClick from "../../sounds/buttonClick.mp3";
+import UIfx from "uifx";
+
+const clickSound = new UIfx(buttonClick, {
+  volume: 1,
+  throttleMs: 100,
+});
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,6 +51,7 @@ const CustomCategories = (props) => {
   const [loading, setLoading] = useState(false);
 
   const [gameCategoryPicked, setGameCategoryPicked] = useState(false);
+  const [refreshLoading, setRefreshLoading] = useState(false);
 
   const { setGameCategory } = useContext(GameCategoryContext);
 
@@ -91,6 +101,14 @@ const CustomCategories = (props) => {
   }, [searchTerm]);
 
   const loadCategories = () => {
+    setRefreshLoading(true);
+
+    setTimeout(() => {
+      setRefreshLoading(false);
+    }, 2000);
+
+    clickSound.play();
+
     axios
       .get(`https://headsupbackend.herokuapp.com/api/category/get/`)
       .then((category) => {
@@ -118,6 +136,8 @@ const CustomCategories = (props) => {
   }, []);
 
   const handlePlayCategory = (category) => {
+    clickSound.play();
+
     if (category.questions.length > 9) {
       setGameCategory(category);
       setGameCategoryPicked(true);
@@ -139,11 +159,20 @@ const CustomCategories = (props) => {
 
       <div className={classes.paper}>
         <Typography component="h1" variant="h6">
-          <motion.div onClick={loadCategories}>
+          <motion.div
+            onClick={loadCategories}
+            style={{ paddingTop: "10px", paddingBottom: "10px" }}
+          >
             All categories
-            <RefreshIcon
-              style={{ position: "absolute", right: 0, marginRight: "10px" }}
-            />
+            {refreshLoading ? (
+              <CircularProgress
+                style={{ position: "absolute", right: 0, marginTop: "-8px" }}
+              />
+            ) : (
+              <RefreshIcon
+                style={{ position: "absolute", right: 0, marginRight: "10px" }}
+              />
+            )}
           </motion.div>
         </Typography>
         <TextField

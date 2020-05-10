@@ -6,6 +6,7 @@ const tableStyle = {
   marginLeft: "auto",
   marginRight: "auto",
   width: "70%",
+  maxHeight: "100px",
   color: "#f8f8ff",
 };
 
@@ -56,7 +57,7 @@ export default function QuestionsTable(props) {
 
   return (
     <motion.div
-      className="result-questions-container-questions-table "
+      className="result-questions-container-questions-table"
       variants={questionsTransitionContainer}
       initial="hidden"
       animate="visible"

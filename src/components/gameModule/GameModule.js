@@ -47,7 +47,7 @@ function GameModule(props) {
   const { gameCategory } = useContext(GameCategoryContext);
   const { gameVariant } = useContext(GameVariantContext);
 
-  const [numberOfGames] = useState(2);
+  const [numberOfGames] = useState(8 - 1);
   const [numberOfGamesCompleted, setNumberOfGamesCompleted] = useState(0);
   const [countdownStart, setCountdownStart] = useState(5);
   const [counterTimer, setCounterTimer] = useState(30);
@@ -270,15 +270,6 @@ function GameModule(props) {
       setClickOnSkip(false);
     }
   };
-
-  //Skip questin and reset timer on phone forward tilt
-  // const handleTiltOnCorrect = () => {
-  //   if (!tiltDone) {
-  //     successSound.play();
-  //     setCounterTimer(0);
-  //     setCorrectAnswer(true);
-  //   }
-  // };
 
   const [added, setAdded] = React.useState(false);
 
