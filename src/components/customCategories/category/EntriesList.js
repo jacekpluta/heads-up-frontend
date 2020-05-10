@@ -45,7 +45,7 @@ const EntriesList = (props) => {
   const classes = useStyles();
 
   const [state] = useState({
-    columns: [{ title: "Pytanie", field: "name" }],
+    columns: [{ title: "Question", field: "name" }],
     data: [],
   });
 

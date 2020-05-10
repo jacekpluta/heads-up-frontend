@@ -37,23 +37,21 @@ const innerTheme = createMuiTheme({
 });
 
 const tableEmptyCustomStyle = {
-  top: "calc(50% + 100px)",
   left: "50%",
   transform: "translate(-50%, -50%)",
   textAlign: "center",
   fontSize: "4vw",
   color: "#00000",
-  position: "absolute",
+  position: "fixed",
 };
 
 const tableEmptyAllStyle = {
-  top: "calc(50% + 150px)",
   left: "50%",
   transform: "translate(-50%, -50%)",
   textAlign: "center",
   fontSize: "4vw",
   color: "#00000",
-  position: "absolute",
+  position: "fixed",
 };
 
 const buttonStyle = {

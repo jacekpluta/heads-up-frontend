@@ -34,7 +34,7 @@ body {
 
 .Main {
   height: 100vh;
-  padding-left: calc(3% + 25px);
+  padding-left: calc(2% + 25px);
   padding-right: 2%;
   padding-top: 60px;
 }

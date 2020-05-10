@@ -343,8 +343,12 @@ function App(props) {
         }}
       >
         <ParStyle style={{ fontSize: "5vw", top: "40%" }}>
-          {error ? "Please refresh the game" : "Loading the game"}
+          Loading the game
         </ParStyle>
+        <ParStyle style={{ fontSize: "5vw", top: "60%" }}>
+          {error ? error : ""}
+        </ParStyle>
+
         <div
           style={{
             top: "50%",
