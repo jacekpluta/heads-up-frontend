@@ -22,8 +22,6 @@ import { connect } from "react-redux";
 import * as GamesApi from "../webApi/GamesApi";
 import * as AnimeApi from "../webApi/AnimeApi";
 
-import { useCookies } from "react-cookie";
-
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
 
@@ -86,7 +84,6 @@ function App(props) {
   const [animeList, setAnimeList] = useState([]);
 
   const [check, setCheck] = useState(false);
-  const [cookies, setCookies] = useCookies(["name"]);
 
   const [animeFetched, setAnimeFetched] = useState(false);
 
@@ -113,9 +110,9 @@ function App(props) {
       name: "films",
       gameMenuTitle: "Filmy",
       questions:
-        cookies && cookies.filmList && cookies.filmList[20]
-          ? cookies.filmList
-          : filmList, //checks if there is list of quesitons in cookies
+        localStorage.filmList && localStorage.filmList !== ""
+          ? localStorage.filmList.split(",")
+          : filmList, //checks if there is list of quesitons in local storage
       background: { backgroundImage: `url(${MoviesTile})` },
       gameTile: { MoviesTile },
       description: "Opisz swój ulubiony film!",
@@ -125,9 +122,9 @@ function App(props) {
       name: "games",
       gameMenuTitle: "Gry",
       questions:
-        cookies && cookies.gamesList && cookies.gamesList[20]
-          ? cookies.gamesList
-          : gamesList, //checks if there is list of quesitons in cookies
+        localStorage.gamesList && localStorage.gamesList !== ""
+          ? localStorage.gamesList.split(",")
+          : gamesList, //checks if there is list of quesitons in local storage
       background: { backgroundImage: `url(${GamesTile})` },
       gameTile: { GamesTile },
       description: "GRY! GRY! GRY!",
@@ -137,9 +134,9 @@ function App(props) {
       name: "anime",
       gameMenuTitle: "Anime",
       questions:
-        cookies && cookies.animeList && cookies.animeList[20]
-          ? cookies.animeList
-          : animeList, //checks if there is list of quesitons in cookies
+        localStorage.animeList && localStorage.animeList !== ""
+          ? localStorage.animeList.split(",")
+          : animeList, //checks if there is list of quesitons in local storage
       background: { backgroundImage: `url(${AnimeTile})` },
       gameTile: { AnimeTile },
       description: "Czy znasz wszystkie?",
@@ -254,45 +251,36 @@ function App(props) {
     }
   }, [animeFetched, gamesFetched, filmsFetched]);
 
-  //set coockies if they are not set after all data was fetched
+  //set local storage if they are not set after all data was fetched
   useEffect(() => {
     if (allFechted) {
-      if (
-        (cookies && cookies.filmList && cookies.filmList.length === 0) ||
-        (cookies && cookies.filmList && !cookies.filmList)
-      ) {
-        setCookies("filmList", filmList, { path: "/" });
+      if (localStorage && !localStorage.filmList) {
+        localStorage.setItem("filmList", filmList);
       }
-      if (
-        (cookies && cookies.animeList && cookies.animeList.length === 0) ||
-        (cookies && cookies.animeList && !cookies.animeList)
-      ) {
-        setCookies("animeList", animeList, { path: "/" });
+      if (localStorage && !localStorage.animeList) {
+        localStorage.setItem("animeList", animeList);
       }
-      if (
-        (cookies && cookies.gamesList && cookies.gamesList.length === 0) ||
-        (cookies && cookies.gamesList && !cookies.gamesList)
-      ) {
-        setCookies("gamesList", gamesList, { path: "/" });
+      if (localStorage && !localStorage.gamesList) {
+        localStorage.setItem("gamesList", gamesList);
       }
     }
   }, [allFechted]);
 
-  //fetch data for categories if there is not data in coockies for them
+  //fetch data for categories if there is not data in local storage for them
   useEffect(() => {
-    if (cookies.filmList && cookies.filmList[20]) {
+    if (localStorage.filmList && localStorage.filmList !== "") {
       setFilmsFetched(true);
     } else {
       fetchMyAPIFilms();
     }
 
-    if (cookies.animeList && cookies.animeList[20]) {
+    if (localStorage.animeList && localStorage.animeList !== "") {
       setAnimeFetched(true);
     } else {
       fetchMyAPIAnime();
     }
 
-    if (cookies.gamesList && cookies.gamesList[20]) {
+    if (localStorage.gamesList && localStorage.gamesList !== "") {
       setGamesFetched(true);
     } else {
       fetchMyAPIGames();
@@ -323,6 +311,12 @@ function App(props) {
     }
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      window.screen.orientation.lock("portrait");
+    }, 1000);
+  }, []);
+
   //checks if the data has been fetched, if not then reload page
   useEffect(() => {
     if (check) {
@@ -333,10 +327,10 @@ function App(props) {
   }, [check, allFechted]);
 
   const renderLoading = () => {
-    //checks if data was fetched in 4 seconds of loading screen
+    //checks if data was fetched in 5 seconds of loading screen
     setTimeout(() => {
       setCheck(true);
-    }, 4000);
+    }, 5000);
 
     return (
       <Grid
@@ -368,12 +362,6 @@ function App(props) {
       </Grid>
     );
   };
-
-  useEffect(() => {
-    setTimeout(() => {
-      window.screen.orientation.lock("portrait");
-    }, 200);
-  }, []);
 
   if (allFechted) {
     return (

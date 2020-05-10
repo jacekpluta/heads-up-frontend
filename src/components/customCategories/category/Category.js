@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 
-import BackButton from "../BackButton";
+import BackButton from "../../BackButton";
 import { motion } from "framer-motion";
 import Button from "@material-ui/core/Button";
 
-import EntriesList from "../category/EntriesList";
+import EntriesList from "./EntriesList";
 
 import { useCookies } from "react-cookie";
 
-import { makeStyles } from "@material-ui/core/styles";
-
-import { pageVariantsLogin } from "../PageVariants";
-import { pageTransition } from "../PageTransition";
-import { setUser } from "../../actions";
+import { pageVariantsLogin } from "../../PageVariants";
+import { pageTransition } from "../../PageTransition";
+import { setUser } from "../../../actions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -51,7 +49,7 @@ const CustomCategories = (props) => {
   };
 
   const handleLogout = () => {
-    axios.get("https://headsupbackend.herokuapp.com//logout").then((data) => {
+    axios.get("https://headsupbackend.herokuapp.com/logout").then((data) => {
       if (data.status === 200 && data.data.message === "Logged out") {
         setTimeout(() => {
           history.push("/login");

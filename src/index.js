@@ -23,7 +23,7 @@ import Result from "./components/resultPage/Result";
 import Register from "./components/customCategories/Register";
 import Login from "./components/customCategories/Login";
 import CustomCategories from "./components/customCategories/CustomCategories";
-import Category from "./components/category/Category";
+import Category from "./components/customCategories/category/Category";
 import PlayersCategories from "./components/customCategories/PlayersCategories";
 
 import { createStore } from "redux";

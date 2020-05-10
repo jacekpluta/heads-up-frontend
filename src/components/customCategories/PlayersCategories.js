@@ -39,6 +39,7 @@ const CustomCategories = (props) => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const [gameCategoryPicked, setGameCategoryPicked] = useState(false);
 
@@ -101,10 +102,15 @@ const CustomCategories = (props) => {
   };
 
   useEffect(() => {
+    setLoading(true);
+
     axios
       .get(`https://headsupbackend.herokuapp.com/api/category/get/`)
       .then((category) => {
         setAllCategories(category.data.categories);
+      })
+      .then(() => {
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -156,6 +162,7 @@ const CustomCategories = (props) => {
           myCategories={allCategories}
           handlePlayCategory={handlePlayCategory}
           showAllCategories={showAllCategories}
+          loading={loading}
         ></CategoriesList>
       </div>
       {error !== "" ? (

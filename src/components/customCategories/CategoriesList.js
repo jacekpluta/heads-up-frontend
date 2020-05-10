@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
 
-import PropTypes from "prop-types";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -11,14 +10,11 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import IconButton from "@material-ui/core/IconButton";
-import FirstPageIcon from "@material-ui/icons/FirstPage";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-import LastPageIcon from "@material-ui/icons/LastPage";
-import TableHead from "@material-ui/core/TableHead";
 
+import TableHead from "@material-ui/core/TableHead";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import TablePaginationActions from "./TablePaginationActions";
 
 import windowSize from "react-window-size";
 
@@ -40,8 +36,8 @@ const innerTheme = createMuiTheme({
   },
 });
 
-const tableStyle = {
-  top: "calc(50% + 50px)",
+const tableEmptyCustomStyle = {
+  top: "calc(50% + 100px)",
   left: "50%",
   transform: "translate(-50%, -50%)",
   textAlign: "center",
@@ -49,11 +45,23 @@ const tableStyle = {
   color: "#00000",
   position: "absolute",
 };
+
+const tableEmptyAllStyle = {
+  top: "calc(50% + 150px)",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  textAlign: "center",
+  fontSize: "4vw",
+  color: "#00000",
+  position: "absolute",
+};
+
 const buttonStyle = {
   maxWidth: "100px",
   maxHeight: "30px",
   minWidth: "100px",
   minHeight: "30px",
+  marginBottom: "2px",
 };
 
 const CategoriesList = (props) => {
@@ -66,6 +74,7 @@ const CategoriesList = (props) => {
     showAllCategories,
     windowWidth,
     searchResults,
+    loading,
   } = props;
 
   const classes = useStyles2();
@@ -437,16 +446,36 @@ const CategoriesList = (props) => {
             {setCustomCategoriesBody()}
             {setEmptyRows()}
           </TableBody>
-        ) : showAllCategories ? (
+        ) : (
           <TableBody>
             {setAllCategoriesBody()}
             {setEmptyRows()}
           </TableBody>
-        ) : (
-          <TableBody style={tableStyle}>
+        )}
+
+        {myCategories.length === 0 && !loading ? (
+          <TableBody
+            style={
+              showAllCategories ? tableEmptyAllStyle : tableEmptyCustomStyle
+            }
+          >
             NO CATEGORIES
             {setEmptyRows()}
           </TableBody>
+        ) : (
+          ""
+        )}
+
+        {loading ? (
+          <TableBody
+            style={
+              showAllCategories ? tableEmptyAllStyle : tableEmptyCustomStyle
+            }
+          >
+            <CircularProgress />
+          </TableBody>
+        ) : (
+          ""
         )}
 
         <TableFooter>
@@ -472,83 +501,6 @@ const CategoriesList = (props) => {
 };
 
 export default windowSize(CategoriesList);
-
-const useStyles1 = makeStyles((theme) => ({
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5),
-  },
-}));
-
-function TablePaginationActions(props) {
-  const classes = useStyles1();
-  const theme = useTheme();
-  const { count, page, rowsPerPage, onChangePage } = props;
-
-  const handleFirstPageButtonClick = (event) => {
-    onChangePage(event, 0);
-  };
-
-  const handleBackButtonClick = (event) => {
-    onChangePage(event, page - 1);
-  };
-
-  const handleNextButtonClick = (event) => {
-    onChangePage(event, page + 1);
-  };
-
-  const handleLastPageButtonClick = (event) => {
-    onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-  };
-
-  return (
-    <div className={classes.root}>
-      <IconButton
-        onClick={handleFirstPageButtonClick}
-        disabled={page === 0}
-        aria-label="first page"
-      >
-        {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
-      </IconButton>
-      <IconButton
-        onClick={handleBackButtonClick}
-        disabled={page === 0}
-        aria-label="previous page"
-      >
-        {theme.direction === "rtl" ? (
-          <KeyboardArrowRight />
-        ) : (
-          <KeyboardArrowLeft />
-        )}
-      </IconButton>
-      <IconButton
-        onClick={handleNextButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="next page"
-      >
-        {theme.direction === "rtl" ? (
-          <KeyboardArrowLeft />
-        ) : (
-          <KeyboardArrowRight />
-        )}
-      </IconButton>
-      <IconButton
-        onClick={handleLastPageButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="last page"
-      >
-        {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
-      </IconButton>
-    </div>
-  );
-}
-
-TablePaginationActions.propTypes = {
-  count: PropTypes.number.isRequired,
-  onChangePage: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
-};
 
 const useStyles2 = makeStyles({
   table: {

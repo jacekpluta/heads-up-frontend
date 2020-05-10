@@ -89,7 +89,7 @@ function Result(props) {
   useEffect(() => {
     setTimeout(() => {
       window.screen.orientation.lock("portrait");
-    }, 200);
+    }, 1000);
   }, []);
 
   useEffect(() => {

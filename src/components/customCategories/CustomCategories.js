@@ -75,6 +75,7 @@ const CustomCategories = (props) => {
   const [success, setSuccess] = useState("");
   const [cookies, setCookies] = useCookies(["name"]);
   const [currentCategory, setCurrentCategory] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const classes = useStyles();
 
@@ -137,6 +138,7 @@ const CustomCategories = (props) => {
   };
 
   useEffect(() => {
+    setLoading(true);
     if (user) {
       axios
         .get(
@@ -144,6 +146,9 @@ const CustomCategories = (props) => {
         )
         .then((category) => {
           setMyCategories(category.data.categories);
+        })
+        .then(() => {
+          setLoading(false);
         })
         .catch((err) => {
           console.log(err);
@@ -358,6 +363,7 @@ const CustomCategories = (props) => {
           </Typography>
         </div>
         <CategoriesList
+          loading={loading}
           myCategories={myCategories}
           handleEditModalOpen={handleEditModalOpen}
           handleDeleteCategory={handleDeleteCategory}

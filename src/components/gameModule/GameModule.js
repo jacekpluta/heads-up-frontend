@@ -196,7 +196,7 @@ function GameModule(props) {
     },
     isRunningTimer ? delayTimer : null
   );
-  console.log(gameCategory);
+
   //Returns random question
   const getRandomQuestion = (rand) => {
     if (gameCategory && gameCategory.questions[0].name) {

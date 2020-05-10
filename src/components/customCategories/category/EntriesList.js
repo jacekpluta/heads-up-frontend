@@ -31,6 +31,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     backgroundColor: "white",
     paddingRight: "10px",
+    paddingTop: "10px",
+    paddingBottom: "10px",
   },
 }));
 

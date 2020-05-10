@@ -39,7 +39,7 @@ export default function GameMenu(props) {
   useEffect(() => {
     setTimeout(() => {
       window.screen.orientation.lock("portrait");
-    }, 200);
+    }, 1000);
   }, []);
 
   useEffect(() => {
