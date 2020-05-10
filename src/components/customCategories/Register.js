@@ -82,7 +82,7 @@ const Register = (props) => {
     event.preventDefault();
 
     axios
-      .post("https://myheadsupapp.herokuapp.com/register", {
+      .post("https://headsupbackend.herokuapp.com/register", {
         email: email,
         password: password,
         passwordRepeat: passwordRepeat,

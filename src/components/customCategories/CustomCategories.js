@@ -111,7 +111,7 @@ const CustomCategories = (props) => {
   };
 
   const handleLogout = () => {
-    axios.get("https://myheadsupapp.herokuapp.com/logout").then((data) => {
+    axios.get("https://headsupbackend.herokuapp.com/logout").then((data) => {
       if (data.status === 200 && data.data.message === "Logged out") {
         setTimeout(() => {
           history.push("/login");
@@ -125,7 +125,9 @@ const CustomCategories = (props) => {
 
   const loadCategories = () => {
     axios
-      .get(`https://myheadsupapp.herokuapp.com/api/category/get/${user.email}`)
+      .get(
+        `https://headsupbackend.herokuapp.com/api/category/get/${user.email}`
+      )
       .then((category) => {
         setMyCategories(category.data.categories);
       })
@@ -138,7 +140,7 @@ const CustomCategories = (props) => {
     if (user) {
       axios
         .get(
-          `https://myheadsupapp.herokuapp.com/api/category/get/${user.email}`
+          `https://headsupbackend.herokuapp.com/api/category/get/${user.email}`
         )
         .then((category) => {
           setMyCategories(category.data.categories);
@@ -159,7 +161,7 @@ const CustomCategories = (props) => {
 
     axios
       .put(
-        `https://myheadsupapp.herokuapp.com/api/category/update/${categoryId}`,
+        `https://headsupbackend.herokuapp.com/api/category/update/${categoryId}`,
         {
           email: user.email,
           name: currentCategory.name,
@@ -190,7 +192,7 @@ const CustomCategories = (props) => {
   const handleDeleteCategory = (categoryId) => {
     axios
       .delete(
-        `https://myheadsupapp.herokuapp.com/api/category/remove/${categoryId}`
+        `https://headsupbackend.herokuapp.com/api/category/remove/${categoryId}`
       )
       .then((category) => {
         if (category.data.error) {
@@ -268,7 +270,7 @@ const CustomCategories = (props) => {
     event.preventDefault();
 
     axios
-      .post("https://myheadsupapp.herokuapp.com/api/category/create", {
+      .post("https://headsupbackend.herokuapp.com/api/category/create", {
         email: user.email,
         name: categoryName,
         description: categoryDescription,

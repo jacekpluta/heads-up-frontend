@@ -48,7 +48,7 @@ const Login = (props) => {
     event.preventDefault();
 
     axios
-      .post("https://myheadsupapp.herokuapp.com/user", {
+      .post("https://headsupbackend.herokuapp.com/user", {
         email: email,
         password: password,
       })
