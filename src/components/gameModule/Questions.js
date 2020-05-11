@@ -9,7 +9,7 @@ function Questions(props) {
 
   const styleCounter = {
     position: "absolute",
-    top: "85%",
+    top: "80%",
     left: "calc(50% - 37.7px)",
     transform: "translate(-50%, -50%)",
     display: "flex",

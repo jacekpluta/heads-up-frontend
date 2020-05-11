@@ -27,6 +27,9 @@ import { useHistory } from "react-router-dom";
 import buttonClick from "../sounds/buttonClick.mp3";
 import UIfx from "uifx";
 
+import { isBrowser } from "react-device-detect";
+import InvalidDevice from "./InvalidDevice";
+
 const pageVariants = {
   initial: {
     opacity: 0,
@@ -365,58 +368,61 @@ function App(props) {
       </Grid>
     );
   };
-
-  if (allFechted) {
-    return (
-      <motion.div
-        className="App"
-        variants={pageVariants}
-        transition={pageTransition}
-        initial="initial"
-        animate="in"
-        exit="out"
-      >
-        <Header />
-        <Button
-          size="small"
-          variant="contained"
-          style={buttonStyleMyCat}
-          color="primary"
-          onClick={handlePlayersCategories}
+  if (!isBrowser) {
+    if (allFechted) {
+      return (
+        <motion.div
+          className="App"
+          variants={pageVariants}
+          transition={pageTransition}
+          initial="initial"
+          animate="in"
+          exit="out"
         >
-          All Categories
-        </Button>
+          <Header />
+          <Button
+            size="small"
+            variant="contained"
+            style={buttonStyleMyCat}
+            color="primary"
+            onClick={handlePlayersCategories}
+          >
+            All Categories
+          </Button>
 
-        <Button
-          size="small"
-          style={buttonStyleAllCat}
-          variant="contained"
-          color="secondary"
-          onClick={handleLogin}
+          <Button
+            size="small"
+            style={buttonStyleAllCat}
+            variant="contained"
+            color="secondary"
+            onClick={handleLogin}
+          >
+            Your Categories
+          </Button>
+
+          <Main
+            allFechted={allFechted}
+            gameCategoriesList={gameCategoriesList}
+          ></Main>
+        </motion.div>
+      );
+    } else
+      return (
+        <Grid
+          container
+          spacing={0}
+          alignItems="center"
+          justify="center"
+          style={{
+            background: "linearGradient(180deg, #013064, #1255a0)",
+          }}
         >
-          Your Categories
-        </Button>
-
-        <Main
-          allFechted={allFechted}
-          gameCategoriesList={gameCategoriesList}
-        ></Main>
-      </motion.div>
-    );
-  } else
-    return (
-      <Grid
-        container
-        spacing={0}
-        alignItems="center"
-        justify="center"
-        style={{
-          background: "linearGradient(180deg, #013064, #1255a0)",
-        }}
-      >
-        {renderLoading()}
-      </Grid>
-    );
+          {renderLoading()}
+        </Grid>
+      );
+  } else {
+    return <InvalidDevice></InvalidDevice>;
+  }
 }
 
 export default App;

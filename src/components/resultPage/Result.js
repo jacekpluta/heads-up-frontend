@@ -120,7 +120,7 @@ function Result(props) {
       animate="in"
       exit="out"
     >
-      <p style={pStyle}>TWÓJ WYNIK </p>
+      <p style={pStyle}>YOUR SCORE </p>
       <Medal countPoints={countPoints}> </Medal>
 
       <div className="result-questions-container">

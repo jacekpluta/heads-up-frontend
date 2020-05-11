@@ -1,13 +1,11 @@
 To do:
 1. animated header
 2. medal and gametile glowing effect
-3. if "Fullscreen request failed" 
+3. fix css names
 
 BUGS:
-1. sometimes skipped/correct screen stays 
-2. No button sounds
-3. fix auth
-4. chnage tiles names and header to english
+1. fix auth
+2. chnage tiles names and header to english
 
 
 

@@ -89,7 +89,7 @@ function GameModule(props) {
     }, 200);
   };
 
-  //turns on and off ability to skip questions
+  //turns on and off ability to skip questions on hover backutton
   const turnOffClickOnSkip = () => {
     setClickOnSkip(false);
   };

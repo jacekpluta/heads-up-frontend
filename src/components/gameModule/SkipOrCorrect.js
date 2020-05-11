@@ -45,7 +45,7 @@ const SkipOrCorrect = (props) => {
         initial={skippedAnswer ? "inModule" : "outModule"}
         animate={skippedAnswer ? "outModule" : "inModule"}
       >
-        <p style={pStyle}>POMINIĘTE</p>
+        <p style={pStyle}>SKIPPED</p>
       </motion.div>
       {/* CORRECT ANSWER */}
       <motion.div
@@ -58,7 +58,7 @@ const SkipOrCorrect = (props) => {
         initial={correctAnswer ? "inModule" : "outModule"}
         animate={correctAnswer ? "outModule" : "inModule"}
       >
-        <p style={pStyle}>DOBRZE</p>
+        <p style={pStyle}>CORRECT</p>
       </motion.div>
     </React.Fragment>
   );

@@ -27,7 +27,7 @@ export default function ChangeOrientationBox(props) {
       initial="initial"
       animate="in"
     >
-      <ParStyle style={{ fontSize: "10vw" }}>PRZYŁÓŻ TELEFON DO CZOŁA</ParStyle>
+      <ParStyle style={{ fontSize: "10vw" }}>PLACE ON FOREHEAD</ParStyle>
     </motion.div>
   );
 }
