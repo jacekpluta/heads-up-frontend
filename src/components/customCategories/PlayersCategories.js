@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomCategories = (props) => {
   const [allCategories, setAllCategories] = useState([]);
-  const [showAllCategories, setShowAllCategories] = useState(true);
+  const [showAllCategories] = useState(true);
 
   const [error, setError] = useState("");
 
@@ -98,7 +98,7 @@ const CustomCategories = (props) => {
     } else {
       setSearchResults([]);
     }
-  }, [searchTerm]);
+  }, [searchTerm, allCategories]);
 
   const loadCategories = () => {
     setRefreshLoading(true);

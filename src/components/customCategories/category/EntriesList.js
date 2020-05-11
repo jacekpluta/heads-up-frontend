@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import MaterialTable, { Column } from "material-table";
+import MaterialTable from "material-table";
 import axios from "axios";
 
 import Alert from "@material-ui/lab/Alert";

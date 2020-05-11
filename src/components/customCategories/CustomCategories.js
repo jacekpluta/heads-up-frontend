@@ -280,7 +280,7 @@ const CustomCategories = (props) => {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [isClient]);
 
   function getSize() {
     return {

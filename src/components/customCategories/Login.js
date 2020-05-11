@@ -21,11 +21,19 @@ import { pageTransition } from "../PageTransition";
 import { setUser } from "../../actions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { CircularProgress } from "@material-ui/core";
+
+const loadingStyle = {
+  position: "absolute",
+  left: "calc(50% - 28px)",
+  top: "50%",
+};
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   let history = useHistory();
 
   const { user, setUser } = props;
@@ -36,7 +44,7 @@ const Login = (props) => {
         history.push("/customCategories");
       }, 200);
     }
-  }, [user]);
+  }, [user, history]);
 
   const handleGoBack = () => {
     setTimeout(() => {
@@ -45,6 +53,7 @@ const Login = (props) => {
   };
 
   const handleLogin = (event) => {
+    setLoading(true);
     event.preventDefault();
 
     axios
@@ -58,22 +67,26 @@ const Login = (props) => {
           data.data.error &&
           data.data.error[0] === "Password or email address is incorrect"
         ) {
+          setLoading(false);
           setUser(null);
           setError(data.data.error[0]);
         } else if (
           data.status === 200 &&
           data.data.message === "Password and email address are correct"
         ) {
+          setLoading(false);
           setUser({
             email: email,
             password: password,
           });
           setError("");
         } else {
+          setLoading(false);
           setUser(null);
         }
       })
       .catch((err) => {
+        setLoading(false);
         console.log(err);
       });
   };
@@ -147,7 +160,7 @@ const Login = (props) => {
             ) : (
               ""
             )}
-
+            {loading ? <CircularProgress style={loadingStyle} /> : ""}
             <Button
               type="submit"
               fullWidth
@@ -155,6 +168,7 @@ const Login = (props) => {
               color="primary"
               className={classes.submit}
               onClick={handleLogin}
+              disabled={loading}
             >
               Sign In
             </Button>

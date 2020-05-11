@@ -17,7 +17,6 @@ import AnimeTile from "../pic/animeTile.jpg";
 import animalList from "../lists/AnimalsList";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { connect } from "react-redux";
 
 import * as GamesApi from "../webApi/GamesApi";
 import * as AnimeApi from "../webApi/AnimeApi";
@@ -264,7 +263,7 @@ function App(props) {
         localStorage.setItem("gamesList", gamesList);
       }
     }
-  }, [allFechted]);
+  }, [allFechted, filmList, animeList, gamesList]);
 
   //fetch data for categories if there is not data in local storage for them
   useEffect(() => {
@@ -420,4 +419,4 @@ function App(props) {
     );
 }
 
-export default connect(null)(App);
+export default App;

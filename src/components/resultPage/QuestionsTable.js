@@ -6,7 +6,7 @@ const tableStyle = {
   marginLeft: "auto",
   marginRight: "auto",
   width: "70%",
-  maxHeight: "100px",
+  marginTop: "30px",
   color: "#f8f8ff",
 };
 
@@ -43,6 +43,8 @@ const wrongColorCell = {
   marginTop: "1px",
   marginBottom: "1px",
   marginLeft: "10px",
+  maxHeight: "10px",
+  lineHeight: "17px",
 };
 
 const correctColorCell = {
@@ -51,6 +53,7 @@ const correctColorCell = {
   marginTop: "1px",
   marginBottom: "1px",
   marginLeft: "10px",
+  lineHeight: "10px",
 };
 export default function QuestionsTable(props) {
   const { questionsResult, points } = props;

@@ -75,6 +75,8 @@ function GameModule(props) {
   const [questionsResult, setQuestionsResult] = useState([]);
   const [pointsObject, setPointsObject] = useState("");
 
+  const [deviceTilted, setDeviceTilted] = useState(false);
+
   const [currentOrientation, setCurrentOrientation] = useState(null);
 
   const { muteSound } = useContext(MuteSoundContext);
@@ -87,6 +89,7 @@ function GameModule(props) {
     }, 200);
   };
 
+  //turns on and off ability to skip questions
   const turnOffClickOnSkip = () => {
     setClickOnSkip(false);
   };
@@ -95,7 +98,7 @@ function GameModule(props) {
     setClickOnSkip(true);
   };
 
-  //routes to result
+  // routes to result
   useEffect(() => {
     if (showResult) {
       setTimeout(() => {
@@ -104,8 +107,7 @@ function GameModule(props) {
     }
   }, [showResult, history]);
 
-  //  returns to main if there is no gameVariant or gameCategory
-
+  // returns to main if there is no gameVariant or gameCategory
   useEffect(() => {
     if (!gameCategory) {
       history.push("/");
@@ -212,6 +214,7 @@ function GameModule(props) {
     }
   };
 
+  //lock in landscape orientation
   useEffect(() => {
     if (currentOrientation === "landscape") {
       window.screen.orientation.lock("landscape");
@@ -256,8 +259,7 @@ function GameModule(props) {
       setShowCounterTimer(true);
       setDelayTimer(1000);
       setCurrentQuestion(getRandomQuestion([numberOfGamesCompleted]));
-
-      setAdded(false);
+      setDeviceTilted(false);
     }
   }, [showQuestions, numberOfGamesCompleted]);
 
@@ -266,45 +268,50 @@ function GameModule(props) {
     if (clickOnSkip) {
       setCounterTimer(0);
       setSkippedAnswer(true);
+      setTimeout(() => {
+        setSkippedAnswer(false);
+      }, 2000);
       failureSound.play();
       setClickOnSkip(false);
     }
   };
 
-  const [added, setAdded] = React.useState(false);
-
-  React.useEffect(() => {
+  //on device tilted set deviceTilted true
+  useEffect(() => {
     window.addEventListener("deviceorientation", (e) => {
       if (e && e.gamma) {
         if (
-          !added &&
+          !deviceTilted &&
           e.gamma < 50 &&
           e.gamma > 0 &&
           !showCountdown &&
           showCounterTimer
         ) {
-          // if (showCounterTimer) {
-          setAdded(true);
-          // }
+          setDeviceTilted(true);
         }
       }
     });
-  }, [added, showCountdown, showCounterTimer]);
+  }, [deviceTilted, showCountdown, showCounterTimer]);
 
-  React.useEffect(() => {
-    if (added) {
+  //on device tilted
+  useEffect(() => {
+    if (deviceTilted) {
       successSound.play();
       setCounterTimer(0);
-      setCorrectAnswer(true);
-      setShowCounterTimer(false);
 
+      setCorrectAnswer(true);
+      setTimeout(() => {
+        setCorrectAnswer(false);
+      }, 1000);
+
+      setShowCounterTimer(false);
       setPointsObject((pointsObject) => [...pointsObject, "1"]);
 
       setTimeout(() => {
-        setAdded(false);
+        setDeviceTilted(false);
       }, 2000);
     }
-  }, [added]);
+  }, [deviceTilted]);
 
   //End of each round
   useEffect(() => {
@@ -314,19 +321,21 @@ function GameModule(props) {
     }
   }, [counterTimer, correctAnswer, skippedAnswer]);
 
-  //Set points if skipped or time runs out
+  //Set points if time runs out
   useEffect(() => {
     if (counterTimer === 0 && correctAnswer === false) {
       setPointsObject((pointsObject) => [...pointsObject, "0"]);
       setSkippedAnswer(true);
+      setTimeout(() => {
+        setSkippedAnswer(false);
+      }, 2000);
     }
   }, [counterTimer, correctAnswer]);
 
+  //end of the round
   useEffect(() => {
-    if (counterTimer === -2 && numberOfGamesCompleted <= numberOfGames) {
+    if (counterTimer < -1 && numberOfGamesCompleted <= numberOfGames) {
       setClickOnSkip(true);
-      setCorrectAnswer(false);
-      setSkippedAnswer(false);
       setShowCounterTimer(false);
       setCounterTimer(timerSeconds);
       setNumberOfGamesCompleted(numberOfGamesCompleted + 1);
@@ -341,7 +350,6 @@ function GameModule(props) {
     counterTimer,
     numberOfGamesCompleted,
     numberOfGames,
-
     currentQuestion,
   ]);
 

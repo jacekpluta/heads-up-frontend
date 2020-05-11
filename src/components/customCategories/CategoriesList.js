@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
 
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -21,7 +21,7 @@ import windowSize from "react-window-size";
 import green from "@material-ui/core/colors/green";
 import orange from "@material-ui/core/colors/orange";
 
-import { Popup, Button as SemanticButton } from "semantic-ui-react";
+import { Popup } from "semantic-ui-react";
 
 const outerTheme = createMuiTheme({
   palette: {},
@@ -37,9 +37,9 @@ const innerTheme = createMuiTheme({
     },
   },
 });
-
 const tableEmptyCustomStyle = {
   left: "50%",
+
   transform: "translate(-50%, -50%)",
   textAlign: "center",
   fontSize: "4vw",
@@ -49,11 +49,18 @@ const tableEmptyCustomStyle = {
 
 const tableEmptyAllStyle = {
   left: "50%",
+  top: "300px",
   transform: "translate(-50%, -50%)",
   textAlign: "center",
   fontSize: "4vw",
   color: "#00000",
-  position: "fixed",
+  position: "absolute",
+};
+const tableEmptyStyle = {
+  textAlign: "center",
+  fontSize: "4vw",
+  color: "#00000",
+  position: "relative",
 };
 
 const buttonStyle = {
@@ -95,7 +102,7 @@ const CategoriesList = (props) => {
     } else {
       setRowsPerPage(4);
     }
-  }, [windowWidth]);
+  }, [windowWidth, showAllCategories]);
 
   const emptyRows =
     rowsPerPage -
@@ -173,6 +180,15 @@ const CategoriesList = (props) => {
       id: "actions",
       label: "Action",
       minWidth: 50,
+      align: "center",
+    },
+  ];
+
+  const columnsLoading = [
+    {
+      id: "loading",
+      label: "Loading",
+      maxWidth: "100%",
       align: "center",
     },
   ];
@@ -287,6 +303,23 @@ const CategoriesList = (props) => {
       ));
     } else if (!showAllCategories && windowWidth <= 768) {
       return columnsShort.map((column) => (
+        <TableCell
+          key={column.id}
+          align={column.align}
+          style={{
+            minWidth: column.minWidth,
+            maxWidth: column.maxWidth,
+          }}
+        >
+          {column.label}
+        </TableCell>
+      ));
+    }
+  };
+
+  const setLoadingHeader = () => {
+    if (loading) {
+      return columnsLoading.map((column) => (
         <TableCell
           key={column.id}
           align={column.align}
@@ -495,14 +528,17 @@ const CategoriesList = (props) => {
         ));
     }
   };
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
-            {showAllCategories
-              ? setAllCategoriesHeader()
-              : setCustomCategoriesHeader()}
+            {showAllCategories && !loading ? setAllCategoriesHeader() : ""}
+
+            {!showAllCategories && !loading ? setCustomCategoriesHeader() : ""}
+
+            {loading ? setLoadingHeader() : ""}
           </TableRow>
         </TableHead>
 
@@ -525,20 +561,16 @@ const CategoriesList = (props) => {
             }
           >
             NO CATEGORIES
-            {setEmptyRows()}
+            {!showAllCategories ? setEmptyRows() : ""}
           </TableBody>
         ) : (
           ""
         )}
 
         {loading ? (
-          <TableBody
-            style={
-              showAllCategories ? tableEmptyAllStyle : tableEmptyCustomStyle
-            }
-          >
+          <div style={tableEmptyStyle}>
             <CircularProgress />
-          </TableBody>
+          </div>
         ) : (
           ""
         )}

@@ -1,7 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { GameCategoryContext } from "../../contex/GameCategoryContext";
 import BackButton from "../BackButton";
+import DeviceOrientation, { Orientation } from "react-screen-orientation";
 
 import { useHistory } from "react-router-dom";
 
@@ -23,6 +24,7 @@ export default function GameMenu(props) {
   };
 
   const { gameCategory } = useContext(GameCategoryContext);
+  const [currentOrientation, setCurrentOrientation] = useState(false);
 
   useEffect(() => {
     const page = document.documentElement;
@@ -48,11 +50,27 @@ export default function GameMenu(props) {
     }
   }, [gameCategory, history]);
 
-  if (gameCategory) {
+  const pageVariantsNoSlideAnimation = {
+    initial: {
+      opacity: 0,
+      x: "-100vw",
+    },
+    in: {
+      opacity: 1,
+      x: 0,
+    },
+    out: { opacity: 0 },
+  };
+
+  const renderGameMenu = () => {
     return (
       <motion.div
         className="game-menu-container"
-        variants={pageVariants}
+        variants={
+          currentOrientation === "landscape"
+            ? pageVariants
+            : pageVariantsNoSlideAnimation
+        }
         transition={pageTransition}
         initial="initial"
         animate="in"
@@ -69,6 +87,24 @@ export default function GameMenu(props) {
 
         <Variants />
       </motion.div>
+    );
+  };
+  if (gameCategory) {
+    return (
+      <DeviceOrientation
+        lockOrientation={"landscape"}
+        onOrientationChange={(orientation) => {
+          setCurrentOrientation(orientation);
+        }}
+      >
+        <Orientation orientation="landscape" angle="90" alwaysRender={false}>
+          {" "}
+          {renderGameMenu()}
+        </Orientation>
+        <Orientation orientation="portrait" alwaysRender={false}>
+          {renderGameMenu()}
+        </Orientation>
+      </DeviceOrientation>
     );
   } else {
     return <div></div>;

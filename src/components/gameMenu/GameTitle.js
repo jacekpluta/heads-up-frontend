@@ -7,19 +7,22 @@ function GameTitle(props) {
   const defaulBackgroundImage = `url(${defaultPic})`;
 
   const gameTitleStyle = {
-    height: "200px",
+    maxWidth: "400px",
+    maxHeight: "400px",
+    minWidth: "180px",
+    minHeight: "180px",
     borderStyle: "solid",
     borderColor: "white",
     borderRadius: "10px",
     borderWidth: "10px",
-    minWidth: "60%",
+
     backgroundSize: "100% 100%",
     backgroundImage: `${
       gameCategoryImage
         ? gameCategoryImage.backgroundImage
         : defaulBackgroundImage
     }`,
-    marginTop: "15%",
+    marginTop: "50px",
     zIndex: 5,
   };
 

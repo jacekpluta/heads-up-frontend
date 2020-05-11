@@ -9,7 +9,7 @@ function Questions(props) {
 
   const styleCounter = {
     position: "absolute",
-    top: "75%",
+    top: "85%",
     left: "calc(50% - 37.7px)",
     transform: "translate(-50%, -50%)",
     display: "flex",
@@ -30,18 +30,18 @@ function Questions(props) {
     alignItems: "center",
     justifyContent: "center",
     color: "#f8f8ff",
-    fontSize: "7vh",
+    fontSize: "5vh",
     fontWeight: 700,
     textShadow: "5px 5px 10px #474747",
   };
 
   const pStyleQuestion = {
-    // color: "#f8f8ff",
-    // fontSize: "12vh",
-    // fontWeight: 700,
-    // textAlign: "center",
-    // width: "100%",
-    // textShadow: "5px 5px 10px #474747",
+    color: "#f8f8ff",
+    fontSize: "9vh",
+    fontWeight: 700,
+    textAlign: "center",
+    width: "100%",
+    textShadow: "5px 5px 10px #474747",
   };
 
   const rednerCounter = () => {

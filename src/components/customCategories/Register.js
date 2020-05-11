@@ -18,8 +18,15 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
+import { CircularProgress } from "@material-ui/core";
 
 import { useHistory } from "react-router-dom";
+
+const loadingStyle = {
+  position: "absolute",
+  left: "calc(50% - 28px)",
+  top: "50%",
+};
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -48,6 +55,7 @@ const Register = (props) => {
   const classes = useStyles();
   const { setUser, user } = props;
 
+  const [loading, setLoading] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
@@ -80,6 +88,7 @@ const Register = (props) => {
 
   const handleRegister = (event) => {
     event.preventDefault();
+    setLoading(true);
 
     axios
       .post("https://headsupbackend.herokuapp.com/register", {
@@ -92,9 +101,10 @@ const Register = (props) => {
         if (user.data.error) {
           setError(user.data.error[0]);
           setSuccess("");
+          setLoading(false);
         } else {
           setError("");
-
+          setLoading(false);
           setUser({
             email: user.data.email,
             password: user.data.password,
@@ -104,6 +114,7 @@ const Register = (props) => {
       })
       .catch((err) => {
         setError(err);
+        setLoading(false);
         console.log(err);
       });
   };
@@ -182,6 +193,7 @@ const Register = (props) => {
             ) : (
               ""
             )}
+            {loading ? <CircularProgress style={loadingStyle} /> : ""}
             <Button
               type="submit"
               fullWidth
@@ -189,6 +201,7 @@ const Register = (props) => {
               color="primary"
               className={classes.submit}
               onClick={handleRegister}
+              disabled={loading}
             >
               Sign Up
             </Button>
