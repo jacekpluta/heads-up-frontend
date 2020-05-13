@@ -16,7 +16,6 @@ const divStyle = {
 export default function InvalidDevice() {
   return (
     <div className="App" style={divStyle}>
-      {" "}
       <ParStyle style={{ fontSize: "6vw" }}>
         SORRY, THIS GAME IS ONLY AVAILABLE ON MOBILE DEVICES
       </ParStyle>

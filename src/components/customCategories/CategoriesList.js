@@ -345,10 +345,14 @@ const CategoriesList = (props) => {
                 {category.name}{" "}
                 {category.questions.length < 10 ? (
                   <Popup
-                    content="Category needs atleast 10 questions before starting the game"
-                    position="right center"
-                    offset="0, 10px"
-                    style={{ color: "red", border: "solid", padding: "5px" }}
+                    content="Category must have atleast 10 questions"
+                    position="top center"
+                    style={{
+                      color: "white",
+                      backgroundColor: "#f40057",
+                      border: "solid",
+                      padding: "5px",
+                    }}
                     trigger={
                       <Button
                         variant="contained"

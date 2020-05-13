@@ -6,7 +6,7 @@ const Main = (props) => {
   const { gameCategoriesList } = props;
 
   return (
-    <div className="Main">
+    <div className="main">
       <Grid container spacing={0}>
         {gameCategoriesList.map((gameCategory) => (
           <Grid

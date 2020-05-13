@@ -6,7 +6,7 @@ To do:
 BUGS:
 1. fix auth
 2. chnage tiles names and header to english
-
+3. loadings animations in custom and all categories
 
 
 //"webpack-dev-server": "^3.10.3"

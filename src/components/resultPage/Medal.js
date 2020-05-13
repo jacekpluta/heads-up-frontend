@@ -58,7 +58,7 @@ export default function Medal(props) {
   return (
     <motion.div
       style={medalStyle()}
-      className="result-container-medal"
+      className="medal"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
       transition={{
@@ -70,7 +70,7 @@ export default function Medal(props) {
       }}
     >
       {
-        <p className="result-container-medal-points" style={pointsStyle()}>
+        <p className="medal__points" style={pointsStyle()}>
           {" "}
           {allPoints}
         </p>

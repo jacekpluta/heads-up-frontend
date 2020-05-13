@@ -21,7 +21,7 @@ const pageTransition = {
 export default function ChangeOrientationBox(props) {
   return (
     <motion.div
-      className="ChangeOrientationBox"
+      className="changeorientationbox"
       variants={pageVariants}
       transition={pageTransition}
       initial="initial"

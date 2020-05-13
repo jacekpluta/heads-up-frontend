@@ -113,7 +113,7 @@ function Result(props) {
 
   return (
     <motion.div
-      className="result-container"
+      className="result"
       variants={pageVariants}
       transition={pageTransition}
       initial="initial"
@@ -123,17 +123,11 @@ function Result(props) {
       <p style={pStyle}>YOUR SCORE </p>
       <Medal countPoints={countPoints}> </Medal>
 
-      <div className="result-questions-container">
+      <div className="result__questions">
         <QuestionsTable questionsResult={questionsResult} points={points} />
 
         <Grid container>
-          <Grid
-            container
-            item
-            xs={6}
-            justify="center"
-            className={"result-container-back-button"}
-          >
+          <Grid container item xs={6} justify="center" className={"backbutton"}>
             <motion.div
               whileHover={{ scale: 1.2 }}
               whileTap={{
@@ -155,7 +149,7 @@ function Result(props) {
             item
             xs={6}
             justify="center"
-            className={"result-container-refresh-button"}
+            className={"refresh"}
             onClick={() => {
               setRefreshGame(true);
             }}

@@ -60,7 +60,7 @@ export default function QuestionsTable(props) {
 
   return (
     <motion.div
-      className="result-questions-container-questions-table"
+      className="questionstable"
       variants={questionsTransitionContainer}
       initial="hidden"
       animate="visible"

@@ -1,44 +1,72 @@
-import * as React from "react";
-import { mount } from "enzyme";
+import React, { Component } from "react";
+import TestRenderer from "react-test-renderer";
+
 import App from "../App";
 import Header from "../mainPage/Header";
 import Main from "../mainPage/Main";
-import { CircularProgress } from "@material-ui/core/";
 
-import Enzyme, { shallow } from "enzyme";
+import Box from "../mainPage/Box";
+import { HeaderStyle } from "../../styles/Layout";
+
+import { MemoryRouter } from "react-router-dom";
+import * as deviceDetect from "react-device-detect";
+import { GameCategoryContext } from "../../contex/GameCategoryContext";
+import { MuteSoundContext } from "../../contex/MuteSoundContext";
+
+import Enzyme, { shallow, mount } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
 Enzyme.configure({ adapter: new Adapter() });
 
+deviceDetect.isMobile = true;
+
 let wrapper;
 
-// beforeEach(() => {
-//   wrapper = shallow(<App />);
-// });
-
-// afterEach(() => {
-//   jest.clearAllMocks();
-// });
-
-it("it shows a loader when !allFechted", () => {
-  const wrapper = shallow(<App />);
-  console.log(wrapper);
-  // const loadingIndicator = wrapper.find(CircularProgress);
-  // expect(loadingIndicator).toHaveLength(1);
+beforeEach(() => {
+  wrapper = shallow(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>
+  );
 });
 
-// it("it should render Header component", async () => {
-//   expect(wrapper.find(Header)).toBeTruthy();
+afterEach(() => {});
+
+// it("should render itself", () => {
+//   const gameCategoryValue = {
+//     id: 0,
+//     name: "animals",
+//     gameMenuTitle: "Zwierzeta",
+//     questions: [],
+//     background: "",
+//     gameTile: "",
+//     description: "Czy umiesz udawać słonia?",
+//   };
 // });
 
-// it("it should render Main component", async () => {
-//   expect(wrapper.find(Main)).toBeTruthy();
-// });
+it("render correctly text component", () => {
+  const gameCategoryValue = {
+    id: 0,
+    name: "animals",
+    gameMenuTitle: "Zwierzeta",
+    questions: [],
+    background: "",
+    gameTile: "",
+    description: "Czy umiesz udawać słonia?",
+  };
 
-// Change the viewport to 500px.
-// global.innerWidth = 300;
-// global.innerHeight = 600;
+  const TextInputComponent = TestRenderer.create(
+    <MuteSoundContext.Provider value={false}>
+      <GameCategoryContext.Provider value={gameCategoryValue}>
+        <MemoryRouter>
+          <App />
+        </MemoryRouter>
+      </GameCategoryContext.Provider>
+    </MuteSoundContext.Provider>
+  ).toJSON();
+  expect(TextInputComponent).toMatchSnapshot();
+});
 
-// Trigger the window resize event.
-// global.dispatchEvent(new Event("resize"));
-// console.log(wrapped.find(CircularProgress));
+//   <GameCategoryContext.Provider value={gameCategoryValue}>
+//
+// <MuteSoundContext.Provider value={false}>

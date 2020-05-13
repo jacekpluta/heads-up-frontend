@@ -357,7 +357,7 @@ const CustomCategories = (props) => {
       initial="initial"
       animate="in"
       exit="out"
-      className={"Login"}
+      className="customcategories"
     >
       <BackButton handleGoBack={handleGoBack} />
       <Button

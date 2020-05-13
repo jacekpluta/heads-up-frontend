@@ -29,7 +29,7 @@ const BackButton = (props) => {
         handleGoBack();
         clickSound.play();
       }}
-      className="BackButtonContainer"
+      className="backbutton"
     >
       <Icon color="white" path={mdiArrowLeftCircle} />
     </motion.div>

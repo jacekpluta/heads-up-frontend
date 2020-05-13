@@ -27,7 +27,8 @@ import { useHistory } from "react-router-dom";
 import buttonClick from "../sounds/buttonClick.mp3";
 import UIfx from "uifx";
 
-import { isBrowser } from "react-device-detect";
+import { isMobile } from "react-device-detect";
+
 import InvalidDevice from "./InvalidDevice";
 
 const pageVariants = {
@@ -97,6 +98,7 @@ function App(props) {
 
   let history = useHistory();
 
+  //local game category list
   const gameCategoriesList = [
     {
       id: 0,
@@ -216,10 +218,10 @@ function App(props) {
     Promise.all([
       AnimeApi.animeApiTop020(),
       AnimeApi.animeApiTop2040(),
-      // AnimeApi.animeApiTop4060(),
+      AnimeApi.animeApiTop4060(),
       AnimeApi.animeApiTopCharacters020(),
       AnimeApi.animeApiTopCharacters2040(),
-      // AnimeApi.animeApiTopCharacters4060(),
+      AnimeApi.animeApiTopCharacters4060(),
     ])
       .then((responses) => {
         responses.forEach((response) => {
@@ -368,11 +370,11 @@ function App(props) {
       </Grid>
     );
   };
-  if (!isBrowser) {
+  if (isMobile) {
     if (allFechted) {
       return (
         <motion.div
-          className="App"
+          className="app"
           variants={pageVariants}
           transition={pageTransition}
           initial="initial"

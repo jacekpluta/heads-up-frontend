@@ -59,13 +59,16 @@ export default function GameMenu(props) {
       opacity: 1,
       x: 0,
     },
-    out: { opacity: 0 },
+    out: {
+      opacity: 0,
+      x: "100vw",
+    },
   };
 
   const renderGameMenu = () => {
     return (
       <motion.div
-        className="game-menu-container"
+        className="gamemenu"
         variants={
           currentOrientation === "landscape"
             ? pageVariants
@@ -76,7 +79,7 @@ export default function GameMenu(props) {
         animate="in"
         exit="out"
       >
-        <div className="game-menu-container-game-tile-description">
+        <div className="gamemenu__description">
           <BackButton handleGoBack={handleGoBack} />
           {/* <GlowingEffect></GlowingEffect> */}
           <GameTitle gameCategoryImage={gameCategory.background} />

@@ -16,7 +16,7 @@ export default function DrawTile(props) {
     <motion.div
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.8, transition: { duration: 1 } }}
-      className="TileStyle"
+      className="tile"
       style={drawTileStyle}
       onClick={() => {
         handleStartGame();

@@ -121,7 +121,7 @@ const Login = (props) => {
       initial="initial"
       animate="in"
       exit="out"
-      className={"Login"}
+      className={"login"}
     >
       <BackButton handleGoBack={handleGoBack} />
       <Container component="main" maxWidth="xs">

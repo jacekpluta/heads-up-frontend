@@ -18,7 +18,7 @@ export default function ChallangeTile(props) {
     <motion.div
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.8, transition: { duration: 1 } }}
-      className="TileStyle"
+      className="tile"
       style={challangeTileStyle}
       onClick={() => {
         handleStartGame();

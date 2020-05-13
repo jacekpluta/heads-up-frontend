@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly text component 1`] = `
+<div
+  className="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+  style={
+    Object {
+      "background": "linearGradient(180deg, #013064, #1255a0)",
+    }
+  }
+>
+  <div
+    className="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+    style={
+      Object {
+        "background": "linearGradient(180deg, #013064, #1255a0)",
+      }
+    }
+  >
+    <p
+      className="sc-bwzfXH fKrVns"
+      style={
+        Object {
+          "fontSize": "5vw",
+          "top": "40%",
+        }
+      }
+    >
+      Loading the game
+    </p>
+    <p
+      className="sc-bwzfXH fKrVns"
+      style={
+        Object {
+          "fontSize": "5vw",
+          "top": "60%",
+        }
+      }
+    >
+      
+    </p>
+    <div
+      style={
+        Object {
+          "color": "#fff",
+          "fontSize": "5vw",
+          "left": "50%",
+          "position": "absolute",
+          "textAlign": "center",
+          "textShadow": "3px 3px 0px rgba(0, 0, 0, 0.2)",
+          "top": "50%",
+          "transform": "translate(-50%, -50%)",
+        }
+      }
+    >
+      <div
+        className="MuiCircularProgress-root MuiCircularProgress-colorSecondary MuiCircularProgress-indeterminate"
+        role="progressbar"
+        style={
+          Object {
+            "height": 40,
+            "width": 40,
+          }
+        }
+      >
+        <svg
+          className="MuiCircularProgress-svg"
+          viewBox="22 22 44 44"
+        >
+          <circle
+            className="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+            cx={44}
+            cy={44}
+            fill="none"
+            r={19.5}
+            strokeWidth={5}
+            style={Object {}}
+          />
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+`;

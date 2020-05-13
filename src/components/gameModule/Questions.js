@@ -62,7 +62,7 @@ function Questions(props) {
     <div>
       {currentQuestion ? rednerCounter() : ""}{" "}
       <motion.div
-        className="random-question"
+        className="questions"
         animate={{
           y: 0,
           opacity: 1,
