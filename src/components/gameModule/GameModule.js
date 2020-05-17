@@ -46,7 +46,7 @@ function GameModule(props) {
   const { gameCategory } = useContext(GameCategoryContext);
   const { gameVariant } = useContext(GameVariantContext);
 
-  const [numberOfGames] = useState(8 - 1);
+  const [numberOfGames] = useState(3 - 1);
   const [numberOfGamesCompleted, setNumberOfGamesCompleted] = useState(0);
   const [countdownStart, setCountdownStart] = useState(5);
   const [counterTimer, setCounterTimer] = useState(30);
