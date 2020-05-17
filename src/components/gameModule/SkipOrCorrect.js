@@ -40,7 +40,7 @@ const SkipOrCorrect = (props) => {
       {/* SKIPPED ANSWER */}
 
       <motion.div
-        className="SkipCorrect"
+        className="skiporcorrect"
         variants={pageTransition}
         initial={skippedAnswer ? "inModule" : "outModule"}
         animate={skippedAnswer ? "outModule" : "inModule"}
@@ -49,7 +49,7 @@ const SkipOrCorrect = (props) => {
       </motion.div>
       {/* CORRECT ANSWER */}
       <motion.div
-        className="SkipCorrect"
+        className="skiporcorrect"
         style={{
           background:
             "linear-gradient(180deg, rgb(7, 255, 48), rgb(2, 255, 171))",

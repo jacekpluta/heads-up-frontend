@@ -59,12 +59,12 @@ body {
   background-size: 100% 100%;
 }
 
-.gameVariantBox {
+/* .gameVariantBox {
   box-sizing: border-box;
   border-style: solid;
   border-color: white;
   border-radius: 10px;
-}
+} */
 
 .backbutton {
   width: 70px;
@@ -120,7 +120,7 @@ body {
   background: linear-gradient(180deg, #023774 65%, #074285 35%);
 }
 
-.resultquestions {
+.result__questions {
   border-top-style: hidden;
   border-top-left-radius: 150px;
   border-top-right-radius: 150px;
@@ -151,9 +151,7 @@ body {
 .medal {
   position: relative;
   text-align: center;
-
   margin: auto;
-
   min-width: 20%;
   height: 220px;
   width: 120px;
@@ -186,7 +184,7 @@ body {
   background: linear-gradient(180deg, #0adaff, #1b85ff);
 }
 
-.random-question {
+.questions {
   position: absolute;
   top: 42%;
   transform: translate(-50%, -50%);
@@ -201,7 +199,7 @@ body {
   text-shadow: 5px 5px 10px #474747;
 }
 
-.SkipCorrect {
+.skiporcorrect {
   position: absolute;
   padding: 0;
   margin: 0;

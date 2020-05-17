@@ -33,7 +33,7 @@ const questionsTransition = {
 const pStyle = {
   textAlign: "center",
   width: "100%",
-  fontSize: "3.5vh",
+  fontSize: "3.1vh",
   color: "#f8f8ff",
 };
 
@@ -43,8 +43,8 @@ const wrongColorCell = {
   marginTop: "1px",
   marginBottom: "1px",
   marginLeft: "10px",
-  maxHeight: "10px",
-  lineHeight: "17px",
+  maxHeight: "11px",
+  lineHeight: "14px",
 };
 
 const correctColorCell = {
@@ -53,7 +53,8 @@ const correctColorCell = {
   marginTop: "1px",
   marginBottom: "1px",
   marginLeft: "10px",
-  lineHeight: "10px",
+  maxHeight: "11px",
+  lineHeight: "14px",
 };
 export default function QuestionsTable(props) {
   const { questionsResult, points } = props;

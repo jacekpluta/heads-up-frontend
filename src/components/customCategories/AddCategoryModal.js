@@ -47,7 +47,7 @@ const AddCategoryForm = (props) => {
             variant="outlined"
             fullWidth
             id="categoryDescription"
-            label="Opis kategorii"
+            label="Category description"
             name="categoryDescription"
             type="text"
             value={categoryDescription}

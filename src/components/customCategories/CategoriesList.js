@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -23,6 +23,101 @@ import orange from "@material-ui/core/colors/orange";
 
 import { Popup } from "semantic-ui-react";
 
+const columns = [
+  {
+    id: "name",
+    label: "Name",
+    minWidth: 50,
+    maxWidth: 50,
+    align: "center",
+  },
+  {
+    id: "description",
+    label: "Description",
+    minWidth: 50,
+    maxWidth: 110,
+    align: "center",
+  },
+  {
+    id: "play",
+    label: "Play",
+    minWidth: 50,
+    align: "center",
+  },
+  {
+    id: "open",
+    label: "Change questions",
+    minWidth: 50,
+    align: "center",
+  },
+  {
+    id: "edit",
+    label: "Edit",
+    minWidth: 50,
+    align: "center",
+  },
+  {
+    id: "delete",
+    label: "Delete",
+    minWidth: 50,
+    align: "center",
+  },
+];
+
+const columnsShort = [
+  {
+    id: "name",
+    label: "Name",
+    minWidth: 50,
+    maxWidth: 50,
+    align: "center",
+  },
+  {
+    id: "description",
+    label: "Description",
+    minWidth: 50,
+    maxWidth: 110,
+    align: "center",
+  },
+  {
+    id: "actions",
+    label: "Action",
+    minWidth: 50,
+    align: "center",
+  },
+];
+
+const columnsLoading = [
+  {
+    id: "loading",
+    label: "Loading",
+    maxWidth: "100%",
+    align: "center",
+  },
+];
+
+const columnsAllCategories = [
+  {
+    id: "name",
+    label: "Name",
+    minWidth: 40,
+    maxWidth: 50,
+    align: "center",
+  },
+  {
+    id: "userEmail",
+    label: "User",
+    minWidth: 40,
+    align: "center",
+  },
+  {
+    id: "play",
+    label: "Play",
+    minWidth: 40,
+    align: "center",
+  },
+];
+
 const outerTheme = createMuiTheme({
   palette: {},
 });
@@ -37,9 +132,9 @@ const innerTheme = createMuiTheme({
     },
   },
 });
+
 const tableEmptyCustomStyle = {
   left: "50%",
-
   transform: "translate(-50%, -50%)",
   textAlign: "center",
   fontSize: "4vw",
@@ -93,8 +188,8 @@ const CategoriesList = (props) => {
   } = props;
 
   const classes = useStyles2();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(4);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(4);
 
   useEffect(() => {
     if (windowWidth <= 768 && !showAllCategories) {
@@ -117,103 +212,8 @@ const CategoriesList = (props) => {
     setPage(0);
   };
 
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("name");
-
-  const columns = [
-    {
-      id: "name",
-      label: "Name",
-      minWidth: 50,
-      maxWidth: 50,
-      align: "center",
-    },
-    {
-      id: "description",
-      label: "Description",
-      minWidth: 50,
-      maxWidth: 110,
-      align: "center",
-    },
-    {
-      id: "play",
-      label: "Play",
-      minWidth: 50,
-      align: "center",
-    },
-    {
-      id: "open",
-      label: "Change questions",
-      minWidth: 50,
-      align: "center",
-    },
-    {
-      id: "edit",
-      label: "Edit",
-      minWidth: 50,
-      align: "center",
-    },
-    {
-      id: "delete",
-      label: "Delete",
-      minWidth: 50,
-      align: "center",
-    },
-  ];
-
-  const columnsShort = [
-    {
-      id: "name",
-      label: "Name",
-      minWidth: 50,
-      maxWidth: 50,
-      align: "center",
-    },
-    {
-      id: "description",
-      label: "Description",
-      minWidth: 50,
-      maxWidth: 110,
-      align: "center",
-    },
-    {
-      id: "actions",
-      label: "Action",
-      minWidth: 50,
-      align: "center",
-    },
-  ];
-
-  const columnsLoading = [
-    {
-      id: "loading",
-      label: "Loading",
-      maxWidth: "100%",
-      align: "center",
-    },
-  ];
-
-  const columnsAllCategories = [
-    {
-      id: "name",
-      label: "Name",
-      minWidth: 40,
-      maxWidth: 50,
-      align: "center",
-    },
-    {
-      id: "userEmail",
-      label: "User",
-      minWidth: 40,
-      align: "center",
-    },
-    {
-      id: "play",
-      label: "Play",
-      minWidth: 40,
-      align: "center",
-    },
-  ];
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("name");
 
   // const handleRequestSort = (event, property) => {
   //   const isAsc = orderBy === property && order === "asc";
@@ -467,10 +467,12 @@ const CategoriesList = (props) => {
             <ThemeProvider theme={outerTheme}>
               <TableCell component="th" scope="row" align="center">
                 {category.name}{" "}
-                {category.questions.length < 10 ? (
+                {category &&
+                category.questions &&
+                category.questions.length < 10 ? (
                   <Popup
-                    content="Category needs atleast 10 questions before starting the game"
-                    position="right center"
+                    content="Category needs atleast 10 questions"
+                    position="top center"
                     offset="0, 10px"
                     style={{ color: "red", border: "solid", padding: "5px" }}
                     trigger={

@@ -107,7 +107,7 @@ function App(props) {
       questions: animalList,
       background: { backgroundImage: `url(${AnimalsTile})` },
       gameTile: { AnimalsTile },
-      description: "Czy umiesz udawać słonia?",
+      description: "Can you pretend to be a lazy sloth?",
     },
     {
       id: 1,
@@ -119,7 +119,7 @@ function App(props) {
           : filmList, //checks if there is list of quesitons in local storage
       background: { backgroundImage: `url(${MoviesTile})` },
       gameTile: { MoviesTile },
-      description: "Opisz swój ulubiony film!",
+      description: "Describe your favourite movie!",
     },
     {
       id: 2,
@@ -131,7 +131,7 @@ function App(props) {
           : gamesList, //checks if there is list of quesitons in local storage
       background: { backgroundImage: `url(${GamesTile})` },
       gameTile: { GamesTile },
-      description: "GRY! GRY! GRY!",
+      description: "Who doesnt love games?",
     },
     {
       id: 3,
@@ -143,7 +143,7 @@ function App(props) {
           : animeList, //checks if there is list of quesitons in local storage
       background: { backgroundImage: `url(${AnimeTile})` },
       gameTile: { AnimeTile },
-      description: "Czy znasz wszystkie?",
+      description: "Do you know all the titles and characters?",
     },
   ];
 
