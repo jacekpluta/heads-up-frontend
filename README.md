@@ -1,12 +1,13 @@
 # Heads Up App
-> Heads Up is a web game application where players guess words or phrases that appear on the
+Heads Up is a web game application where players guess words or phrases that appear on the
  mobile held to their foreheads by watching the other players act it out or give hints as time counted down. 
  The aim is to get as many words/phrases correct.
+ 
+Game only works on mobile devices with motion sensors (accelerometer and gyroscope).
 
 
 ![](mdimages/header_md.png)
 
-Unfortunately game only works on mobile devices with motion sensors (accelerometer and gyroscope).
 
 
 You choose a category and one person holds the phone/tablet in front of his/her head.
@@ -19,27 +20,23 @@ This web app take the concept of mobile app Heads Up!
 
 ## Installation
 
-> install all packages
+install all packages
 
-```sh
+```
 npm install
 ```
-> go to https://bitbucket.org/jacagaca/headsupbackend and download back-end server
 
-> install all packages in server directory 
+go to https://bitbucket.org/jacagaca/headsupbackend and download back-end server
+install all packages in server directory and start the server
 
-```sh
-npm install
 ```
-> start the server
-
-```sh
+npm install  
 npm start
 ```
 
-> start the app
+start the app
 
-```sh
+```
 npm start
 ```
 
@@ -47,60 +44,60 @@ npm start
 
 ## Usage example
 
-Start the game by click on one of the four categories.
+Real time gameplay example  
 
-![](mdImages/1.png)
+![](12.png)    
 
-Choose game variant (describe, show, challenge, draw). It this case it is "describe" category.
+Start the game by click on one of the four categories.  
 
-![](mdImages/2.png)
+![](mdimages/1.png)    
 
-Place your phone on the forehead to start the game.
+Choose game variant (describe, show, challenge, draw). It this case it is "describe" category.  
 
-![](mdImages/3.png)
+![](mdimages/2.png)    
 
-The game has started. Second player sees that codeword and has to describe it to you without actually using it and you have to guess it.
+Place your phone on the forehead to start the game.  
 
-![](mdImages/4.png)
+![](mdimages/3.png)    
 
-If you guess the word you should tilt your phone forward to gain a point.
+The game has started. Second player sees that codeword and has to describe it to you without actually using it and you have to guess it.  
 
-In case of running out of time or skipping the word, you lose a poin.
-![](mdimages/5.png)
+![](mdimages/4.png)    
+
+If you guess the word you should tilt your phone forward to gain a point.    
+
+In case of running out of time or skipping the word, you lose a poin.  
+![](mdimages/5.png)    
 
 After the game has ended, you can see what medal with amount of points you have gotten and a table with results what codewords you have answered.
-At the bottom you have a possibility to repeat a game with the same category or go and choose a different game variant.
+At the bottom you have a possibility to repeat a game with the same category or go and choose a different game variant.    
 
+You can also create your own categories! Just click in the main menu "YOUR CATEGORIES" button   
+![](mdimages/55.png)    
 
-You can also create your own categories! Just click in the main menu "YOUR CATEGORIES" button 
-![](mdimages/55.png)
+Create an account using your e-mail address and password.  
+![](mdimages/6.png)    
 
-Create an account using your e-mail address and password.
-![](mdimages/6.png)
+After logging in, click in the top left "Add" button, enter category name, description and click "Add".  
+![](mdimages/7.png)    
 
+We have created food category. Now we need to put atleast 10 questions before we can start the game. We do that by clicking "QUESTIONS" button.  
+![](mdimages/8.png)    
 
-After logging in, click in the top left "Add" button, enter category name, description and click "Add".
-![](mdimages/7.png)
+To add a new question, simply just click plus button in top right corrner, enter new question and click confirm.  
+![](mdimages/9.png)    
 
-We have created food category. Now we need to put atleast 10 questions before we can start the game. We do that by clicking "QUESTIONS" button.
-![](mdimages/8.png)
-
-To add a new question, simply just click plus button in top right corrner, enter new question and click confirm.
-![](mdimages/9.png)
-
-After adding atleast 10 questions we can start the game. Course of the game is exactly the same as in choosing normal category.
-![](mdimages/10.png)
+After adding atleast 10 questions we can start the game. Course of the game is exactly the same as in choosing normal category.  
+![](mdimages/10.png)    
 
 Last but not least is an option to see all categories created by players. In the main menu click "ALL CATEGORIES" button at the top right corner.
-Here you can see all categories created by other players and play them with your friends. 
+Here you can see all categories created by other players and play them with your friends.  
 
-![](mdimages/11.png)
+![](mdimages/11.png)    
 
-Create, share and play crazy categories that you and your friends came up with and have fun!
+Create, share and play crazy categories that you and your friends came up with and have fun!  
 
-Real time gameplay example
 
-![](12.png)
 ## Contact
 
 Your Name – Jacek Pluta
@@ -112,4 +109,4 @@ Website - https://jacekplutaportfolio.netlify.app/
 
 ## License
 
-- Copyright 2020 © <a href="https://jacekplutaportfolio.netlify.app/" target="_blank">Jacek Pluta</a>.
+- Copyright 2020 © Jacek Pluta
