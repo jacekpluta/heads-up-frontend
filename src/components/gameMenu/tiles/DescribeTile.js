@@ -20,7 +20,7 @@ function DescribeTile(props) {
       style={describleTileStyle}
       onClick={() => {
         handleStartGame();
-        setGameVariant("opowiadaj");
+        setGameVariant("describe");
       }}
     ></motion.div>
   );

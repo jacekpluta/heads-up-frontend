@@ -150,7 +150,7 @@ function GameModule(props) {
   };
 
   useEffect(() => {
-    if (gameCategory && gameVariant === "opowiadaj") {
+    if (gameCategory && gameVariant === "describe") {
       handleGameVariantDescribe();
     } else if (gameCategory && gameVariant === "show") {
       handleGameVariantShow();
