@@ -36,7 +36,7 @@ function Header() {
   };
   return (
     <HeaderStyle>
-      {!muteSound ? (
+      {/* {!muteSound ? (
         <FontAwesomeIcon
           onClick={handleMuteSound}
           icon={faVolumeMute}
@@ -62,7 +62,7 @@ function Header() {
           color="white"
           style={volumeButtonStyle}
         />
-      )}
+      )} */}
     </HeaderStyle>
   );
 }
