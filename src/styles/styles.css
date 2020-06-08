@@ -72,7 +72,7 @@ body {
   padding-top: 15px;
   padding-left: 15px;
   position: absolute;
-  z-index: 5;
+  z-index: 15;
 }
 
 .gamemenu {
@@ -134,12 +134,6 @@ body {
   position: relative;
   width: 100%;
   overflow: scroll;
-}
-
-.backbutton {
-  padding-top: 10px;
-  position: relative;
-  z-index: 2;
 }
 
 .refresh {

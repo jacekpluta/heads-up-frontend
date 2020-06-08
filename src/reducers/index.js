@@ -53,10 +53,25 @@ const user_reducer = (state = initialUserState, action) => {
   }
 };
 
+const initialMusicEntriesState = {
+  musicEntries: [],
+};
+
+const musicEntries_reducer = (state = initialMusicEntriesState, action) => {
+  switch (action.type) {
+    case actionTypes.FETCH_MUSIC:
+      return action.payload;
+
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   user: user_reducer,
   points: points_reducer,
   questionsResult: questionsResult_reducer,
+  musicEntries: musicEntries_reducer,
 });
 
 export default rootReducer;

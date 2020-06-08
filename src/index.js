@@ -26,18 +26,22 @@ import CustomCategories from "./components/customCategories/CustomCategories";
 import Category from "./components/customCategories/category/Category";
 import PlayersCategories from "./components/customCategories/PlayersCategories";
 
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { Provider, connect } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { useCookies } from "react-cookie";
 import { setUser } from "./actions";
+import thunk from "redux-thunk";
 
 import rootReducer from "./reducers/index";
 
-const store = createStore(rootReducer, composeWithDevTools());
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 
 const Root = (props) => {
-  const { points, questionsResult, user, setUser } = props;
+  const { points, questionsResult, user, setUser, musicEntries } = props;
 
   const [gameCategory, setGameCategory] = useState(null);
   const [gameVariant, setGameVariant] = useState(null);

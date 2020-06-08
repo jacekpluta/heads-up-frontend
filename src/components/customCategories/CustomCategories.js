@@ -39,7 +39,7 @@ const buttonSignoutStyle = {
   borderRadius: "15px",
   borderWidth: "4px",
   color: "white",
-  marginTop: "23px",
+  marginTop: "-50px",
   marginRight: "20px",
 };
 
@@ -51,7 +51,7 @@ const addCategoryButtonStyle = {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(10),
+    marginTop: theme.spacing(2),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -367,7 +367,7 @@ const CustomCategories = (props) => {
         color="primary"
         onClick={handleLogout}
       >
-        Sign Out
+        SIGN OUT
       </Button>
       <div className={classes.paper}>
         <div>

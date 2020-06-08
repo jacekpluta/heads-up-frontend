@@ -13,6 +13,7 @@ import AnimalsTile from "../pic/animalsTile.jpg";
 import MoviesTile from "../pic/moviesTile.jpg";
 import GamesTile from "../pic/gamesTile.jpg";
 import AnimeTile from "../pic/animeTile.jpg";
+import MusicTile from "../pic/animeTile.jpg";
 
 import animalList from "../lists/AnimalsList";
 import axios from "axios";
@@ -28,8 +29,11 @@ import buttonClick from "../sounds/buttonClick.mp3";
 import UIfx from "uifx";
 
 import { isMobile } from "react-device-detect";
+import { connect } from "react-redux";
 
 import InvalidDevice from "./InvalidDevice";
+
+import { fetchMusicEntries } from "../actions/index";
 
 const pageVariants = {
   initial: {
@@ -89,14 +93,61 @@ function App(props) {
   const [check, setCheck] = useState(false);
 
   const [animeFetched, setAnimeFetched] = useState(false);
-
   const [filmsFetched, setFilmsFetched] = useState(false);
   const [gamesFetched, setGamesFetched] = useState(false);
+  const [musicFetched, setMusicFetched] = useState(false);
+
   const [allFechted, setAllFechted] = useState(false);
 
   const [error, setError] = useState("");
 
+  const { musicList, fetchMusicEntries } = props;
+
   let history = useHistory();
+
+  // const promise = new Promise((resolve) => {
+  //   console.log("- Executing promise");
+  //   resolve();
+  // });
+
+  // const observable = new Observable((observer) => {
+  //   console.log("- Executing observable");
+  //   observer.next();
+  // });
+
+  // const promise = new Promise((resolve) => {
+  //   setTimeout(() => {
+  //     console.log("Promise Async after 2 sec task done");
+  //     resolve();
+  //   }, 2000);
+  // });
+  // promise.then(() => console.log("Promise Handler"));
+  // Oops, can't prevent handler from being executed anymore.
+
+  // const observable = new Observable((observer) => {
+  //   setTimeout(() => {
+  //     console.log("Observable Async after 2 sec task done");
+  //     observer.next();
+  //   }, 2000);
+  // });
+  // const subscription = observable.subscribe(() =>
+  //   console.log("Observable Handler")
+  // );
+  // subscription.unsubscribe();
+
+  // const promise = new Promise((resolve) => {
+  //   console.log("Executing...");
+  //   resolve(Math.random());
+  // });
+  // promise.then((result) => console.log(result));
+  // promise.then((result) => console.log(result));
+
+  // const observable = new Observable((observer) => {
+  //   console.log("Executing...");
+  //   observer.next(Math.random());
+  // });
+  // observable.subscribe((result) => console.log(result));
+  // observable.subscribe((result) => console.log(result));
 
   //local game category list
   const gameCategoriesList = [
@@ -144,6 +195,18 @@ function App(props) {
       background: { backgroundImage: `url(${AnimeTile})` },
       gameTile: { AnimeTile },
       description: "Do you know all the titles and characters?",
+    },
+    {
+      id: 4,
+      name: "music",
+      gameMenuTitle: "Music",
+      questions:
+        localStorage.musicList && localStorage.musicList !== ""
+          ? localStorage.musicList.split(",")
+          : musicList, //checks if there is list of quesitons in local storage
+      background: { backgroundImage: `url(${MusicTile})` },
+      gameTile: { MusicTile },
+      description: "Can you sing them all?",
     },
   ];
 
@@ -250,14 +313,14 @@ function App(props) {
   }
 
   useEffect(() => {
-    if (animeFetched && gamesFetched && filmsFetched) {
+    if (animeFetched && gamesFetched && filmsFetched && musicFetched) {
       setAllFechted(true);
     }
-  }, [animeFetched, gamesFetched, filmsFetched]);
+  }, [animeFetched, gamesFetched, filmsFetched, musicFetched]);
 
   //set local storage if they are not set after all data was fetched
   useEffect(() => {
-    if (allFechted) {
+    if (allFechted && musicList.lenght > 0) {
       if (localStorage && !localStorage.filmList) {
         localStorage.setItem("filmList", filmList);
       }
@@ -267,8 +330,12 @@ function App(props) {
       if (localStorage && !localStorage.gamesList) {
         localStorage.setItem("gamesList", gamesList);
       }
+
+      if (localStorage && !localStorage.musicList) {
+        localStorage.setItem("musicList", musicList);
+      }
     }
-  }, [allFechted, filmList, animeList, gamesList]);
+  }, [allFechted, filmList, animeList, gamesList, musicList]);
 
   //fetch data for categories if there is not data in local storage for them
   useEffect(() => {
@@ -288,6 +355,13 @@ function App(props) {
       setGamesFetched(true);
     } else {
       fetchMyAPIGames();
+    }
+
+    if (localStorage.musicList && localStorage.musicList !== "") {
+      setMusicFetched(true);
+    } else {
+      fetchMusicEntries();
+      setMusicFetched(true);
     }
   }, []);
 
@@ -427,4 +501,10 @@ function App(props) {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    musicList: state.musicEntries,
+  };
+};
+
+export default connect(mapStateToProps, { fetchMusicEntries })(App);

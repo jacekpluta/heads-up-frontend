@@ -4,7 +4,7 @@ To do:
 3. fix css names
 
 BUGS:
-1. fix auth
+1. fix auth, jwt token insted of login/password
 2. chnage tiles names and header to english
 3. loadings animations in custom and all categories
 

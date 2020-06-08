@@ -23,7 +23,7 @@ const buttonStyle = {
   borderRadius: "15px",
   borderWidth: "4px",
   color: "white",
-  marginTop: "25px",
+  marginTop: "-50px",
   marginRight: "25px",
 };
 
@@ -78,7 +78,7 @@ const CustomCategories = (props) => {
         color="primary"
         onClick={handleLogout}
       >
-        Wyloguj
+        SIGN OUT
       </Button>
 
       <EntriesList pickedCategory={pickedCategory} user={user} />

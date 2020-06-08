@@ -24,7 +24,7 @@ const BackButton = (props) => {
       onHoverStart={showCounterTimer ? () => turnOffClickOnSkip() : ""}
       onHoverEnd={showCounterTimer ? () => turnOnClickOnSkip() : ""}
       whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.8, transition: { duration: 1 } }}
+      whileTap={{ scale: 0.8 }}
       onClick={() => {
         handleGoBack();
         clickSound.play();

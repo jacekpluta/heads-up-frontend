@@ -38,7 +38,6 @@ const SkipOrCorrect = (props) => {
   return (
     <React.Fragment>
       {/* SKIPPED ANSWER */}
-
       <motion.div
         className="skiporcorrect"
         variants={pageTransition}
@@ -47,6 +46,7 @@ const SkipOrCorrect = (props) => {
       >
         <p style={pStyle}>SKIPPED</p>
       </motion.div>
+
       {/* CORRECT ANSWER */}
       <motion.div
         className="skiporcorrect"

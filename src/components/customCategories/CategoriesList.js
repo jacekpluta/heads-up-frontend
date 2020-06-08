@@ -171,7 +171,6 @@ const buttonMiniStyle = {
   maxHeight: "30px",
   minWidth: "20px",
   minHeight: "30px",
-  paddingBottom: "25px",
 };
 
 const CategoriesList = (props) => {
@@ -342,10 +341,10 @@ const CategoriesList = (props) => {
           <TableRow key={category._id}>
             <ThemeProvider theme={outerTheme}>
               <TableCell component="th" scope="row" align="center">
-                {category.name}{" "}
+                {category.name}
                 {category.questions.length < 10 ? (
                   <Popup
-                    content="Category must have atleast 10 questions"
+                    content="Category needs atleast 10 questions"
                     position="top center"
                     style={{
                       color: "white",
@@ -364,7 +363,7 @@ const CategoriesList = (props) => {
                     }
                   />
                 ) : (
-                  ""
+                  <React.Fragment></React.Fragment>
                 )}
               </TableCell>
 
@@ -394,10 +393,10 @@ const CategoriesList = (props) => {
           <TableRow key={category._id}>
             <ThemeProvider theme={outerTheme}>
               <TableCell component="th" scope="row" align="center">
-                {category.name}{" "}
+                {category.name}
                 {category.questions.length < 10 ? (
                   <Popup
-                    content="Category needs atleast 10 questions before starting the game"
+                    content="Category needs atleast 10 questions"
                     position="right center"
                     offset="0, 10px"
                     style={{ color: "red", border: "solid", padding: "5px" }}
@@ -412,7 +411,7 @@ const CategoriesList = (props) => {
                     }
                   />
                 ) : (
-                  ""
+                  <React.Fragment></React.Fragment>
                 )}
               </TableCell>
               <TableCell align="center">
@@ -486,7 +485,7 @@ const CategoriesList = (props) => {
                     }
                   />
                 ) : (
-                  ""
+                  <React.Fragment></React.Fragment>
                 )}
               </TableCell>
               <TableCell align="center">
@@ -540,11 +539,19 @@ const CategoriesList = (props) => {
       <Table className={classes.table} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
-            {showAllCategories && !loading ? setAllCategoriesHeader() : ""}
+            {showAllCategories && !loading ? (
+              setAllCategoriesHeader()
+            ) : (
+              <React.Fragment></React.Fragment>
+            )}
 
-            {!showAllCategories && !loading ? setCustomCategoriesHeader() : ""}
+            {!showAllCategories && !loading ? (
+              setCustomCategoriesHeader()
+            ) : (
+              <React.Fragment></React.Fragment>
+            )}
 
-            {loading ? setLoadingHeader() : ""}
+            {loading ? setLoadingHeader() : <React.Fragment></React.Fragment>}
           </TableRow>
         </TableHead>
 
@@ -566,19 +573,25 @@ const CategoriesList = (props) => {
               showAllCategories ? tableEmptyAllStyle : tableEmptyCustomStyle
             }
           >
-            NO CATEGORIES
-            {!showAllCategories ? setEmptyRows() : ""}
+            <TableRow>
+              <TableCell>NO CATEGORIES</TableCell>
+            </TableRow>
+            {!showAllCategories ? (
+              setEmptyRows()
+            ) : (
+              <React.Fragment></React.Fragment>
+            )}
           </TableBody>
         ) : (
-          ""
+          <React.Fragment></React.Fragment>
         )}
 
         {loading ? (
-          <div style={tableEmptyStyle}>
+          <TableBody style={tableEmptyStyle}>
             <CircularProgress />
-          </div>
+          </TableBody>
         ) : (
-          ""
+          <React.Fragment></React.Fragment>
         )}
 
         <TableFooter>
