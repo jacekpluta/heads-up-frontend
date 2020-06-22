@@ -67,11 +67,26 @@ const musicEntries_reducer = (state = initialMusicEntriesState, action) => {
   }
 };
 
+const initialAlcoholEntriesState = {
+  alcoholEntries: [],
+};
+
+const alcoholEntries_reducer = (state = initialAlcoholEntriesState, action) => {
+  switch (action.type) {
+    case actionTypes.FETCH_ALCOHOL:
+      return action.payload;
+
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   user: user_reducer,
   points: points_reducer,
   questionsResult: questionsResult_reducer,
   musicEntries: musicEntries_reducer,
+  alcoholEntries: alcoholEntries_reducer,
 });
 
 export default rootReducer;

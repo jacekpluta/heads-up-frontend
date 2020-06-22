@@ -16,7 +16,7 @@ import AnimeTile from "../pic/animeTile.jpg";
 import MusicTile from "../pic/animeTile.jpg";
 
 import animalList from "../lists/AnimalsList";
-import axios from "axios";
+
 import { motion } from "framer-motion";
 
 import * as GamesApi from "../webApi/GamesApi";
@@ -33,7 +33,9 @@ import { connect } from "react-redux";
 
 import InvalidDevice from "./InvalidDevice";
 
-import { fetchMusicEntries } from "../actions/index";
+import { fetchMusicEntries, fetchAlcoholEntries } from "../actions/index";
+import { default as axiosObservable } from "axios-observable";
+import axios from "axios";
 
 const pageVariants = {
   initial: {
@@ -101,9 +103,18 @@ function App(props) {
 
   const [error, setError] = useState("");
 
-  const { musicList, fetchMusicEntries } = props;
+  const {
+    musicList,
+    alcoholList,
+    fetchMusicEntries,
+    fetchAlcoholEntries,
+  } = props;
 
   let history = useHistory();
+
+  useEffect(() => {
+    fetchAlcoholEntries();
+  }, []);
 
   // const promise = new Promise((resolve) => {
   //   console.log("- Executing promise");
@@ -225,7 +236,21 @@ function App(props) {
   };
 
   //FETCH MOVIES TITLES FROM ANIME API
-  async function fetchMyAPIFilms() {
+  function fetchMyAPIFilms() {
+    axiosObservable
+      .request({
+        url: "https://the-cocktail-db.p.rapidapi.com/filter.php?i=Gin",
+        method: "GET",
+        headers: {
+          "x-rapidapi-host": "the-cocktail-db.p.rapidapi.com",
+          "x-rapidapi-key":
+            "5bb9e8a323msh942779a3b338994p16b327jsnad6a21812387",
+        },
+      })
+      .subscribe((response) => {
+        //console.log(response);
+      });
+
     axios("https://parseapi.back4app.com/classes/Movie?keys=title", {
       headers: {
         "X-Parse-Application-Id": "xjK389lSZ70YgvRNe9fb1kd94z9IllRKqOrQIa6l",
@@ -504,7 +529,11 @@ function App(props) {
 const mapStateToProps = (state) => {
   return {
     musicList: state.musicEntries,
+    alcoholList: state.alcoholEntries,
   };
 };
 
-export default connect(mapStateToProps, { fetchMusicEntries })(App);
+export default connect(mapStateToProps, {
+  fetchMusicEntries,
+  fetchAlcoholEntries,
+})(App);

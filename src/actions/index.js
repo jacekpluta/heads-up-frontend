@@ -1,5 +1,6 @@
 import * as actionTypes from "./types";
 import MusicApi from "../webApi/MusicApi";
+import AlcoholApi from "../webApi/AlcoholApi";
 
 export const setQuestionsResult = (questionsResult) => {
   return {
@@ -49,5 +50,21 @@ export const fetchMusicEntries = () => {
     const allTitles = combinedResponses.map((response) => response.title);
 
     dispatch({ type: actionTypes.FETCH_MUSIC, payload: allTitles });
+  };
+};
+
+export const fetchAlcoholEntries = () => {
+  return async (dispatch, getState) => {
+    await AlcoholApi.get("/filter.php?i=Gin").subscribe(
+      (response) => {
+        const drinks = response.data.drinks;
+
+        const allDrinks = drinks.map((drink) => drink.strDrink);
+
+        dispatch({ type: actionTypes.FETCH_ALCOHOL, payload: allDrinks });
+      },
+
+      (error) => console.log(error)
+    );
   };
 };
