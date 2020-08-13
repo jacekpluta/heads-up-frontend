@@ -8,16 +8,9 @@ import QuestionsTable from "./QuestionsTable";
 import Medal from "./Medal";
 import { Grid } from "@material-ui/core/";
 
-import buttonClick from "../../sounds/buttonClick.mp3";
-import UIfx from "uifx";
-
 import { pageVariants } from "../PageVariants";
 import { pageTransition } from "../PageTransition";
-
-const clickSound = new UIfx(buttonClick, {
-  volume: 1,
-  throttleMs: 100,
-});
+import { clickSound } from "../Sounds";
 
 const pStyle = {
   textAlign: "center",
@@ -29,28 +22,16 @@ const pStyle = {
   textShadow: "6px 6px 0px rgba(0,0,0,0.2)",
 };
 
-const refreshIconContainerStyle = {
+const iconContainerStyle = {
   borderStyle: "ridge",
   borderWidth: "10px",
   borderRadius: "30%",
   borderColor: " #1b85ff",
-
   background: " #1b85ff",
   paddingTop: "15px",
   paddingBottom: "15px",
-  width: "65%",
-  textAlign: "center",
-};
-
-const backIconContainerStyle = {
-  borderStyle: "ridge",
-  borderWidth: "10px",
-  borderRadius: "30%",
-  borderColor: " #1b85ff",
-
-  background: " #1b85ff",
-  paddingTop: "15px",
-  paddingBottom: "15px",
+  marginTop: "20px",
+  marginBottom: "50px",
   width: "60%",
   textAlign: "center",
 };
@@ -86,6 +67,7 @@ function Result(props) {
       page.msRequestFullscreen();
     }
   }, []);
+
   useEffect(() => {
     setTimeout(() => {
       window.screen.orientation.lock("portrait");
@@ -127,19 +109,20 @@ function Result(props) {
         <QuestionsTable questionsResult={questionsResult} points={points} />
 
         <Grid container>
-          <Grid container item xs={6} justify="center" className={"backbutton"}>
+          <Grid container item xs={6} justify="center">
             <motion.div
               whileHover={{ scale: 1.2 }}
               whileTap={{
                 scale: 0.8,
               }}
-              style={backIconContainerStyle}
+              style={iconContainerStyle}
               onClick={handleGoBack}
             >
               <FontAwesomeIcon
                 icon={faCaretSquareLeft}
                 size="4x"
                 color="white"
+                className="icon"
               />
             </motion.div>
           </Grid>
@@ -149,7 +132,6 @@ function Result(props) {
             item
             xs={6}
             justify="center"
-            className={"refresh"}
             onClick={() => {
               setRefreshGame(true);
             }}
@@ -159,7 +141,7 @@ function Result(props) {
               whileTap={{
                 scale: 0.8,
               }}
-              style={refreshIconContainerStyle}
+              style={iconContainerStyle}
             >
               <FontAwesomeIcon icon={faRedo} size="4x" color="white" />
             </motion.div>

@@ -13,7 +13,7 @@ import AnimalsTile from "../pic/animalsTile.jpg";
 import MoviesTile from "../pic/moviesTile.jpg";
 import GamesTile from "../pic/gamesTile.jpg";
 import AnimeTile from "../pic/animeTile.jpg";
-import MusicTile from "../pic/animeTile.jpg";
+import MusicTile from "../pic/musicTile.jpg";
 
 import animalList from "../lists/AnimalsList";
 
@@ -25,13 +25,10 @@ import * as AnimeApi from "../webApi/AnimeApi";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
 
-import buttonClick from "../sounds/buttonClick.mp3";
-import UIfx from "uifx";
+import { clickSound } from "./Sounds";
 
 import { isMobile } from "react-device-detect";
 import { connect } from "react-redux";
-
-import InvalidDevice from "./InvalidDevice";
 
 import { fetchMusicEntries, fetchAlcoholEntries } from "../actions/index";
 import { default as axiosObservable } from "axios-observable";
@@ -58,11 +55,6 @@ const pageTransition = {
   duration: 1,
 };
 
-const clickSound = new UIfx(buttonClick, {
-  volume: 1,
-  throttleMs: 100,
-});
-
 const buttonStyleMyCat = {
   position: "absolute",
   right: 0,
@@ -87,6 +79,18 @@ const buttonStyleAllCat = {
   borderWidth: "4px",
 };
 
+const buttonStyleIsNotMobile = {
+  position: "absolute",
+  top: 0,
+  left: 0,
+  maxWidth: "50%",
+  maxHeight: "40px",
+  minWidth: "50%",
+  minHeight: "40px",
+  borderColor: "#f40056",
+  borderStyle: "ridge",
+  borderWidth: "40px",
+};
 function App(props) {
   const [filmList, setFilmList] = useState([]);
   const [gamesList, setGamesList] = useState([]);
@@ -337,6 +341,7 @@ function App(props) {
       });
   }
 
+
   useEffect(() => {
     if (animeFetched && gamesFetched && filmsFetched && musicFetched) {
       setAllFechted(true);
@@ -345,7 +350,8 @@ function App(props) {
 
   //set local storage if they are not set after all data was fetched
   useEffect(() => {
-    if (allFechted && musicList.lenght > 0) {
+    if (allFechted ) {
+
       if (localStorage && !localStorage.filmList) {
         localStorage.setItem("filmList", filmList);
       }
@@ -364,6 +370,7 @@ function App(props) {
 
   //fetch data for categories if there is not data in local storage for them
   useEffect(() => {
+  
     if (localStorage.filmList && localStorage.filmList !== "") {
       setFilmsFetched(true);
     } else {
@@ -372,18 +379,20 @@ function App(props) {
 
     if (localStorage.animeList && localStorage.animeList !== "") {
       setAnimeFetched(true);
+    
     } else {
       fetchMyAPIAnime();
     }
 
     if (localStorage.gamesList && localStorage.gamesList !== "") {
-      setGamesFetched(true);
+      setGamesFetched(true);    
     } else {
       fetchMyAPIGames();
     }
 
     if (localStorage.musicList && localStorage.musicList !== "") {
       setMusicFetched(true);
+    
     } else {
       fetchMusicEntries();
       setMusicFetched(true);
@@ -395,19 +404,19 @@ function App(props) {
 
     if (page.requestFullscreen) {
       page.requestFullscreen().catch((err) => {
-        setError("Fullscreen request failed");
+      
       });
     } else if (page.mozRequestFullScreen) {
       page.mozRequestFullScreen().catch((err) => {
-        setError("Fullscreen request failed");
+       
       });
     } else if (page.webkitRequestFullscreen) {
       page.webkitRequestFullscreen().catch((err) => {
-        setError("Fullscreen request failed");
+      
       });
     } else if (page.msRequestFullscreen) {
       page.msRequestFullscreen().catch((err) => {
-        setError("Fullscreen request failed");
+      
       });
     } else {
       document.exitFullscreen();
@@ -446,11 +455,9 @@ function App(props) {
         }}
       >
         <ParStyle style={{ fontSize: "5vw", top: "40%" }}>
-          Loading the game
+          Loading the game...
         </ParStyle>
-        <ParStyle style={{ fontSize: "5vw", top: "60%" }}>
-          {error ? error : ""}
-        </ParStyle>
+      
 
         <div
           style={{
@@ -469,7 +476,7 @@ function App(props) {
       </Grid>
     );
   };
-  if (isMobile) {
+
     if (allFechted) {
       return (
         <motion.div
@@ -488,7 +495,7 @@ function App(props) {
             color="primary"
             onClick={handlePlayersCategories}
           >
-            All Categories
+            PLAYERS CATEGORIES
           </Button>
 
           <Button
@@ -521,10 +528,8 @@ function App(props) {
           {renderLoading()}
         </Grid>
       );
-  } else {
-    return <InvalidDevice></InvalidDevice>;
-  }
-}
+  } 
+
 
 const mapStateToProps = (state) => {
   return {

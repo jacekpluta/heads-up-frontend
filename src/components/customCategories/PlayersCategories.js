@@ -21,13 +21,7 @@ import { useHistory } from "react-router-dom";
 
 import { GameCategoryContext } from "../../contex/GameCategoryContext";
 
-import buttonClick from "../../sounds/buttonClick.mp3";
-import UIfx from "uifx";
-
-const clickSound = new UIfx(buttonClick, {
-  volume: 1,
-  throttleMs: 100,
-});
+import { clickSound } from "../Sounds";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -153,24 +147,27 @@ const CustomCategories = (props) => {
       initial="initial"
       animate="in"
       exit="out"
-      className={"Login"}
     >
-      <BackButton handleGoBack={handleGoBack} />
-
+      <BackButton handleGoBack={handleGoBack} blackColor={true} />
       <div className={classes.paper}>
         <Typography component="h1" variant="h6">
           <motion.div
             onClick={loadCategories}
             style={{ paddingTop: "10px", paddingBottom: "10px" }}
           >
-            All categories
+            PLAYERS CATEGORIES
             {refreshLoading ? (
               <CircularProgress
                 style={{ position: "absolute", right: 0, marginTop: "-8px" }}
               />
             ) : (
               <RefreshIcon
-                style={{ position: "absolute", right: 0, marginRight: "10px" }}
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  marginTop: "-5px",
+                  fontSize: "50px",
+                }}
               />
             )}
           </motion.div>

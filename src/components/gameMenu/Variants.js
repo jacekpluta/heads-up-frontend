@@ -1,17 +1,14 @@
 import React from "react";
 import { Grid } from "@material-ui/core/";
-import UIfx from "uifx";
-import buttonClick from "../../sounds/buttonClick.mp3";
+
 import DescribeTile from "./tiles/DescribeTile";
 import ShowTile from "./tiles/ShowTile";
 import ChallangeTile from "./tiles/ChallangeTile";
 import DrawTile from "./tiles/DrawTile";
 import { useHistory } from "react-router-dom";
+
 //SOUDS
-const clickSound = new UIfx(buttonClick, {
-  volume: 1,
-  throttleMs: 100,
-});
+import { clickSound } from "../Sounds";
 
 export default function GameMenu() {
   let history = useHistory();

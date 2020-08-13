@@ -23,14 +23,7 @@ import { useHistory } from "react-router-dom";
 
 import { GameCategoryContext } from "../../contex/GameCategoryContext";
 
-import buttonClick from "../../sounds/buttonClick.mp3";
-import UIfx from "uifx";
-
-const clickSound = new UIfx(buttonClick, {
-  volume: 1,
-  throttleMs: 100,
-});
-
+import { clickSound } from "../Sounds";
 const buttonSignoutStyle = {
   float: "right",
   backgroundColor: "#1b85ff",
@@ -39,7 +32,7 @@ const buttonSignoutStyle = {
   borderRadius: "15px",
   borderWidth: "4px",
   color: "white",
-  marginTop: "-50px",
+  marginTop: "12px",
   marginRight: "20px",
 };
 
@@ -51,7 +44,7 @@ const addCategoryButtonStyle = {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

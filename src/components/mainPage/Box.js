@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
-import UIfx from "uifx";
-import buttonClick from "../../sounds/buttonClick.mp3";
+
 import { DivLink } from "../../styles/Layout";
 import { GameCategoryContext } from "../../contex/GameCategoryContext";
-
+import { clickSound } from "../Sounds";
 import { useHistory } from "react-router-dom";
 
 function Box(props) {
@@ -15,12 +14,6 @@ function Box(props) {
   const { backgroundImage, gameCategory } = props;
 
   let history = useHistory();
-
-  //SOUDS
-  const clickSound = new UIfx(buttonClick, {
-    volume: 1,
-    throttleMs: 100,
-  });
 
   //plays click on box click
   const boxClicked = () => {

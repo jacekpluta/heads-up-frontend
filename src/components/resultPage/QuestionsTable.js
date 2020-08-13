@@ -33,28 +33,18 @@ const questionsTransition = {
 const pStyle = {
   textAlign: "center",
   width: "100%",
-  fontSize: "3.1vh",
+  fontSize: "3vh",
   color: "#f8f8ff",
 };
 
 const wrongColorCell = {
   background:
     "-webkit-linear-gradient(left, #074285 0% ,#ff0707 50%,  #074285 100%)",
-  marginTop: "1px",
-  marginBottom: "1px",
-  marginLeft: "10px",
-  maxHeight: "11px",
-  lineHeight: "14px",
 };
 
 const correctColorCell = {
   background:
     "-webkit-linear-gradient(left, #074285 0% ,#07ff30 50%,  #074285 100%)",
-  marginTop: "1px",
-  marginBottom: "1px",
-  marginLeft: "10px",
-  maxHeight: "11px",
-  lineHeight: "14px",
 };
 export default function QuestionsTable(props) {
   const { questionsResult, points } = props;
@@ -74,6 +64,7 @@ export default function QuestionsTable(props) {
                   points={key}
                   key={key}
                   variants={questionsTransition}
+                  className="resultCell"
                   style={
                     points[key] === "0" ? wrongColorCell : correctColorCell
                   }

@@ -620,6 +620,7 @@ export default windowSize(CategoriesList);
 
 const useStyles2 = makeStyles({
   table: {
+
     minWidth: 320,
   },
 });

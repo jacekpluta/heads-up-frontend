@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { zIndex } from "material-ui/styles";
 
 const pStyle = {
   position: "absolute",
@@ -43,6 +44,7 @@ const SkipOrCorrect = (props) => {
         variants={pageTransition}
         initial={skippedAnswer ? "inModule" : "outModule"}
         animate={skippedAnswer ? "outModule" : "inModule"}
+        style={skippedAnswer ? { zIndex: 20 } : { zIndex: 0 }}
       >
         <p style={pStyle}>SKIPPED</p>
       </motion.div>
@@ -50,13 +52,18 @@ const SkipOrCorrect = (props) => {
       {/* CORRECT ANSWER */}
       <motion.div
         className="skiporcorrect"
-        style={{
-          background:
-            "linear-gradient(180deg, rgb(7, 255, 48), rgb(2, 255, 171))",
-        }}
         variants={pageTransition}
         initial={correctAnswer ? "inModule" : "outModule"}
         animate={correctAnswer ? "outModule" : "inModule"}
+        style={
+          correctAnswer
+            ? {
+                zIndex: 20,
+                background:
+                  "linear-gradient(180deg, rgb(7, 255, 48), rgb(2, 255, 171))",
+              }
+            : { zIndex: 0 }
+        }
       >
         <p style={pStyle}>CORRECT</p>
       </motion.div>

@@ -7,6 +7,7 @@ import useInterval from "../../customHooks/UseInterval";
 import BackButton from "../BackButton";
 import Questions from "../gameModule/Questions";
 import SkipOrCorrect from "./SkipOrCorrect";
+import Button from "@material-ui/core/Button";
 
 import { GameCategoryContext } from "../../contex/GameCategoryContext";
 import { GameVariantContext } from "../../contex/GameVariantContext";
@@ -41,12 +42,38 @@ const failureSound = new UIfx(FailureRing, {
   throttleMs: 100,
 });
 
+const correctButtonStyle = {
+  position: "absolute",
+  left: 0,
+  bottom: 0,
+  maxWidth: "100%",
+  maxHeight: "80px",
+  minWidth: "100%",
+  minHeight: "80px",
+  borderColor: "#3e50b4",
+  borderStyle: "ridge",
+  borderWidth: "4px",
+};
+
+const skipButtonStyle = {
+  position: "absolute",
+  right: 0,
+  bottom: 0,
+  maxWidth: "100%",
+  maxHeight: "80px",
+  minWidth: "100%",
+  minHeight: "80px",
+  borderColor: "#f40056",
+  borderStyle: "ridge",
+  borderWidth: "4px",
+};
+
 function GameModule(props) {
   const highNumber = 99999999999999999999;
   const { gameCategory } = useContext(GameCategoryContext);
   const { gameVariant } = useContext(GameVariantContext);
 
-  const [numberOfGames] = useState(8 - 1);
+  const [numberOfGames] = useState(5 - 1);
   const [numberOfGamesCompleted, setNumberOfGamesCompleted] = useState(0);
   const [countdownStart, setCountdownStart] = useState(5);
   const [counterTimer, setCounterTimer] = useState(30);
@@ -286,7 +313,7 @@ function GameModule(props) {
       setCorrectAnswer(true);
       setTimeout(() => {
         setCorrectAnswer(false);
-      }, 1000);
+      }, 2000);
 
       setShowCounterTimer(false);
       setPointsObject((pointsObject) => [...pointsObject, "1"]);
@@ -359,7 +386,6 @@ function GameModule(props) {
         exit="out"
         style={backgroundColor}
         className="gamemodule"
-        onClick={handleClickOnSkip}
       >
         <BackButton
           turnOffClickOnSkip={turnOffClickOnSkip}
@@ -382,7 +408,30 @@ function GameModule(props) {
         ) : (
           ""
         )}
-
+        <motion.div className="correctButtonStyle" whileTap={{ scale: 0.8 }}>
+          <Button
+            type="submit"
+            size="big"
+            variant="contained"
+            style={correctButtonStyle}
+            color="primary"
+            onClick={() => setDeviceTilted(true)}
+          >
+            CORRECT
+          </Button>
+        </motion.div>
+        <motion.div className="skipButtonStyle" whileTap={{ scale: 0.8 }}>
+          <Button
+            type="submit"
+            size="big"
+            variant="contained"
+            style={skipButtonStyle}
+            color="secondary"
+            onClick={handleClickOnSkip}
+          >
+            SKIP
+          </Button>
+        </motion.div>
         <SkipOrCorrect
           correctAnswer={correctAnswer}
           skippedAnswer={skippedAnswer}

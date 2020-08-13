@@ -3,13 +3,7 @@ import { motion } from "framer-motion";
 import Icon from "@mdi/react";
 import { mdiArrowLeftCircle } from "@mdi/js";
 
-import UIfx from "uifx";
-import buttonClick from "../sounds/buttonClick.mp3";
-
-const clickSound = new UIfx(buttonClick, {
-  volume: 1,
-  throttleMs: 100,
-});
+import { clickSound } from "./Sounds";
 
 const BackButton = (props) => {
   const {
@@ -17,6 +11,7 @@ const BackButton = (props) => {
     turnOnClickOnSkip,
     showCounterTimer,
     handleGoBack,
+    blackColor,
   } = props;
 
   return (
@@ -31,7 +26,15 @@ const BackButton = (props) => {
       }}
       className="backbutton"
     >
-      <Icon color="white" path={mdiArrowLeftCircle} />
+      <Icon
+        color={blackColor ? "black" : "white"}
+        style={
+          blackColor
+            ? { width: 50 + "px", height: 50 + "px" }
+            : { width: 80 + "px", height: 80 + "px" }
+        }
+        path={mdiArrowLeftCircle}
+      />
     </motion.div>
   );
 };

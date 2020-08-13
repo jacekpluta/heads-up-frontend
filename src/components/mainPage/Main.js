@@ -1,27 +1,19 @@
 import React from "react";
 import Box from "./Box";
-import { Grid } from "@material-ui/core/";
 
 const Main = (props) => {
   const { gameCategoriesList } = props;
 
   return (
     <div className="main">
-      <Grid container spacing={0}>
-        {gameCategoriesList.map((gameCategory) => (
-          <Grid
-            item
-            xs={6}
-            style={{ paddingBottom: "5%" }}
-            key={gameCategory.name}
-          >
-            <Box
-              backgroundImage={gameCategory.background}
-              gameCategory={gameCategory}
-            ></Box>
-          </Grid>
-        ))}
-      </Grid>
+      {gameCategoriesList.map((gameCategory) => (
+        <div className="mainItem">
+          <Box
+            backgroundImage={gameCategory.background}
+            gameCategory={gameCategory}
+          ></Box>
+        </div>
+      ))}
     </div>
   );
 };

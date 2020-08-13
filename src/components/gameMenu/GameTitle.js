@@ -22,7 +22,7 @@ function GameTitle(props) {
         ? gameCategoryImage.backgroundImage
         : defaulBackgroundImage
     }`,
-    //  marginTop: "50px",
+    marginTop: "50px",
     zIndex: 5,
   };
 

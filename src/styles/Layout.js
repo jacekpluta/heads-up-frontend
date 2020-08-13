@@ -44,7 +44,7 @@ export const BlueBackgroundStyle = styled.div`
 
 export const HeaderStyle = styled.div`
   box-sizing: border-box;
-  height: 100px;
+  height: 150px;
   border-bottom-style: solid;
   border-bottom-width: 5px;
   border-bottom-color: white;

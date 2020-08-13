@@ -1,68 +1,104 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faVolumeUp, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
-
+import {
+  faVolumeUp,
+  faQuestionCircle,
+} from "@fortawesome/free-solid-svg-icons";
+import { motion } from "framer-motion";
 import { HeaderStyle } from "../../styles/Layout";
 import { MuteSoundContext } from "../../contex/MuteSoundContext";
 
-import buttonClick from "../../sounds/buttonClick.mp3";
-import UIfx from "uifx";
-//SOUDS
-const clickSound = new UIfx(buttonClick, {
-  volume: 1,
-  throttleMs: 100,
-});
+import { clickSound } from "../Sounds";
+import HowToPlay from "./HowToPlay";
+import HowToPlayPic from "../../pic/HowToPlayPic.jpg";
+import { Header as sHeader, Button, Popup, Grid } from "semantic-ui-react";
 
-function Header() {
+function Header(props) {
   const { muteSound, setMuteSound } = useContext(MuteSoundContext);
+  const [showHowToPlay, setShowHowToPlay] = useState(false);
+  // const handleMuteSound = () => {
+  //   if (!muteSound) {
+  //     clickSound.play();
+  //   }
+  //   setMuteSound(!muteSound);
+  // };
 
-  const handleMuteSound = () => {
-    if (!muteSound) {
-      clickSound.play();
-    }
-    setMuteSound(!muteSound);
-  };
+  // const volumeButtonStyle = {
+  //   float: "top-left",
+  //   marginLeft: "2%",
+  //   marginTop: "33px",
+  //   backgroundColor: "#1b85ff",
+  //   borderColor: " #1b63ff",
+  //   borderStyle: "ridge",
+  //   borderRadius: "15px",
+  //   borderWidth: "4px",
+  //   padding: "3px",
+  // };
 
-  const volumeButtonStyle = {
-    float: "top-left",
-    marginLeft: "2%",
-    marginTop: "33px",
-    backgroundColor: "#1b85ff",
-    borderColor: " #1b63ff",
-    borderStyle: "ridge",
-    borderRadius: "15px",
-    borderWidth: "4px",
-    padding: "3px",
+  const containerStyle = {
+    textAlign: "center",
+    position: "absolute",
+    right: 0,
+    top: "40px",
+    bottom: 0,
   };
+  const contextRef = React.useRef();
   return (
     <HeaderStyle>
-      {/* {!muteSound ? (
-        <FontAwesomeIcon
-          onClick={handleMuteSound}
-          icon={faVolumeMute}
-          size="2x"
-          color="white"
-          style={{
-            float: "bottom-left",
-            marginLeft: "10px",
-            marginTop: "10px",
-            backgroundColor: "#1b85ff",
-            borderColor: " #1b63ff",
-            borderStyle: "ridge",
-            borderRadius: "15px",
-            borderWidth: "4px",
-            padding: "3px",
-          }}
-        />
-      ) : (
-        <FontAwesomeIcon
-          onClick={handleMuteSound}
-          icon={faVolumeUp}
-          size="2x"
-          color="white"
-          style={volumeButtonStyle}
-        />
-      )} */}
+      <Popup
+        trigger={
+          <motion.img
+            whileHover={{ scale: 1.2 }}
+            whileTap={{
+              scale: 0.8,
+            }}
+            src={HowToPlayPic}
+            alt="How To Play"
+            width="200"
+            height="200"
+            style={containerStyle}
+          />
+        }
+        position="top right"
+        flowing
+        hoverable
+        wide
+        context={contextRef}
+      >
+        <Grid centered divided columns={3}>
+          <Grid.Column textAlign="center">
+            <p>
+              <Button color="blue" size="mini">
+                1
+              </Button>
+            </p>
+            <p>Pick game category and game variant</p>
+          </Grid.Column>
+
+          <Grid.Column textAlign="center">
+            <p>
+              <Button color="blue" size="mini">
+                2
+              </Button>
+            </p>
+            <p>Place your phone on your forehead</p>
+          </Grid.Column>
+
+          <Grid.Column textAlign="center">
+            <p>
+              <Button color="blue" size="mini">
+                3
+              </Button>
+            </p>
+            <p>
+              Did u guess codeword? Tilt your phone forward or click "CORRECT"
+              button
+            </p>
+            <p>Do you want to skip current codeword? Click "SKIP" button</p>
+          </Grid.Column>
+        </Grid>
+      </Popup>
+      <strong ref={contextRef} style={containerStyle}></strong>
     </HeaderStyle>
   );
 }
