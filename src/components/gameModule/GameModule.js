@@ -53,6 +53,7 @@ const correctButtonStyle = {
   borderColor: "#3e50b4",
   borderStyle: "ridge",
   borderWidth: "4px",
+  fontSize: "22px",
 };
 
 const skipButtonStyle = {
@@ -66,6 +67,7 @@ const skipButtonStyle = {
   borderColor: "#f40056",
   borderStyle: "ridge",
   borderWidth: "4px",
+  fontSize: "22px",
 };
 
 function GameModule(props) {
@@ -415,7 +417,11 @@ function GameModule(props) {
             variant="contained"
             style={correctButtonStyle}
             color="primary"
-            onClick={() => setDeviceTilted(true)}
+            onClick={() => {
+              if (showQuestions) {
+                setDeviceTilted(true);
+              }
+            }}
           >
             CORRECT
           </Button>
