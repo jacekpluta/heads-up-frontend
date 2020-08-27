@@ -74,15 +74,14 @@ You can also create your own categories! Just click in the main menu "YOUR CATEG
 9. To add a new question, simply just click plus button in top right corrner, enter new question and click confirm.  
    ![](mdimages/9.png)
 
-10. After adding atleast 10 questions you can start the game. Course of the game is exactly the same as choosing normal categoryfrom the main menu.  
+10. After adding atleast 10 questions you can start the game. Course of the game is exactly the same as choosing normal category from the main menu.  
     ![](mdimages/10.png)
 
-11. Last but not least is an option to see all categories created by players. In the main menu click "ALL CATEGORIES" button at the top right corner.
+11. Last but not least is an option to see all categories created by players. In the main menu click "ALL CATEGORIES" button at the top right corner at main page.
     Here you can see all categories created by other players and play them with your friends.
 
 ![](mdimages/11.png)
 
-12. Create, share and play crazy categories that you and your friends came up with and have fun!
 
 ## Contact
 
