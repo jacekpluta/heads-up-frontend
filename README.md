@@ -62,22 +62,22 @@ In case of running out of time or skipping the word, you lose a point.
 You can also create your own categories! Just click in the main menu "YOUR CATEGORIES" button.  
 ![](mdimages/55.png)
 
-6. Create an account using your e-mail address and password.  
+7. Create an account using your e-mail address and password.  
    ![](mdimages/6.png)
 
-7. After logging in, click in the top left "Add" button, enter category name and description.  
+8. After logging in, click in the top left "Add" button, enter category name and description.  
    ![](mdimages/7.png)
-
-8. Now you need to put atleast 10 questions before a game could be started. You can do that by clicking "QUESTIONS" button.  
+   
+9. Now you need to put atleast 10 questions before a game could be started. You can do that by clicking "QUESTIONS" button.  
    ![](mdimages/8.png)
 
-9. To add a new question, simply just click plus button in top right corrner, enter new question and click confirm.  
+10. To add a new question, simply just click plus button in top right corrner, enter new question and click confirm.  
    ![](mdimages/9.png)
 
-10. After adding atleast 10 questions you can start the game. Course of the game is exactly the same as choosing normal category from the main menu.  
+11. After adding atleast 10 questions you can start the game. Course of the game is exactly the same as choosing normal category from the main menu.  
     ![](mdimages/10.png)
 
-11. Last but not least is an option to see all categories created by players. In the main menu click "ALL CATEGORIES" button at the top right corner at main page.
+12. Last but not least is an option to see all categories created by players. In the main menu click "ALL CATEGORIES" button at the top right corner at main page.
     Here you can see all categories created by other players and play them with your friends.
 
 ![](mdimages/11.png)
