@@ -71,7 +71,6 @@ export default function Medal(props) {
     >
       {
         <p className="medal__points" style={pointsStyle()}>
-          {" "}
           {allPoints}
         </p>
       }

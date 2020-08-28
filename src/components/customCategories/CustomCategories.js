@@ -74,7 +74,7 @@ const CustomCategories = (props) => {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [cookies, setCookies] = useCookies(["name"]);
+  const [_, setCookies] = useCookies(["name"]);
   const [currentCategory, setCurrentCategory] = useState(null);
   const [loading, setLoading] = useState(false);
 

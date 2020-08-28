@@ -27,7 +27,6 @@ import { useHistory } from "react-router-dom";
 
 import { clickSound } from "./Sounds";
 
-import { isMobile } from "react-device-detect";
 import { connect } from "react-redux";
 
 import { fetchMusicEntries, fetchAlcoholEntries } from "../actions/index";
@@ -79,18 +78,6 @@ const buttonStyleAllCat = {
   borderWidth: "4px",
 };
 
-const buttonStyleIsNotMobile = {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  maxWidth: "50%",
-  maxHeight: "40px",
-  minWidth: "50%",
-  minHeight: "40px",
-  borderColor: "#f40056",
-  borderStyle: "ridge",
-  borderWidth: "40px",
-};
 function App(props) {
   const [filmList, setFilmList] = useState([]);
   const [gamesList, setGamesList] = useState([]);
@@ -109,7 +96,7 @@ function App(props) {
 
   const {
     musicList,
-    alcoholList,
+
     fetchMusicEntries,
     fetchAlcoholEntries,
   } = props;
@@ -341,7 +328,6 @@ function App(props) {
       });
   }
 
-
   useEffect(() => {
     if (animeFetched && gamesFetched && filmsFetched && musicFetched) {
       setAllFechted(true);
@@ -350,8 +336,7 @@ function App(props) {
 
   //set local storage if they are not set after all data was fetched
   useEffect(() => {
-    if (allFechted ) {
-
+    if (allFechted) {
       if (localStorage && !localStorage.filmList) {
         localStorage.setItem("filmList", filmList);
       }
@@ -370,7 +355,6 @@ function App(props) {
 
   //fetch data for categories if there is not data in local storage for them
   useEffect(() => {
-  
     if (localStorage.filmList && localStorage.filmList !== "") {
       setFilmsFetched(true);
     } else {
@@ -379,20 +363,18 @@ function App(props) {
 
     if (localStorage.animeList && localStorage.animeList !== "") {
       setAnimeFetched(true);
-    
     } else {
       fetchMyAPIAnime();
     }
 
     if (localStorage.gamesList && localStorage.gamesList !== "") {
-      setGamesFetched(true);    
+      setGamesFetched(true);
     } else {
       fetchMyAPIGames();
     }
 
     if (localStorage.musicList && localStorage.musicList !== "") {
       setMusicFetched(true);
-    
     } else {
       fetchMusicEntries();
       setMusicFetched(true);
@@ -403,21 +385,13 @@ function App(props) {
     const page = document.documentElement;
 
     if (page.requestFullscreen) {
-      page.requestFullscreen().catch((err) => {
-      
-      });
+      page.requestFullscreen().catch((err) => {});
     } else if (page.mozRequestFullScreen) {
-      page.mozRequestFullScreen().catch((err) => {
-       
-      });
+      page.mozRequestFullScreen().catch((err) => {});
     } else if (page.webkitRequestFullscreen) {
-      page.webkitRequestFullscreen().catch((err) => {
-      
-      });
+      page.webkitRequestFullscreen().catch((err) => {});
     } else if (page.msRequestFullscreen) {
-      page.msRequestFullscreen().catch((err) => {
-      
-      });
+      page.msRequestFullscreen().catch((err) => {});
     } else {
       document.exitFullscreen();
     }
@@ -457,7 +431,6 @@ function App(props) {
         <ParStyle style={{ fontSize: "5vw", top: "40%" }}>
           Loading the game...
         </ParStyle>
-      
 
         <div
           style={{
@@ -477,59 +450,58 @@ function App(props) {
     );
   };
 
-    if (allFechted) {
-      return (
-        <motion.div
-          className="app"
-          variants={pageVariants}
-          transition={pageTransition}
-          initial="initial"
-          animate="in"
-          exit="out"
+  if (allFechted) {
+    return (
+      <motion.div
+        className="app"
+        variants={pageVariants}
+        transition={pageTransition}
+        initial="initial"
+        animate="in"
+        exit="out"
+      >
+        <Header />
+        <Button
+          size="small"
+          variant="contained"
+          style={buttonStyleMyCat}
+          color="primary"
+          onClick={handlePlayersCategories}
         >
-          <Header />
-          <Button
-            size="small"
-            variant="contained"
-            style={buttonStyleMyCat}
-            color="primary"
-            onClick={handlePlayersCategories}
-          >
-            PLAYERS CATEGORIES
-          </Button>
+          PLAYERS CATEGORIES
+        </Button>
 
-          <Button
-            size="small"
-            style={buttonStyleAllCat}
-            variant="contained"
-            color="secondary"
-            onClick={handleLogin}
-          >
-            Your Categories
-          </Button>
-
-          <Main
-            allFechted={allFechted}
-            gameCategoriesList={gameCategoriesList}
-          ></Main>
-        </motion.div>
-      );
-    } else
-      return (
-        <Grid
-          container
-          spacing={0}
-          alignItems="center"
-          justify="center"
-          style={{
-            background: "linearGradient(180deg, #013064, #1255a0)",
-          }}
+        <Button
+          size="small"
+          style={buttonStyleAllCat}
+          variant="contained"
+          color="secondary"
+          onClick={handleLogin}
         >
-          {renderLoading()}
-        </Grid>
-      );
-  } 
+          Your Categories
+        </Button>
 
+        <Main
+          allFechted={allFechted}
+          gameCategoriesList={gameCategoriesList}
+        ></Main>
+      </motion.div>
+    );
+  } else
+    return (
+      <Grid
+        container
+        spacing={0}
+        alignItems="center"
+        justify="center"
+        style={{
+          background: "linearGradient(180deg, #013064, #1255a0)",
+        }}
+      >
+        {renderLoading()}
+      </Grid>
+    );
+}
 
 const mapStateToProps = (state) => {
   return {

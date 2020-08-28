@@ -15,7 +15,7 @@ export default function ShowTile(props) {
   return (
     <motion.div
       whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.8, transition: { duration: 1 } }}
+      whileTap={{ scale: 0.95, transition: { duration: 1 } }}
       className="tile"
       style={showTileStyle}
       onClick={() => {

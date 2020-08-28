@@ -152,7 +152,7 @@ function GameModule(props) {
 
   const handleGameVariantShow = () => {
     const backgroundColorShow = {
-      background: "linear-gradient(180deg, rgb(0, 255, 34), rgb(40, 236, 220))",
+      background: "linear-gradient((180deg, #05f, #09f))",
     };
     setBackgroundColor(backgroundColorShow);
     setCounterTimer(90);
@@ -161,8 +161,7 @@ function GameModule(props) {
 
   const handleGameVariantChallange = () => {
     const backgroundColorChallange = {
-      background:
-        "linear-gradient(180deg, rgb(216, 15, 243), rgb(205, 241, 74))",
+      background: "linear-gradient((180deg, #05f, #09f))",
     };
     setBackgroundColor(backgroundColorChallange);
     setCounterTimer(80);
@@ -171,7 +170,7 @@ function GameModule(props) {
 
   const handleGameVariantDraw = () => {
     const backgroundColorDraw = {
-      background: "linear-gradient(180deg, rgb(81, 255, 0), rgb(255, 0, 234))",
+      background: "linear-gradient((180deg, #05f, #09f))",
     };
     setBackgroundColor(backgroundColorDraw);
     setCounterTimer(120);
@@ -410,7 +409,7 @@ function GameModule(props) {
         ) : (
           ""
         )}
-        <motion.div className="correctButtonStyle" whileTap={{ scale: 0.8 }}>
+        <motion.div className="correctButtonStyle" whileTap={{ scale: 0.95 }}>
           <Button
             type="submit"
             size="big"
@@ -426,7 +425,7 @@ function GameModule(props) {
             CORRECT
           </Button>
         </motion.div>
-        <motion.div className="skipButtonStyle" whileTap={{ scale: 0.8 }}>
+        <motion.div className="skipButtonStyle" whileTap={{ scale: 0.95 }}>
           <Button
             type="submit"
             size="big"

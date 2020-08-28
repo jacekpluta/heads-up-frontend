@@ -41,7 +41,7 @@ const store = createStore(
 );
 
 const Root = (props) => {
-  const { points, questionsResult, user, setUser, musicEntries } = props;
+  const { points, questionsResult, user, setUser } = props;
 
   const [gameCategory, setGameCategory] = useState(null);
   const [gameVariant, setGameVariant] = useState(null);

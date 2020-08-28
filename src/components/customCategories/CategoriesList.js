@@ -211,8 +211,8 @@ const CategoriesList = (props) => {
     setPage(0);
   };
 
-  const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("name");
+  const [order, _] = useState("asc");
+  const [orderBy, __] = useState("name");
 
   // const handleRequestSort = (event, property) => {
   //   const isAsc = orderBy === property && order === "asc";
@@ -620,7 +620,6 @@ export default windowSize(CategoriesList);
 
 const useStyles2 = makeStyles({
   table: {
-
     minWidth: 320,
   },
 });

@@ -1,6 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { zIndex } from "material-ui/styles";
 
 const pStyle = {
   position: "absolute",

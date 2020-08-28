@@ -1,21 +1,21 @@
-import React, { useState, useContext } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faVolumeUp,
-  faQuestionCircle,
-} from "@fortawesome/free-solid-svg-icons";
+import React from "react";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import {
+//   faVolumeUp,
+//   faQuestionCircle,
+// } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
 import { HeaderStyle } from "../../styles/Layout";
-import { MuteSoundContext } from "../../contex/MuteSoundContext";
+// import { MuteSoundContext } from "../../contex/MuteSoundContext";
 
-import { clickSound } from "../Sounds";
-import HowToPlay from "./HowToPlay";
+// import { clickSound } from "../Sounds";
+// import HowToPlay from "./HowToPlay";
 import HowToPlayPic from "../../pic/HowToPlayPic.jpg";
-import { Header as sHeader, Button, Popup, Grid } from "semantic-ui-react";
+import { Button, Popup, Grid } from "semantic-ui-react";
 
 function Header(props) {
-  const { muteSound, setMuteSound } = useContext(MuteSoundContext);
-  const [showHowToPlay, setShowHowToPlay] = useState(false);
+  // const { muteSound, setMuteSound } = useContext(MuteSoundContext);
+  // const [showHowToPlay, setShowHowToPlay] = useState(false);
   // const handleMuteSound = () => {
   //   if (!muteSound) {
   //     clickSound.play();
@@ -50,7 +50,7 @@ function Header(props) {
           <motion.img
             whileHover={{ scale: 1.2 }}
             whileTap={{
-              scale: 0.8,
+              scale: 0.95,
             }}
             src={HowToPlayPic}
             alt="How To Play"

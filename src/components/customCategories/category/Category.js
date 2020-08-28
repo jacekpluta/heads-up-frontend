@@ -30,7 +30,7 @@ const buttonStyle = {
 const CustomCategories = (props) => {
   const { setUser, user, pickedCategory } = props;
 
-  const [cookies, setCookies] = useCookies(["name"]);
+  const [_, setCookies] = useCookies(["name"]);
 
   let history = useHistory();
 

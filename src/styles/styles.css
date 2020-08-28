@@ -174,9 +174,12 @@ body {
 .medal {
   position: relative;
   text-align: center;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -30px;
+  margin-bottom: 10px;
   min-width: 20%;
-  height: 220px;
+  height: 240px;
   width: 120px;
   background-size: 100% 100%;
 }

@@ -17,7 +17,7 @@ const pStyle = {
   width: "100%",
   fontSize: "5vh",
   color: "#f8f8ff",
-  paddingTop: "15px",
+  paddingTop: "30px",
   fontWeight: 700,
   textShadow: "6px 6px 0px rgba(0,0,0,0.2)",
 };
@@ -32,7 +32,7 @@ const iconContainerStyle = {
   paddingBottom: "15px",
   marginTop: "20px",
   marginBottom: "50px",
-  width: "60%",
+  width: "40%",
   textAlign: "center",
 };
 
@@ -113,7 +113,7 @@ function Result(props) {
             <motion.div
               whileHover={{ scale: 1.2 }}
               whileTap={{
-                scale: 0.8,
+                scale: 0.95,
               }}
               style={iconContainerStyle}
               onClick={handleGoBack}
@@ -139,7 +139,7 @@ function Result(props) {
             <motion.div
               whileHover={{ scale: 1.2 }}
               whileTap={{
-                scale: 0.8,
+                scale: 0.95,
               }}
               style={iconContainerStyle}
             >
