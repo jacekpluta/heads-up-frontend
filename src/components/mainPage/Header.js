@@ -39,7 +39,7 @@ function Header(props) {
     textAlign: "center",
     position: "absolute",
     right: 0,
-    top: "40px",
+    top: "70px",
     bottom: 0,
   };
   const contextRef = React.useRef();

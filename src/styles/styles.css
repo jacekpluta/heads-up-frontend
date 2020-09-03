@@ -129,7 +129,7 @@ body {
   min-height: inherit;
   max-width: 70%;
   max-height: 50%;
-  min-width: 55%;
+  min-width: 75%;
   min-height: 125px;
   height: 18vh;
   background-size: 100% 100%;
@@ -312,3 +312,32 @@ body {
 .glow span:nth-child(2) {
   filter: blur(50px);
 } */
+
+@media only screen and (min-width: 1000px) {
+  .box {
+    box-sizing: border-box;
+    border-style: solid;
+    border-color: white;
+    border-radius: 10px;
+    border-width: 10px;
+    width: 120px;
+    height: 350px;
+    min-width: 90%;
+    background-repeat: no-repeat;
+    background-size: contain, cover;
+    background-size: 100% 100%;
+  }
+
+  .tile {
+    position: relative;
+    border-style: ridge;
+    border-width: 10px;
+    border-radius: 30px;
+    min-height: inherit;
+
+    min-width: 35%;
+    min-height: 130px;
+
+    background-size: 100% 100%;
+  }
+}
