@@ -40,11 +40,12 @@ const addCategoryButtonStyle = {
   position: "absolute",
   left: 0,
   marginLeft: "5px",
+ 
 };
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(12),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -352,7 +353,7 @@ const CustomCategories = (props) => {
       exit="out"
       className="customcategories"
     >
-      <BackButton handleGoBack={handleGoBack} />
+      <BackButton handleGoBack={handleGoBack} blackColor={true} />
       <Button
         type="submit"
         size="small"
@@ -363,23 +364,22 @@ const CustomCategories = (props) => {
         SIGN OUT
       </Button>
       <div className={classes.paper}>
-        <div>
-          <Button
-            style={addCategoryButtonStyle}
-            type="submit"
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              clickSound.play();
-              setAddModalOpen(true);
-            }}
-          >
-            {windowSize.width >= 500 ? "Add Category" : "Add"}
-          </Button>
-          <Typography component="h1" variant="h6">
-            Your categories
-          </Typography>
-        </div>
+        <Button
+          style={addCategoryButtonStyle}
+          type="submit"
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            clickSound.play();
+            setAddModalOpen(true);
+          }}
+        >
+          {windowSize.width >= 500 ? "Add Category" : "Add"}
+        </Button>
+        <Typography component="h1" variant="h6">
+          Your categories
+        </Typography>
+
         <CategoriesList
           loading={loading}
           myCategories={myCategories}

@@ -11,7 +11,7 @@ import { HeaderStyle } from "../../styles/Layout";
 // import { clickSound } from "../Sounds";
 // import HowToPlay from "./HowToPlay";
 import HowToPlayPic from "../../pic/HowToPlayPic.jpg";
-import { Button, Popup, Grid } from "semantic-ui-react";
+import { Button, Popup, Grid , Card, Image, Rating } from "semantic-ui-react";
 
 function Header(props) {
   // const { muteSound, setMuteSound } = useContext(MuteSoundContext);
@@ -36,31 +36,40 @@ function Header(props) {
   // };
 
   const containerStyle = {
-    textAlign: "center",
     position: "absolute",
     right: 0,
-    top: "70px",
-    bottom: 0,
+    width: "90px",
+    top: "100px",
   };
+  
+  const containerStyle2 = {
+       right: 0,
+    top: "60px",
+  };
+
   const contextRef = React.useRef();
   return (
     <HeaderStyle>
       <Popup
         trigger={
-          <motion.img
-            whileHover={{ scale: 1.2 }}
-            whileTap={{
-              scale: 0.95,
-            }}
-            src={HowToPlayPic}
-            alt="How To Play"
-            width="200"
-            height="200"
-            style={containerStyle}
-          />
+
+          <Image  src={HowToPlayPic} style={containerStyle}   />
+       
+
+          // <motion.img
+          //   whileHover={{ scale: 1.2 }}
+          //   whileTap={{
+          //     scale: 0.95,
+          //   }}
+          //   src={HowToPlayPic}
+          //   alt="How To Play"
+          //   style={containerStyle}
+   
+          // />
         }
         position="top right"
         flowing
+        style={containerStyle2}
         hoverable
         wide
         context={contextRef}

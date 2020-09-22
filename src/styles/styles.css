@@ -18,9 +18,10 @@ body {
 }
 
 .customcategories {
+    background: linear-gradient(180deg, #013064, #1255a0);
   position: absolute;
   margin: 0;
-  height: auto;
+  height: 100%;
   width: 100%;
 }
 

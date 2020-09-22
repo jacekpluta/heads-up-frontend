@@ -27,7 +27,7 @@ const BackButton = (props) => {
       className="backbutton"
     >
       <Icon
-        color={blackColor ? "black" : "white"}
+        color={blackColor ? "white" : "white"}
         style={
           blackColor
             ? { width: 50 + "px", height: 50 + "px" }

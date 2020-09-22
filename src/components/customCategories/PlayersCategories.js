@@ -25,12 +25,12 @@ import { clickSound } from "../Sounds";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(12),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "white",
-    padding: "5px",
+ 
   },
 }));
 
@@ -147,50 +147,52 @@ const CustomCategories = (props) => {
       initial="initial"
       animate="in"
       exit="out"
+      className="customcategories"
+    
     >
       <BackButton handleGoBack={handleGoBack} blackColor={true} />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h6">
-          <motion.div
-            onClick={loadCategories}
-            style={{ paddingTop: "10px", paddingBottom: "10px" }}
-          >
-            PLAYERS CATEGORIES
-            {refreshLoading ? (
-              <CircularProgress
-                style={{ position: "absolute", right: 0, marginTop: "-8px" }}
-              />
-            ) : (
-              <RefreshIcon
-                style={{
-                  position: "absolute",
-                  right: 0,
-                  marginTop: "-5px",
-                  fontSize: "50px",
-                }}
-              />
-            )}
-          </motion.div>
-        </Typography>
-        <TextField
-          variant="outlined"
-          fullWidth
-          id="searchTerm"
-          name="searchTerm"
-          label="Search name or a user"
-          type="text"
-          value={searchTerm}
-          onChange={handleInputSearchChange}
-        />
+      <Typography component="h1" variant="h6">
+        <motion.div
+          onClick={loadCategories}
+          style={{ paddingTop: "50px", paddingBottom: "10px" }}
+        >
+          <div style={{ textAlign: "center" }}>PLAYERS CATEGORIES</div>
+          {refreshLoading ? (
+            <CircularProgress
+              style={{ position: "absolute", right: 0, marginTop: "-50px" }}
+            />
+          ) : (
+            <RefreshIcon
+              style={{
+                position: "absolute",
+                right: 0,
+                marginTop: "-50px",
+                fontSize: "50px",
+              }}
+            />
+          )}
+        </motion.div>
+      </Typography>
+      <TextField
+        variant="outlined"
+        fullWidth
+        id="searchTerm"
+        name="searchTerm"
+        label="Search name or a user"
+        type="text"
+        value={searchTerm}
+        onChange={handleInputSearchChange}
+      />
 
-        <CategoriesList
-          searchResults={searchResults}
-          myCategories={allCategories}
-          handlePlayCategory={handlePlayCategory}
-          showAllCategories={showAllCategories}
-          loading={loading}
-        ></CategoriesList>
-      </div>
+      <CategoriesList
+        searchResults={searchResults}
+        myCategories={allCategories}
+        handlePlayCategory={handlePlayCategory}
+        showAllCategories={showAllCategories}
+        loading={loading}
+      ></CategoriesList>
+
       {error !== "" ? (
         <Alert variant="filled" severity="error">
           {error}
@@ -198,6 +200,7 @@ const CustomCategories = (props) => {
       ) : (
         ""
       )}
+      </div>
     </motion.div>
   );
 };
