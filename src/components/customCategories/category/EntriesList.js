@@ -25,14 +25,12 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(2),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    backgroundColor: "white",
-    paddingRight: "10px",
-    paddingTop: "10px",
-    paddingBottom: "10px",
+    marginTop: theme.spacing(12),
+ 
+
+    backgroundColor: "#013166",
+
+
   },
 }));
 
@@ -91,12 +89,10 @@ const EntriesList = (props) => {
 
   return (
     <div className={classes.paper}>
-      <Typography component="h1" variant="h6">
-        {pickedCategory ? pickedCategory.name : ""}
-      </Typography>
+   
       <MaterialTable
         icons={tableIcons}
-        title={""}
+        title={pickedCategory && pickedCategory.name}
         columns={state.columns}
         data={categoryEntries ? categoryEntries : state.data}
         editable={{

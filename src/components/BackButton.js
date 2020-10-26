@@ -12,6 +12,7 @@ const BackButton = (props) => {
     showCounterTimer,
     handleGoBack,
     blackColor,
+    entriesList
   } = props;
 
   return (
@@ -24,14 +25,14 @@ const BackButton = (props) => {
         handleGoBack();
         clickSound.play();
       }}
-      className="backbutton"
+      className={entriesList ? "backbuttonEntriesList" : "backbutton"}
     >
       <Icon
         color={blackColor ? "white" : "white"}
         style={
           blackColor
             ? { width: 50 + "px", height: 50 + "px" }
-            : { width: 80 + "px", height: 80 + "px" }
+            : { width: 50 + "px", height: 50 + "px" }
         }
         path={mdiArrowLeftCircle}
       />

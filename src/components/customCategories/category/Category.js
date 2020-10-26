@@ -62,27 +62,29 @@ const CustomCategories = (props) => {
   };
 
   return (
-    <motion.div
-      variants={pageVariantsLogin}
-      transition={pageTransition}
-      initial="initial"
-      animate="in"
-      exit="out"
-      className={"Login"}
-    >
-      <BackButton handleGoBack={handleGoBack} />
-      <Button
-        type="submit"
-        size="small"
-        style={buttonStyle}
-        color="primary"
-        onClick={handleLogout}
+    <>
+      <motion.div
+        variants={pageVariantsLogin}
+        transition={pageTransition}
+        initial="initial"
+        animate="in"
+        exit="out"
+        className={"category"}
       >
-        SIGN OUT
-      </Button>
+        <BackButton entriesList={true} handleGoBack={handleGoBack} />
+        <Button
+          type="submit"
+          size="small"
+          style={buttonStyle}
+          color="primary"
+          onClick={handleLogout}
+        >
+          SIGN OUT
+        </Button>
 
-      <EntriesList pickedCategory={pickedCategory} user={user} />
-    </motion.div>
+        <EntriesList pickedCategory={pickedCategory} user={user} />
+      </motion.div>
+    </>
   );
 };
 

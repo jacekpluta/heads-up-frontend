@@ -30,7 +30,7 @@ const loadingStyle = {
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(2),
+    marginTop: "50%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

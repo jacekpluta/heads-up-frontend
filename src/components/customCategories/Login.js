@@ -93,7 +93,7 @@ const Login = (props) => {
 
   const useStyles = makeStyles((theme) => ({
     paper: {
-      marginTop: theme.spacing(2),
+      marginTop: "50%",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -121,7 +121,7 @@ const Login = (props) => {
       initial="initial"
       animate="in"
       exit="out"
-      className={"login"}
+      className="login"
     >
       <BackButton handleGoBack={handleGoBack} />
       <Container component="main" maxWidth="xs">
