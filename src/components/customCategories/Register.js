@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import BackButton from "../BackButton";
 import { setUser } from "../../actions";
 import { connect } from "react-redux";
-
+import { backendUrl } from "../../backendUrl";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -91,7 +91,7 @@ const Register = (props) => {
     setLoading(true);
 
     axios
-      .post("https://headsupbackend.herokuapp.com/register", {
+      .post(`${backendUrl}/register`, {
         email: email,
         password: password,
         passwordRepeat: passwordRepeat,

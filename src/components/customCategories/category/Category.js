@@ -8,7 +8,7 @@ import Button from "@material-ui/core/Button";
 import EntriesList from "./EntriesList";
 
 import { useCookies } from "react-cookie";
-
+import { backendUrl } from "../../../backendUrl";
 import { pageVariantsLogin } from "../../PageVariants";
 import { pageTransition } from "../../PageTransition";
 import { setUser } from "../../../actions";
@@ -49,7 +49,7 @@ const CustomCategories = (props) => {
   };
 
   const handleLogout = () => {
-    axios.get("https://headsupbackend.herokuapp.com/logout").then((data) => {
+    axios.get(`${backendUrl}/logout`).then((data) => {
       if (data.status === 200 && data.data.message === "Logged out") {
         setTimeout(() => {
           history.push("/login");

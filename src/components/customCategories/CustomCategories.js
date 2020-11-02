@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import CategoriesList from "./CategoriesList";
-
+import { backendUrl } from "../../backendUrl";
 import BackButton from "../BackButton";
 import { motion } from "framer-motion";
 import Button from "@material-ui/core/Button";
@@ -40,7 +40,6 @@ const addCategoryButtonStyle = {
   position: "absolute",
   left: 0,
   marginLeft: "5px",
- 
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -118,7 +117,7 @@ const CustomCategories = (props) => {
   const handleLogout = () => {
     clickSound.play();
 
-    axios.get("https://headsupbackend.herokuapp.com/logout").then((data) => {
+    axios.get(`${backendUrl}/logout`).then((data) => {
       if (data.status === 200 && data.data.message === "Logged out") {
         setTimeout(() => {
           history.push("/login");
@@ -134,9 +133,7 @@ const CustomCategories = (props) => {
     clickSound.play();
 
     axios
-      .get(
-        `https://headsupbackend.herokuapp.com/api/category/get/${user.email}`
-      )
+      .get(`${backendUrl}/api/category/get/${user.email}`)
       .then((category) => {
         setMyCategories(category.data.categories);
       })
@@ -149,9 +146,7 @@ const CustomCategories = (props) => {
     setLoading(true);
     if (user) {
       axios
-        .get(
-          `https://headsupbackend.herokuapp.com/api/category/get/${user.email}`
-        )
+        .get(`${backendUrl}/api/category/get/${user.email}`)
         .then((category) => {
           setMyCategories(category.data.categories);
         })
@@ -175,15 +170,12 @@ const CustomCategories = (props) => {
     const categoryId = currentCategory._id;
 
     axios
-      .put(
-        `https://headsupbackend.herokuapp.com/api/category/update/${categoryId}`,
-        {
-          email: user.email,
-          name: currentCategory.name,
-          description: currentCategory.description,
-          questions: currentCategory.questions,
-        }
-      )
+      .put(`${backendUrl}/api/category/update/${categoryId}`, {
+        email: user.email,
+        name: currentCategory.name,
+        description: currentCategory.description,
+        questions: currentCategory.questions,
+      })
       .then((category) => {
         if (category.data.error) {
           setError(category.data.error[0]);
@@ -208,9 +200,7 @@ const CustomCategories = (props) => {
     clickSound.play();
 
     axios
-      .delete(
-        `https://headsupbackend.herokuapp.com/api/category/remove/${categoryId}`
-      )
+      .delete(`${backendUrl}/api/category/remove/${categoryId}`)
       .then((category) => {
         if (category.data.error) {
           setError(category.data.error[0]);
@@ -287,7 +277,7 @@ const CustomCategories = (props) => {
     event.preventDefault();
 
     axios
-      .post("https://headsupbackend.herokuapp.com/api/category/create", {
+      .post(`${backendUrl}/api/category/create`, {
         email: user.email,
         name: categoryName,
         description: categoryDescription,

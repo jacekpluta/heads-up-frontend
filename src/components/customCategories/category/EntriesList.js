@@ -22,6 +22,7 @@ import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import { makeStyles } from "@material-ui/core/styles";
+import { backendUrl } from "../../../backendUrl";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -51,7 +52,7 @@ const EntriesList = (props) => {
     if (pickedCategory) {
       axios
         .get(
-          `https://headsupbackend.herokuapp.com/api/category/getById/${pickedCategory._id}`
+          `${backendUrl}/api/category/getById/${pickedCategory._id}`
         )
         .then((category) => {
           setCategoryEntries(category.data.categories[0].questions);
@@ -65,7 +66,7 @@ const EntriesList = (props) => {
   const handleUpdateEntries = (questions) => {
     axios
       .put(
-        `https://headsupbackend.herokuapp.com/api/category/update/${pickedCategory._id}`,
+        `${backendUrl}/api/category/update/${pickedCategory._id}`,
         {
           email: pickedCategory.email,
           name: pickedCategory.name,

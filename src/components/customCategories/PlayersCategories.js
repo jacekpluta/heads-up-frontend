@@ -6,7 +6,7 @@ import BackButton from "../BackButton";
 import { motion } from "framer-motion";
 
 import Alert from "@material-ui/lab/Alert";
-
+import { backendUrl } from "../../backendUrl";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "white",
- 
   },
 }));
 
@@ -104,7 +103,7 @@ const CustomCategories = (props) => {
     clickSound.play();
 
     axios
-      .get(`https://headsupbackend.herokuapp.com/api/category/get/`)
+      .get(`${backendUrl}/api/category/get/`)
       .then((category) => {
         setAllCategories(category.data.categories);
       })
@@ -117,7 +116,7 @@ const CustomCategories = (props) => {
     setLoading(true);
 
     axios
-      .get(`https://headsupbackend.herokuapp.com/api/category/get/`)
+      .get(`${backendUrl}/api/category/get/`)
       .then((category) => {
         setAllCategories(category.data.categories);
       })
@@ -148,58 +147,57 @@ const CustomCategories = (props) => {
       animate="in"
       exit="out"
       className="customcategories"
-    
     >
       <BackButton handleGoBack={handleGoBack} blackColor={true} />
       <div className={classes.paper}>
-      <Typography component="h1" variant="h6">
-        <motion.div
-          onClick={loadCategories}
-          style={{ paddingTop: "50px", paddingBottom: "10px" }}
-        >
-          <div style={{ textAlign: "center" }}>PLAYERS CATEGORIES</div>
-          {refreshLoading ? (
-            <CircularProgress
-              style={{ position: "absolute", right: 0, marginTop: "-50px" }}
-            />
-          ) : (
-            <RefreshIcon
-              style={{
-                position: "absolute",
-                right: 0,
-                marginTop: "-50px",
-                fontSize: "50px",
-              }}
-            />
-          )}
-        </motion.div>
-      </Typography>
-      <TextField
-        variant="outlined"
-        fullWidth
-        id="searchTerm"
-        name="searchTerm"
-        label="Search name or a user"
-        type="text"
-        value={searchTerm}
-        onChange={handleInputSearchChange}
-      />
+        <Typography component="h1" variant="h6">
+          <motion.div
+            onClick={loadCategories}
+            style={{ paddingTop: "50px", paddingBottom: "10px" }}
+          >
+            <div style={{ textAlign: "center" }}>PLAYERS CATEGORIES</div>
+            {refreshLoading ? (
+              <CircularProgress
+                style={{ position: "absolute", right: 0, marginTop: "-50px" }}
+              />
+            ) : (
+              <RefreshIcon
+                style={{
+                  position: "absolute",
+                  right: 0,
+                  marginTop: "-50px",
+                  fontSize: "50px",
+                }}
+              />
+            )}
+          </motion.div>
+        </Typography>
+        <TextField
+          variant="outlined"
+          fullWidth
+          id="searchTerm"
+          name="searchTerm"
+          label="Search name or a user"
+          type="text"
+          value={searchTerm}
+          onChange={handleInputSearchChange}
+        />
 
-      <CategoriesList
-        searchResults={searchResults}
-        myCategories={allCategories}
-        handlePlayCategory={handlePlayCategory}
-        showAllCategories={showAllCategories}
-        loading={loading}
-      ></CategoriesList>
+        <CategoriesList
+          searchResults={searchResults}
+          myCategories={allCategories}
+          handlePlayCategory={handlePlayCategory}
+          showAllCategories={showAllCategories}
+          loading={loading}
+        ></CategoriesList>
 
-      {error !== "" ? (
-        <Alert variant="filled" severity="error">
-          {error}
-        </Alert>
-      ) : (
-        ""
-      )}
+        {error !== "" ? (
+          <Alert variant="filled" severity="error">
+            {error}
+          </Alert>
+        ) : (
+          ""
+        )}
       </div>
     </motion.div>
   );
