@@ -19,7 +19,7 @@ export default function GameMenu() {
   };
 
   return (
-    <Grid container style={{ paddingTop: "40px" }}>
+    <Grid container style={{ paddingTop: "20px" }}>
       <Grid
         container
         item

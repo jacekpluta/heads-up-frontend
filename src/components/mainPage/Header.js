@@ -17,7 +17,7 @@ function Header(props) {
 
   const containerStyle2 = {
     position: "absolute",
-   
+
     top: -100,
     height: "auto",
   };
@@ -25,14 +25,13 @@ function Header(props) {
   const contextRef = React.useRef();
   return (
     <HeaderStyle>
-        <Popup
- flowing
-position="top right"
-        trigger={<Image   style={containerStyle}src={HowToPlayPic} avatar />}
+      <Popup
+        flowing
+        position="top right"
+        trigger={<Image style={containerStyle} src={HowToPlayPic} avatar />}
         style={containerStyle2}
       >
-
-      {/* <Popup
+        {/* <Popup
         trigger={<Image src={HowToPlayPic} style={containerStyle} />}
         position="top"
         flowing

@@ -92,6 +92,7 @@ export default function GameMenu(props) {
       </motion.div>
     );
   };
+
   if (gameCategory) {
     return (
       <DeviceOrientation
